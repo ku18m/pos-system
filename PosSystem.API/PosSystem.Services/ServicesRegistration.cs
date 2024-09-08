@@ -10,7 +10,7 @@ namespace PosSystem.Services
 {
     public static class ServicesRegistration
     {
-        public static void AddServicesRegistration(this WebApplicationBuilder builder )
+        public static void AddServicesRegistration(this WebApplicationBuilder builder)
         {
         }
     }

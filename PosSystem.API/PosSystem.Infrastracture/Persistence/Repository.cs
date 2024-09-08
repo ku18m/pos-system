@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PosSystem.Core.Interfaces;
 using PosSystem.Infrastracture.Persistence.Data;
+using System.Collections.Generic;
 
 namespace PosSystem.Infrastracture.Persistence
 {
@@ -12,14 +13,14 @@ namespace PosSystem.Infrastracture.Persistence
         public Repository(ApplicationDbContext context)
         {
             _context = context;
-            _dbSet = _context.Set<Entity>(); 
+            _dbSet = _context.Set<Entity>();
         }
         public List<Entity> GetAll()
         {
             return _dbSet.ToList();
         }
 
-        public Entity GetById(string id)
+        public Entity GetById(int id)
         {
             return _dbSet.Find(id);
         }
@@ -28,7 +29,7 @@ namespace PosSystem.Infrastracture.Persistence
         {
             _dbSet.Add(entity);
         }
-        public void Delete(string id)
+        public void Delete(int id)
         {
             var entity = _dbSet.Find(id);
             if (entity != null)
@@ -46,6 +47,6 @@ namespace PosSystem.Infrastracture.Persistence
             _context.SaveChanges();
         }
 
-       
+
     }
 }
