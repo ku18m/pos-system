@@ -9,7 +9,7 @@ namespace PosSystem.Infrastracture
     {
         public static void AddInfrastructureRegistration(this WebApplicationBuilder builder)
         {
-            builder.Services.AddTransient(typeof(IRepository<>),typeof(Repository<>));
+            builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
         }
     }
 }
