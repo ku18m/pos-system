@@ -8,9 +8,13 @@ namespace PosSystem.Core.Entities
 {
     public class User
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; set; }
 
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string FullName => $"{FirstName} {LastName}";
 
         public string Email { get; set; }
 
@@ -23,5 +27,10 @@ namespace PosSystem.Core.Entities
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
+
+        public User()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
     }
 }

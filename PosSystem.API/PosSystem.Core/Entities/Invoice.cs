@@ -8,7 +8,7 @@ namespace PosSystem.Core.Entities
 {
     public class Invoice
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; private set; }
 
         public DateTime BillDate { get; set; }
 
@@ -37,5 +37,11 @@ namespace PosSystem.Core.Entities
         public TimeSpan StartTime { get; set; }
 
         public TimeSpan EndTime { get; set; }
+
+        public Invoice()
+        {
+            Id = Guid.NewGuid().ToString();
+            Items = new List<InvoiceItem>();
+        }
     }
 }
