@@ -8,7 +8,7 @@ namespace PosSystem.Core.Entities
 {
     public class InvoiceItem
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; private set; }
 
         public string InvoiceId { get; set; }
         public virtual Invoice Invoice { get; set; }
@@ -28,5 +28,11 @@ namespace PosSystem.Core.Entities
         public decimal Discount { get; set; }
 
         public decimal FinalAmount { get; set; }
+
+
+        public InvoiceItem()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
     }
 }

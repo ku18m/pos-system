@@ -8,7 +8,7 @@ namespace PosSystem.Core.Entities
 {
     public class User
     {
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         public string FirstName { get; set; }
 
