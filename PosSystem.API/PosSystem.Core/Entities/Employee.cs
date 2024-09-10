@@ -13,6 +13,8 @@ namespace PosSystem.Core.Entities
 
         public string LastName { get; set; }
 
+        public string FullName => $"{FirstName} {LastName}";
+
         public DateTime DateOfBirth { get; set; }
 
         public string? PhoneNumber { get; set; }

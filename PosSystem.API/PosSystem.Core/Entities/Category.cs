@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PosSystem.Core.Entities
 {
-    public class Type
+    public class Category
     {
         [Key]
-        public string TypeId { get; set; }
+        public string CategoryId { get; set; }
 
 
         public string Name { get; set; }
@@ -20,9 +20,9 @@ namespace PosSystem.Core.Entities
         public virtual Company Company { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
-        public Type()
+        public Category()
         {
-            TypeId = Guid.NewGuid().ToString();
+            CategoryId = Guid.NewGuid().ToString();
         }
     }
 }

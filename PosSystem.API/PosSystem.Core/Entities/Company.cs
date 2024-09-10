@@ -15,7 +15,7 @@ namespace PosSystem.Core.Entities
 
         public virtual ICollection<Product> Products { get; set; }
 
-        public virtual ICollection<Type> Types { get; set; }
+        public virtual ICollection<Category> Categories { get; set; }
         public Company()
         {
             CompanyId = Guid.NewGuid().ToString();

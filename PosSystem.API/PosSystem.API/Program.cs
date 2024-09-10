@@ -13,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.AddInfrastructureRegistration();
 builder.AddServicesRegistration();
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(""));
+
 
 var app = builder.Build();
 
