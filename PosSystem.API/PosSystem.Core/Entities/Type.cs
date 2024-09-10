@@ -10,7 +10,6 @@ namespace PosSystem.Core.Entities
         public string TypeId { get; set; }
 
 
-        [Required(ErrorMessage = "Type is required")]
         public string Name { get; set; }
         public string? Notes { get; set; }
 

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PosSystem.Core.Entities
 {
@@ -8,7 +7,6 @@ namespace PosSystem.Core.Entities
         [Key]
         public string UnitId { get; set; }
 
-        [Required(ErrorMessage = "Unit is required")]
         public string Name { get; set; }
         public string? Notes { get; set; }
 

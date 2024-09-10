@@ -9,7 +9,6 @@ namespace PosSystem.Core.Entities
         public string CompanyId { get; set; }
 
 
-        [Required(ErrorMessage = "Company Name is required")]
         public string Name { get; set; }
 
         public string? Notes { get; set; }

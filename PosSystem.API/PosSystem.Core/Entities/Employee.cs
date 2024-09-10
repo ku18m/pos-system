@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PosSystem.Core.Entities
 {
@@ -11,16 +9,13 @@ namespace PosSystem.Core.Entities
         public string EmployeeId { get; set; }
 
 
-        [Required]
         public string FirstName { get; set; }
 
-        [Required]
         public string LastName { get; set; }
 
-        [Required]
         public DateTime DateOfBirth { get; set; }
 
-        public int? PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
 
         public string? Address { get; set; }
 
