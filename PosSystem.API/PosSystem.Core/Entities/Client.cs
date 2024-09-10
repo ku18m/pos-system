@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PosSystem.Core.Entities
 {
@@ -11,6 +12,7 @@ namespace PosSystem.Core.Entities
 
         public string LastName { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Number { get; set; }
 
         public string Phone { get; set; }
