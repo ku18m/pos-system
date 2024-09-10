@@ -7,14 +7,15 @@ namespace PosSystem.Infrastracture.Persistence
 {
     public class Repository<Entity> : IRepository<Entity> where Entity : class
     {
-        private readonly ApplicationDbContext _context;
+        private readonly PosDbContext _context;
         private readonly DbSet<Entity> _dbSet;
 
-        public Repository(ApplicationDbContext context)
+        public Repository(PosDbContext context)
         {
             _context = context;
             _dbSet = _context.Set<Entity>();
         }
+
         public List<Entity> GetAll()
         {
             return _dbSet.ToList();

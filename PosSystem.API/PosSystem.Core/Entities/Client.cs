@@ -13,7 +13,8 @@ namespace PosSystem.Core.Entities
 
         public string LastName { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public string FullName => $"{FirstName} {LastName}";
+
         public int Number { get; set; }
 
         public string Phone { get; set; }
@@ -23,8 +24,6 @@ namespace PosSystem.Core.Entities
         public string? Notes { get; set; }
 
         public virtual ICollection<Invoice> Invoices { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
-        public virtual ICollection<Employee> Employees { get; set; }
         public Client()
         {
             ClientId = Guid.NewGuid().ToString();
