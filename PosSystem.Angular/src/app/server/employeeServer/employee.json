@@ -1,0 +1,25 @@
+{
+    "employee": [
+      {
+        "name": "Mohamed",
+        "DateOfBirth":"5/9/2000",
+        "PhoneNumber":"01012345678",
+        "Address":"cairo"
+        
+      },
+      {
+        "name": "Osama",
+        "DateOfBirth":"5/9/2000",
+        "PhoneNumber":"01012345678",
+        "Address":"cairo"
+        
+      },
+      {
+        "name": "Mostafa",
+        "DateOfBirth":"5/9/2000",
+        "PhoneNumber":"01012345678",
+        "Address":"cairo"
+        
+      }
+    ]
+  }

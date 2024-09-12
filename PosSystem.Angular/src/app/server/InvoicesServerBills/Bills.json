@@ -1,0 +1,244 @@
+{
+  "bill": [
+    {
+      "id": "aa7c",
+      "billsDate": "2024-09-12",
+      "clientName": "Ali",
+      "itemName": "Samsung Galaxy J6",
+      "sellingPrice": "7000 ",
+      "unit": "Piece",
+      "quantity": "2",
+      "discount": "200",
+      "total": 13800
+    },
+    {
+      "id": "996e",
+      "billsDate": "2024-09-12",
+      "clientName": "Ahmed",
+      "itemName": "Rt 5507",
+      "sellingPrice": "12000",
+      "unit": "Piece",
+      "quantity": "3",
+      "discount": "1000",
+      "total": 35000
+    },
+    {
+      "id": "40ab",
+      "billsDate": "2024-09-03",
+      "billsNumber": null,
+      "clientName": "Ali",
+      "itemName": "Samsung Galaxy J7 core",
+      "sellingPrice": "14000",
+      "unit": "Piece",
+      "quantity": "1",
+      "discount": "200",
+      "total": 13800
+    },
+    {
+      "id": "a796",
+      "billsDate": "2024-09-12",
+      "clientName": "Ahmed",
+      "itemName": "Samsung Galaxy J6",
+      "sellingPrice": "7000 ",
+      "unit": "Piece",
+      "quantity": "2",
+      "discount": "3000",
+      "total": 11000
+    },
+    {
+      "id": "702b",
+      "billsDate": "2024-09-07",
+      "billsNumber": null,
+      "clientName": "Ahmed",
+      "itemName": "Rt 5507",
+      "sellingPrice": "12000",
+      "unit": "Piece",
+      "quantity": "2",
+      "discount": "3000",
+      "total": 21000
+    },
+    {
+      "id": "531e",
+      "billsDate": "2024-09-12",
+      "clientName": "Ahmed",
+      "itemName": "Samsung Galaxy J7 core",
+      "sellingPrice": "14000",
+      "unit": "Piece",
+      "quantity": "2",
+      "total": 28000
+    },
+    {
+      "id": "0ff2",
+      "billsDate": "2024-09-12",
+      "billsNumber": null,
+      "clientName": "Ahmed",
+      "itemName": "Rt 5507",
+      "sellingPrice": "12000",
+      "unit": "Piece",
+      "quantity": "1",
+      "discount": "200",
+      "total": 12000
+    },
+    {
+      "id": "e13b",
+      "billsDate": "2024-09-12",
+      "clientName": "Ahmed",
+      "itemName": "Samsung Galaxy J6",
+      "sellingPrice": "7000 ",
+      "unit": "Piece",
+      "quantity": "1",
+      "total": 7000
+    },
+    {
+      "id": "d3bd",
+      "billsDate": "2024-09-12",
+      "billsNumber": null,
+      "clientName": "Ali",
+      "itemName": "Samsung Galaxy J6",
+      "sellingPrice": "7000 ",
+      "unit": "Piece",
+      "quantity": "2",
+      "discount": "200",
+      "total": 14000
+    },
+    {
+      "id": "c24a",
+      "billsDate": "2024-09-12",
+      "clientName": "Ahmed",
+      "itemName": "Samsung Galaxy J6",
+      "sellingPrice": "7000 ",
+      "unit": "Piece",
+      "quantity": "1",
+      "discount": "200",
+      "total": 7000
+    },
+    {
+      "id": "b4c7",
+      "billsDate": "2024-09-12",
+      "billsNumber": null,
+      "clientName": "Ali",
+      "itemName": "Rt 5507",
+      "sellingPrice": "12000",
+      "unit": "Piece",
+      "quantity": "2",
+      "discount": null,
+      "total": 24000
+    },
+    {
+      "id": "751d",
+      "billsDate": "2024-09-12",
+      "clientName": "Ahmed",
+      "itemName": "Samsung Galaxy J6",
+      "sellingPrice": "7000 ",
+      "unit": "Piece",
+      "quantity": "1",
+      "total": 7000
+    },
+    {
+      "id": "8bc7",
+      "billsDate": "2024-09-20",
+      "billsNumber": null,
+      "clientName": "Ahmed",
+      "itemName": "Samsung Galaxy J7 core",
+      "sellingPrice": "14000",
+      "unit": "Piece",
+      "quantity": "1",
+      "discount": null,
+      "total": 14000
+    },
+    {
+      "id": "28cc",
+      "billsDate": "2024-09-18",
+      "clientName": "Ahmed",
+      "itemName": "Samsung Galaxy J6",
+      "sellingPrice": "7000 ",
+      "unit": "Piece",
+      "quantity": "1",
+      "total": 7000
+    },
+    {
+      "id": "dbdc",
+      "billsDate": "2024-09-12",
+      "billsNumber": null,
+      "clientName": "Ali",
+      "itemName": "Rt 5507",
+      "sellingPrice": "12000",
+      "unit": "Piece",
+      "quantity": "2",
+      "discount": null,
+      "total": 24000
+    },
+    {
+      "id": "d5ba",
+      "billsDate": "2024-09-27",
+      "clientName": "Ahmed",
+      "itemName": "Samsung Galaxy J6",
+      "sellingPrice": "7000 ",
+      "unit": "Piece",
+      "quantity": "1",
+      "total": 7000
+    },
+    {
+      "id": "44f2",
+      "billsDate": "2024-09-11",
+      "clientName": "Ahmed",
+      "itemName": "LT 5009",
+      "sellingPrice": "2000",
+      "unit": "Piece",
+      "quantity": "2",
+      "total": 4000
+    },
+    {
+      "id": "0de6",
+      "billsDate": "2024-09-10",
+      "clientName": "Ali",
+      "itemName": "Samsung Galaxy J6",
+      "sellingPrice": "7000 ",
+      "unit": "Piece",
+      "quantity": "1",
+      "total": 7000
+    },
+    {
+      "id": "8c21",
+      "billsDate": "2024-09-05",
+      "clientName": "Ahmed",
+      "itemName": "Rt 5507",
+      "sellingPrice": "12000",
+      "unit": "Piece",
+      "quantity": "1999",
+      "total": 23988000
+    },
+    {
+      "id": "cd78",
+      "billsDate": "2024-09-02",
+      "billsNumber": null,
+      "clientName": "Ahmed",
+      "itemName": "Samsung Galaxy J6",
+      "sellingPrice": "7000 ",
+      "unit": "Piece",
+      "quantity": "1",
+      "discount": null,
+      "total": 7000
+    },
+    {
+      "id": "744b",
+      "billsDate": "2024-09-11",
+      "clientName": "Ali",
+      "itemName": "Samsung Galaxy J6",
+      "sellingPrice": "7000 ",
+      "unit": "Piece",
+      "quantity": "1",
+      "total": 7000
+    },
+    {
+      "id": "c408",
+      "billsDate": "2024-09-18",
+      "clientName": "Ali",
+      "itemName": "Samsung Galaxy J6",
+      "sellingPrice": "7000 ",
+      "unit": "Piece",
+      "quantity": "1",
+      "total": 7000
+    }
+  ]
+}
