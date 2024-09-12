@@ -1,0 +1,12 @@
+{
+    "discount": [
+      {
+        "billsTotal":100,
+        "percentageDiscount":20,
+        "valueDiscount":20,
+        "theNet":80,
+        "paidUp":200,
+        "theRest":120
+      }
+    ]
+  }

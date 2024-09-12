@@ -1,0 +1,22 @@
+ul{
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+    
+
+}
+li{
+    background-color: #21263C;
+    color:white;
+    list-style: none;
+    padding: 25px;
+    padding-right: 40px;
+}
+a{
+    text-decoration: none;
+    color:white;
+    
+}
+.active-link{
+    background-color: #296888;
+}

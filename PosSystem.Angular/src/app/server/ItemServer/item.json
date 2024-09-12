@@ -1,0 +1,66 @@
+{
+  "item": [
+    {
+      "companyName": "Samsung",
+      "typeName": "Phones",
+      "name": "Samsung Galaxy J6",
+      "sellingPrice": "7000 ",
+      "buyingPrice": "5000 ",
+      "quantity": "120",
+      "notes": "Good Item",
+      "id": "0ff1",
+      "itemCode": 30.02621019661524
+    },
+    {
+      "id": "69ba",
+      "companyName": "Samsung",
+      "typeName": "Phones",
+      "name": "Samsung Galaxy J7 core",
+      "sellingPrice": "14000",
+      "buyingPrice": "10000",
+      "quantity": "110",
+      "notes": "Good",
+      "itemCode": 90.02621019661524
+    },
+    {
+      "id": "ebf9",
+      "companyName": "Samsung",
+      "typeName": "Tv",
+      "name": "Rt 5507",
+      "sellingPrice": "12000",
+      "buyingPrice": "10000",
+      "quantity": "12",
+      "itemCode": 67.02621019661524
+    },
+    {
+      "id": "ebf9",
+      "companyName": "Samsung",
+      "typeName": "Tv",
+      "name": "Rt 4403",
+      "sellingPrice": "15000",
+      "buyingPrice": "9000",
+      "quantity": "0",
+      "itemCode": 71.02621019661524
+    },
+    {
+      "id": "f0de",
+      "companyName": "Samsung",
+      "typeName": "Tv",
+      "name": "MS 409",
+      "sellingPrice": "25000",
+      "buyingPrice": "20000",
+      "quantity": "20",
+      "itemCode": 0.49894774505435535
+    },
+    {
+      "id": "c278",
+      "companyName": "Tornado",
+      "typeName": "Fan",
+      "name": "LT 5009",
+      "sellingPrice": "2000",
+      "buyingPrice": "1900",
+      "quantity": "30",
+      "itemCode": 79.02621019661524
+    }
+  ]
+}

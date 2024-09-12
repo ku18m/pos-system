@@ -1,0 +1,46 @@
+<div class="rounded bg-light company">
+    <h2 class="mb-5">Sales Report</h2>
+    <div class="input">
+        <label class="clent">Choose A Period:</label>
+        <input type="date" placeholder="From" class="form-control" [(ngModel)]="fromPeriod">
+    </div>
+    <div class="input">
+        <label class="type">Choose A Period:</label>
+        <input type="date" placeholder="To" class="form-control" [(ngModel)]="toPeriod">
+    </div>
+    <div class="button">
+        <button (click)="Submit($event)" class=" bg-success rounded text-light save"><i class="bi bi-floppy text-light m-1"></i>Save</button>
+        <button (click)="Cancel()" class=" bg-danger rounded text-light"><i class="bi bi-trash3 text-light"></i>Cancel</button>
+    </div>
+</div>
+
+
+<table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Item Code</th>
+        <th scope="col">Item Name</th>
+        <th scope="col">Buying Price</th>
+        <th scope="col">Selling Price</th>
+        <th scope="col">Profits</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(item of ReportTableItem; track $index)
+      {
+        <tr>
+          <td>{{item.code}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.buyingPrice}}</td>
+          <td>{{item.sellingPrice}}</td>
+          <td>{{item.profits}}</td>
+        </tr>
+      }
+      
+    </tbody>
+  </table>
+
+    <div class="clear"></div>
+
+
+

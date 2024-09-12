@@ -1,0 +1,76 @@
+{
+  "types": [
+    {
+      "name": "Phone",
+      "notes": "Good Type",
+      "id": "58c1"
+    },
+    {
+      "id": "2033",
+      "companyName": "-- Choose From Companies --"
+    },
+    {
+      "id": "4df6",
+      "companyName": "Samsung",
+      "name": "Tv",
+      "notes": "Wonderful"
+    },
+    {
+      "id": "0052",
+      "companyName": "Tornado",
+      "name": "Fans",
+      "notes": "Good"
+    },
+    {
+      "id": "adf1",
+      "companyName": "Samsung",
+      "name": "Fridge",
+      "notes": "Good"
+    },
+    {
+      "id": "6d8f",
+      "companyName": "Tornado",
+      "name": "Fan"
+    },
+    {
+      "id": "b9e3",
+      "companyName": "Samsung",
+      "name": "Phones"
+    },
+    {
+      "id": "ac41",
+      "companyName": "Samsung",
+      "name": "Phoones"
+    },
+    {
+      "id": "5227",
+      "companyName": "Samsung",
+      "name": "Phoness"
+    },
+    {
+      "id": "7d6c",
+      "companyName": "Samsung",
+      "typeName": "Phones",
+      "name": "Samsung Galaxy J7 core",
+      "sellingPrice": "7000",
+      "buyingPrice": "5000",
+      "quantity": "110",
+      "notes": "Good mobile"
+    },
+    {
+      "id": "c745",
+      "companyName": "Tornado",
+      "typeName": "Fans",
+      "name": "fan ttt",
+      "sellingPrice": "3000",
+      "buyingPrice": "1000",
+      "quantity": "100",
+      "notes": null
+    },
+    {
+      "id": "fc25",
+      "companyName": "Samsung",
+      "name": "Tvs"
+    }
+  ]
+}

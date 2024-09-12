@@ -1,0 +1,19 @@
+{
+  "company": [
+    {
+      "name": "Samsung",
+      "notes": "Good Company",
+      "id": "972c"
+    },
+    {
+      "id": "4384",
+      "name": "Tornado",
+      "notes": "Fantastic"
+    },
+    {
+      "id": "cafe",
+      "name": "LG",
+      "notes": null
+    }
+  ]
+}

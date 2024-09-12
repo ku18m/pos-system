@@ -1,0 +1,17 @@
+{
+  "client": [
+    {
+      "name": "Ahmed",
+      "phone": "01012345678",
+      "number": "0",
+      "address": "Cairo"
+    },
+    {
+      "id": "5f01",
+      "name": "Ali",
+      "phone": "09876543212345",
+      "number": 1,
+      "address": "Alex"
+    }
+  ]
+}
