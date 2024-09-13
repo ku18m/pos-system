@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PosSystem.API", "PosSystem.API\PosSystem.API.csproj", "{C1474CAD-0578-427F-9172-1EF4E8F88B20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PosSystem.API", "PosSystem.API\PosSystem.API.csproj", "{C1474CAD-0578-427F-9172-1EF4E8F88B20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PosSystem.Infrastracture", "PosSystem.Infrastracture\PosSystem.Infrastracture.csproj", "{C0264598-6881-41F1-AD6E-7AD2AD49245D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PosSystem.Infrastracture", "PosSystem.Infrastracture\PosSystem.Infrastracture.csproj", "{C0264598-6881-41F1-AD6E-7AD2AD49245D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PosSystem.Core", "PosSystem.Core\PosSystem.Core.csproj", "{7F72FFD9-776E-4BF5-AEE2-61B1C3325482}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PosSystem.Core", "PosSystem.Core\PosSystem.Core.csproj", "{7F72FFD9-776E-4BF5-AEE2-61B1C3325482}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PosSystem.Services", "PosSystem.Services\PosSystem.Services.csproj", "{00E6BA52-BC91-4D96-89AB-84C2B669FBB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PosSystem.Services", "PosSystem.Services\PosSystem.Services.csproj", "{00E6BA52-BC91-4D96-89AB-84C2B669FBB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PosSystem.Contracts", "PosSystem.Contracts\PosSystem.Contracts.csproj", "{72583EC0-8B0A-4973-908B-5A5AADCAE285}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{00E6BA52-BC91-4D96-89AB-84C2B669FBB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00E6BA52-BC91-4D96-89AB-84C2B669FBB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00E6BA52-BC91-4D96-89AB-84C2B669FBB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72583EC0-8B0A-4973-908B-5A5AADCAE285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72583EC0-8B0A-4973-908B-5A5AADCAE285}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72583EC0-8B0A-4973-908B-5A5AADCAE285}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72583EC0-8B0A-4973-908B-5A5AADCAE285}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
