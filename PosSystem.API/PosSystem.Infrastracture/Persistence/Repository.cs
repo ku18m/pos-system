@@ -1,14 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PosSystem.Core.Interfaces;
+using PosSystem.Core.Interfaces.Repositories;
 using PosSystem.Infrastracture.Persistence.Data;
-using System.Collections.Generic;
 
 namespace PosSystem.Infrastracture.Persistence
 {
     public class Repository<Entity> : IRepository<Entity> where Entity : class
     {
-        private readonly PosDbContext _context;
-        private readonly DbSet<Entity> _dbSet;
+        protected readonly PosDbContext _context;
+        protected readonly DbSet<Entity> _dbSet;
 
         public Repository(PosDbContext context)
         {
@@ -16,38 +15,31 @@ namespace PosSystem.Infrastracture.Persistence
             _dbSet = _context.Set<Entity>();
         }
 
-        public List<Entity> GetAll()
+        public Task<List<Entity>> GetAll()
         {
-            return _dbSet.ToList();
+            return _dbSet.ToListAsync();
         }
 
-        public Entity GetById(int id)
+        public async Task<Entity> GetById(string id)
         {
-            return _dbSet.Find(id);
+            return await _dbSet.FindAsync(id);
         }
 
-        public void Insert(Entity entity)
+        public async Task Insert(Entity entity)
         {
-            _dbSet.Add(entity);
+            _dbSet.AddAsync(entity);
         }
-        public void Delete(int id)
+        public async Task Delete(string id)
         {
-            var entity = _dbSet.Find(id);
+            var entity = await _dbSet.FindAsync(id);
             if (entity != null)
             {
                 _dbSet.Remove(entity);
             }
         }
-        public void Update(Entity entity)
+        public async Task Update(Entity entity)
         {
             _dbSet.Update(entity);
         }
-
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
-
-
     }
 }

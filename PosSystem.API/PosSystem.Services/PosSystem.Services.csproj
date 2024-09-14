@@ -8,9 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PosSystem.Contracts\PosSystem.Contracts.csproj" />
     <ProjectReference Include="..\PosSystem.Core\PosSystem.Core.csproj" />
 	  <FrameworkReference Include="Microsoft.AspNetCore.App" />
 
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
   </ItemGroup>
 
 </Project>
