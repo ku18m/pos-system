@@ -33,9 +33,9 @@ namespace PosSystem.Services
             return mapper.Map<List<ReturnCompanyContract>>(companies);
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(string id)
         {
-            var company = await unitOfWork.CompanyRepository.GetById(id.ToString());
+            var company = await unitOfWork.CompanyRepository.GetById(id);
             if (company == null)
                 throw new Exception("Company not found");
 
@@ -43,9 +43,9 @@ namespace PosSystem.Services
             await unitOfWork.Save();
         }
 
-        public async Task Edit(int id, AddCompanyContract company)
+        public async Task Edit(string id, AddCompanyContract company)
         {
-            var existingCompany = await unitOfWork.CompanyRepository.GetById(id.ToString());
+            var existingCompany = await unitOfWork.CompanyRepository.GetById(id);
             if (existingCompany == null)
                 throw new Exception("Company not found");
 
@@ -54,9 +54,9 @@ namespace PosSystem.Services
             await unitOfWork.Save();
         }
 
-        public async Task<ReturnCompanyContract> GetById(int id)
+        public async Task<ReturnCompanyContract> GetById(string id)
         {
-            var company = await unitOfWork.CompanyRepository.GetById(id.ToString());
+            var company = await unitOfWork.CompanyRepository.GetById(id);
             if (company == null)
                 throw new Exception("Company not found");
 
