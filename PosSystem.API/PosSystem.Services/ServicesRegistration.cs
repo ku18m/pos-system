@@ -36,6 +36,7 @@ namespace PosSystem.Services
             #region Services Registeration
             builder.Services.AddScoped(typeof(IUserServices<,>), typeof(UserServices<,>));
             builder.Services.AddScoped<IAuthServices, AuthServices>();
+            builder.Services.AddScoped(typeof(ICompanyServices<,>), typeof(CompanyServices<,>));
             #endregion
 
             #region Helpers Registeration
