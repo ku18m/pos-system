@@ -50,6 +50,17 @@ builder.AddInfrastructureRegistration();
 builder.AddServicesRegistration();
 
 
+// Allow CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CORSAllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
