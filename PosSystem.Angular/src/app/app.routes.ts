@@ -8,9 +8,12 @@ import { ClientsComponent } from './Components/Pages/clients/clients.component';
 import { InvoicesComponent } from './Components/Pages/invoices/invoices.component';
 import { ReportComponent } from './Components/Pages/report/report.component';
 import { StockComponent } from './Components/Pages/stock/stock.component';
+import { LoginComponent } from './Components/Pages/login/login.component';
 
 export const routes: Routes = [
-    {path:'',component:HomeComponent},
+    {path:'',component:LoginComponent},
+    {path:'login',component:LoginComponent},
+    {path:'home',component:HomeComponent},
     {path:'company',component:CompanyComponent},
     {path:'types',component:TypesComponent},
     {path:'units',component:UnitComponent},

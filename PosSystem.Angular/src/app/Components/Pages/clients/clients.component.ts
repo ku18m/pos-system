@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClientsWithAPIService } from '../../../services/clients-with-api.service';
-import { IClients } from '../../../Models/IClients';
+import { IClients } from './IClients';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-clients',
   standalone: true,
-  imports: [ReactiveFormsModule,FormsModule],
+  imports: [ReactiveFormsModule,FormsModule,NavbarComponent,SidebarComponent,FooterComponent],
   templateUrl: './clients.component.html',
   styleUrl: './clients.component.css'
 })
@@ -35,7 +38,7 @@ export class ClientsComponent implements OnInit {
 
   ngOnInit(): void {
     this.clientService.getAllClients().subscribe({next:(clients:IClients[])=>{  
-    this.clientsList = clients.map(client => client.name)}}); 
+    this.clientsList = clients.map(client => client.id)}}); 
     this.clientForm.get('number')?.disable();
     
 }

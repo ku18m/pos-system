@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { UnitsWithAPIService } from '../../../services/units-with-api.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IUnits } from '../../../Models/IUnits';
+import { IUnits } from './IUnits';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { FooterComponent } from '../footer/footer.component';
+
 
 @Component({
   selector: 'app-unit',
   standalone: true,
-  imports: [ReactiveFormsModule,FormsModule],
+  imports: [ReactiveFormsModule,FormsModule,NavbarComponent,SidebarComponent,FooterComponent],
   templateUrl: './unit.component.html',
   styleUrl: './unit.component.css'
 })
@@ -25,7 +29,8 @@ export class UnitComponent implements OnInit {
 
   ngOnInit(): void {
     this.unitService.getAllUnits().subscribe({next:(units:IUnits[])=>{  
-      this.unitList = units.map(unit => unit.name);  
+      this.unitList = units.map(unit => unit.id
+      );  
     },
     error:(error) => {  
       console.error('Error fetching companies:', error);  

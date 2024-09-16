@@ -1,3 +1,5 @@
+<app-navbar></app-navbar>
+<app-sidebar></app-sidebar>
 <!-- start section1 -->
 <div class="rounded bg-light company">
     <h2 class="mb-5">Sales Invoice</h2>
@@ -57,10 +59,6 @@
         <div class="text-danger ms-5">{{quantityZeroError}}</div>
         <!-- <div class="text-danger ms-5">{{outOFStockError}}</div> -->
         <div class="text-danger ms-5">{{quantityGraterError}}</div>
-        <div class="input">
-            <label class="quantity">Discount:</label>
-            <input type="text" class="form-control quantity-input" formControlName="discount" [(ngModel)]="discount" />
-        </div>
         <div class="input">
             <label class="total">Total:</label>
             <input type="text" class="form-control total-input" formControlName="total" [(ngModel)]="total"/>
@@ -183,5 +181,5 @@
 <!-- end section4 -->
 
 <div class="clear"></div>
-
+<app-footer></app-footer>
 

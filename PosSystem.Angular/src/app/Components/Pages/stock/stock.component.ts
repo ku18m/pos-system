@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ItemWithAPIService } from '../../../services/item-with-api.service';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-stock',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,NavbarComponent,SidebarComponent,FooterComponent],
   templateUrl: './stock.component.html',
   styleUrl: './stock.component.css'
 })

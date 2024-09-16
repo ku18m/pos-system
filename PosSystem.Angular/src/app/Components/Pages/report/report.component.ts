@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InvoicesWithAPIService } from '../../../services/invoices-with-api.service';
 import { ItemWithAPIService } from '../../../services/item-with-api.service';
-import { IInvoices } from '../../../Models/IInvoices';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-report',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,NavbarComponent,SidebarComponent,FooterComponent],
   templateUrl: './report.component.html',
   styleUrl: './report.component.css'
 })

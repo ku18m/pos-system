@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CompanyWithAPIService } from '../../../services/company-with-api.service';
-import { ICompany } from '../../../Models/ICompany';
+import { ICompany } from './ICompany';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-company',
   standalone: true,
-  imports: [ReactiveFormsModule,FormsModule],
+  imports: [ReactiveFormsModule,FormsModule,NavbarComponent,SidebarComponent,FooterComponent],
   templateUrl: './company.component.html',
   styleUrl: './company.component.css'
 })
@@ -28,7 +31,7 @@ export class CompanyComponent implements OnInit {
   ngOnInit() {  
     // Load existing companies on component initialization  
     this.companyService.getAllCompanies().subscribe({next:(companies:ICompany[])=>{  
-      this.companyList = companies.map(company => company.name);  
+      this.companyList = companies.map(company => company.id);  
     },
     error:(error) => {  
       console.error('Error fetching companies:', error);  

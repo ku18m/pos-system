@@ -1,4 +1,4 @@
-export interface IClients{
+export interface IClientsBack{
     id:string,
     name:string,
     phone:string,
