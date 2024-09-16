@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using PosSystem.Contracts.Client;
 using PosSystem.Core.Interfaces;
 using PosSystem.Services.Helpers;
 using System.Text;
@@ -39,6 +38,8 @@ namespace PosSystem.Services
             builder.Services.AddScoped<IAuthServices, AuthServices>();
             builder.Services.AddScoped(typeof(ICompanyServices<,>), typeof(CompanyServices<,>));
             builder.Services.AddScoped(typeof(IClientService<,>), typeof(ClientServices<,>));
+            builder.Services.AddScoped(typeof(IUnitServices<,>), typeof(UnitServices<,>));
+            builder.Services.AddScoped(typeof(ITypeServices<,>), typeof(TypeServices<,>));
 
 
             #endregion

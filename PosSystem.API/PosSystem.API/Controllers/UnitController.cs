@@ -1,28 +1,27 @@
-﻿using AutoMapper;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PosSystem.Contracts.Company;
-using PosSystem.Core.Entities;
-using PosSystem.Core.Interfaces;
+using PosSystem.Contracts.Unit;
 using PosSystem.Services;
 
 namespace PosSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CompanyController(CompanyServices<AddCompanyContract, ReturnCompanyContract> service ) : ControllerBase
+    public class UnitController(UnitServices<AddUnitContract, ReturnUnitContract> service) : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> AddCompany(AddCompanyContract company)
+        public async Task<IActionResult> AddUnit(AddUnitContract unit)
         {
-            if (company == null)
-                return BadRequest("Enter Company Name");
+            if (unit == null)
+                return BadRequest("Enter Unit Name");
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var createdCompany = await service.Add(company);
-                    return Ok(createdCompany);
+                    var createdUnit = await service.Add(unit);
+                    return Ok(createdUnit);
                 }
                 catch (Exception ex)
                 {
@@ -36,13 +35,12 @@ namespace PosSystem.API.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var companies = await service.GetAll();
-            if (companies == null || !companies.Any())
+            var units = await service.GetAll();
+            if (units == null || !units.Any())
                 return NotFound("No companies found");
 
-            return Ok(companies);
+            return Ok(units);
         }
-
         [HttpGet("GetById")]
         public async Task<IActionResult> GetById(string id)
         {
@@ -70,26 +68,24 @@ namespace PosSystem.API.Controllers
                 return BadRequest(new { Error = ex.Message });
             }
         }
-
         [HttpPut("{id}")]
-        public async Task<IActionResult> Edit(string id, [FromBody] AddCompanyContract company)
+        public async Task<IActionResult> Edit(string id, [FromBody] AddUnitContract unit)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                await service.Edit(id, company);
-                return Ok("Company updated successfully");
+                await service.Edit(id, unit);
+                return Ok("Unit updated successfully");
             }
             catch (Exception ex)
             {
                 return BadRequest(new { Error = ex.Message });
             }
         }
-
-        [HttpGet("GetCompanyByName")]
-        public async Task<IActionResult> GetCompanyByName( string name)
+        [HttpGet("GetUnitByName")]
+        public async Task<IActionResult> GetUnitByName(string name)
         {
             try
             {
@@ -99,23 +95,6 @@ namespace PosSystem.API.Controllers
             catch (Exception ex)
             {
                 return NotFound(new { Error = ex.Message });
-            }
-        }
-
-        [HttpGet("GetCompaniesByName")]
-        public async Task<IActionResult> GetCompaniesByName(string name)
-        {
-            try
-            {
-                var companies = await service.GetCompaniesByName(name);
-                if (companies == null || !companies.Any())
-                    return NotFound("No companies found with this name");
-
-                return Ok(companies);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Error = ex.Message });
             }
         }
     }
