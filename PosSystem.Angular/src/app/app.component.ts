@@ -12,12 +12,13 @@ import { ClientsComponent } from './Components/Pages/clients/clients.component';
 import { InvoicesComponent } from './Components/Pages/invoices/invoices.component';
 import { ReportComponent } from './Components/Pages/report/report.component';
 import { StockComponent } from './Components/Pages/stock/stock.component';
-import { LoginComponent } from './Components/Pages/login/login.component';
+
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,NavbarComponent,FooterComponent,SidebarComponent,HomeComponent,CompanyComponent,TypesComponent,UnitComponent,ItemsComponent,ClientsComponent,InvoicesComponent,ReportComponent,StockComponent,LoginComponent],
+  imports: [RouterOutlet,NavbarComponent,FooterComponent,SidebarComponent,HomeComponent,CompanyComponent,TypesComponent,UnitComponent,ItemsComponent,ClientsComponent,InvoicesComponent,ReportComponent,StockComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
