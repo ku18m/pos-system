@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PosSystem.Contracts.Type;
-using PosSystem.Contracts.Unit;
-using PosSystem.Services;
+using PosSystem.Application.Contracts.Type;
+using PosSystem.Application.Interfaces.IServices;
 
 namespace PosSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TypeController(TypeServices<AddTypeContract, ReturnTypeContract> service) : ControllerBase
+    public class TypeController(ITypeServices<AddTypeContract, ReturnTypeContract> service) : ControllerBase
     {
         [HttpPost]
         public async Task<IActionResult> AddType(AddTypeContract type)

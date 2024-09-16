@@ -1,5 +1,5 @@
-﻿using PosSystem.Core.Interfaces;
-using PosSystem.Core.Interfaces.Repositories;
+﻿using PosSystem.Application.Interfaces.IRepositories;
+using PosSystem.Application.Interfaces.IServices;
 using PosSystem.Infrastracture.Persistence.Data;
 using PosSystem.Infrastracture.Persistence.Repositories;
 

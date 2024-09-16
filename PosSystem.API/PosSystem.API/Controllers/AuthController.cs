@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PosSystem.Contracts.User;
-using PosSystem.Core.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
+using PosSystem.Application.Contracts.User;
+using PosSystem.Application.Interfaces.IServices;
 
 namespace PosSystem.API.Controllers
 {

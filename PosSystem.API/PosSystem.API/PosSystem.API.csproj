@@ -23,10 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PosSystem.Contracts\PosSystem.Contracts.csproj" />
+    <ProjectReference Include="..\PosSystem.Application\PosSystem.Application.csproj" />
     <ProjectReference Include="..\PosSystem.Core\PosSystem.Core.csproj" />
     <ProjectReference Include="..\PosSystem.Infrastracture\PosSystem.Infrastracture.csproj" />
-    <ProjectReference Include="..\PosSystem.Services\PosSystem.Services.csproj" />
   </ItemGroup>
 
 </Project>
