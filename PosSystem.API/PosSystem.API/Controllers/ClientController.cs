@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PosSystem.Contracts.Client;
-using PosSystem.Contracts.Company;
-using PosSystem.Core.Interfaces;
-using PosSystem.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+using PosSystem.Application.Contracts.Client;
+using PosSystem.Application.Interfaces.IServices;
 
 namespace PosSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientController(ClientServices<AddClientContract, ReturnClientContract> clientService) : ControllerBase
+    public class ClientController(IClientServices<AddClientContract, ReturnClientContract> clientService) : ControllerBase
     {
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] AddClientContract client)

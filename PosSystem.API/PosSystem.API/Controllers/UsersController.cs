@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PosSystem.Contracts.User;
-using PosSystem.Core.Interfaces;
+using PosSystem.Application.Contracts.User;
+using PosSystem.Application.Interfaces.IServices;
 
 namespace PosSystem.API.Controllers
 {

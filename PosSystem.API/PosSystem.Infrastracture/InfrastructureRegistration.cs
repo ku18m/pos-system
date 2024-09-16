@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PosSystem.Core.Interfaces;
-using PosSystem.Core.Interfaces.Repositories;
+using PosSystem.Application.Interfaces.IRepositories;
+using PosSystem.Application.Interfaces.IServices;
 using PosSystem.Infrastracture.Persistence;
 using PosSystem.Infrastracture.Persistence.Data;
 

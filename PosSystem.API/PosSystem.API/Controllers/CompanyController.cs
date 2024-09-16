@@ -1,15 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using PosSystem.Contracts.Company;
-using PosSystem.Core.Entities;
-using PosSystem.Core.Interfaces;
-using PosSystem.Services;
+using PosSystem.Application.Contracts.Company;
+using PosSystem.Application.Interfaces.IServices;
 
 namespace PosSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CompanyController(CompanyServices<AddCompanyContract, ReturnCompanyContract> service ) : ControllerBase
+    public class CompanyController(ICompanyServices<AddCompanyContract, ReturnCompanyContract> service ) : ControllerBase
     {
         [HttpPost]
         public async Task<IActionResult> AddCompany(AddCompanyContract company)

@@ -1,6 +1,6 @@
 using Microsoft.OpenApi.Models;
+using PosSystem.Application;
 using PosSystem.Infrastracture;
-using PosSystem.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,7 +47,7 @@ builder.Services.AddSwaggerGen(c =>
 
 
 builder.AddInfrastructureRegistration();
-builder.AddServicesRegistration();
+builder.AddApplicationRegistration();
 
 
 var app = builder.Build();
