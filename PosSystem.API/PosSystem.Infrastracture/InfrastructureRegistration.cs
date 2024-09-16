@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PosSystem.Core.Interfaces;
+using PosSystem.Core.Interfaces.Repositories;
 using PosSystem.Infrastracture.Persistence;
 using PosSystem.Infrastracture.Persistence.Data;
 
@@ -15,10 +16,12 @@ namespace PosSystem.Infrastracture
             builder.Services.AddDbContext<PosDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                options.UseLazyLoadingProxies();
             });
 
 
-            builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }
 }
