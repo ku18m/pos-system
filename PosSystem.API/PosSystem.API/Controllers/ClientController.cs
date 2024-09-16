@@ -45,7 +45,7 @@ namespace PosSystem.API.Controllers
                 return NotFound(ex.Message);
             }
         }
-        [HttpGet("{id}")]
+        [HttpGet("GetById")]
         public async Task<IActionResult> GetById(string id)
         {
             try
