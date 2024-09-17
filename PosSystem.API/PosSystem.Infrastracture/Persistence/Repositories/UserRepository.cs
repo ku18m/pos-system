@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PosSystem.Application.Interfaces.IRepositories;
 using PosSystem.Core.Entities;
-using PosSystem.Core.Interfaces.Repositories;
 using PosSystem.Infrastracture.Persistence.Data;
 
 namespace PosSystem.Infrastracture.Persistence.Repositories
@@ -9,9 +9,9 @@ namespace PosSystem.Infrastracture.Persistence.Repositories
     {
         public UserRepository(PosDbContext context) : base(context) { }
 
-        public Task<User> GetUserByEmailAsync(string email)
+        public Task<User> GetUserByUserNameAsync(string username)
         {
-            return _dbSet.Where(u => u.Email == email).FirstOrDefaultAsync()!;
+            return _dbSet.Where(u => u.UserName == username).FirstOrDefaultAsync()!;
         }
     }
 }

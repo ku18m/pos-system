@@ -29,14 +29,10 @@ namespace PosSystem.Core.Entities
 
         public decimal DueAmount { get; set; }
 
-        public string EmployeeId { get; set; }
-        public virtual Employee Employee { get; set; }
+        public string UserId { get; set; }
+        public virtual User User { get; set; }
 
         public DateTime Date { get; set; }
-
-        public TimeSpan StartTime { get; set; }
-
-        public TimeSpan EndTime { get; set; }
 
         public Invoice()
         {

@@ -1,5 +1,6 @@
-﻿using PosSystem.Core.Entities;
-using PosSystem.Core.Interfaces.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using PosSystem.Application.Interfaces.IRepositories;
+using PosSystem.Core.Entities;
 using PosSystem.Infrastracture.Persistence.Data;
 
 namespace PosSystem.Infrastracture.Persistence.Repositories
@@ -8,9 +9,19 @@ namespace PosSystem.Infrastracture.Persistence.Repositories
     {
         public CategoryRepository(PosDbContext context) : base(context) {}
 
-        public async Task<Category> GetCategoryByName(string name)
+        public async Task<IEnumerable<Category>> GetCategoriesByCompanyId(string companyId)
         {
-            return _dbSet.Where(c => c.Name == name).FirstOrDefault();
+            return await _dbSet.Where(c => c.CompanyId == companyId).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Category>> GetCategoriesByName(string name)
+        {
+            return await _dbSet.Where(c => c.Name.Contains(name)).ToListAsync();
+        }
+
+        public async Task<Category?> GetCategoryByName(string name)
+        {
+            return await _dbSet.FirstOrDefaultAsync(c => c.Name == name);
         }
     }
 }

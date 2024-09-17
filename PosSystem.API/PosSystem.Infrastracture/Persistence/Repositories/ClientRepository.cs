@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PosSystem.Application.Interfaces.IRepositories;
 using PosSystem.Core.Entities;
-using PosSystem.Core.Interfaces.Repositories;
 using PosSystem.Infrastracture.Persistence.Data;
-using System.Net;
 
 namespace PosSystem.Infrastracture.Persistence.Repositories
 {
@@ -12,12 +11,12 @@ namespace PosSystem.Infrastracture.Persistence.Repositories
         {
         }
 
-        public async Task<Client> GetClientByName(string name)
+        public async Task<Client?> GetClientByName(string name)
         {
-            return _dbSet.Where(c => c.FirstName == name).FirstOrDefault();
+            return _dbSet.Where(c => c.Name == name).FirstOrDefault();
         }
 
-        public async Task<Client> GetClientByPhone(string phone)
+        public async Task<Client?> GetClientByPhone(string phone)
         {
             return _dbSet.Where(c => c.Phone == phone).FirstOrDefault();
         }
@@ -29,12 +28,20 @@ namespace PosSystem.Infrastracture.Persistence.Repositories
 
         public async Task<IEnumerable<Client>> GetClientsByName(string name)
         {
-            return await _dbSet.Where(c => c.FullName.Contains(name)).ToListAsync();
+            return await _dbSet.Where(c => c.Name.Contains(name)).ToListAsync();
         }
 
         public async Task<IEnumerable<Client>> GetClientsByPhone(string phone)
         {
             return await _dbSet.Where(c => c.Phone.Contains(phone)).ToListAsync();
+        }
+
+        public async Task<int> GetNextClientNumber()
+        {
+            var sqlQuery = "SELECT current_value FROM sys.sequences WHERE name = ClientNumber";
+            var currentValue = await _context.Database.ExecuteSqlRawAsync(sqlQuery);
+
+            return currentValue + 1;
         }
     }
 }

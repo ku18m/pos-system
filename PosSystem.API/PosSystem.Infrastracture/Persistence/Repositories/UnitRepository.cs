@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PosSystem.Application.Interfaces.IRepositories;
 using PosSystem.Core.Entities;
-using PosSystem.Core.Interfaces.Repositories;
 using PosSystem.Infrastracture.Persistence.Data;
 
 namespace PosSystem.Infrastracture.Persistence.Repositories

@@ -1,10 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
 	<InvariantGlobalization>false</InvariantGlobalization>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,13 +22,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.7.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PosSystem.Contracts\PosSystem.Contracts.csproj" />
+    <ProjectReference Include="..\PosSystem.Application\PosSystem.Application.csproj" />
     <ProjectReference Include="..\PosSystem.Core\PosSystem.Core.csproj" />
     <ProjectReference Include="..\PosSystem.Infrastracture\PosSystem.Infrastracture.csproj" />
-    <ProjectReference Include="..\PosSystem.Services\PosSystem.Services.csproj" />
   </ItemGroup>
 
 </Project>

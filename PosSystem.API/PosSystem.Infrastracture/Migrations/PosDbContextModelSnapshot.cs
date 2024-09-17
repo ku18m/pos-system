@@ -18,6 +18,9 @@ namespace PosSystem.Infrastracture.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -56,20 +59,20 @@ namespace PosSystem.Infrastracture.Migrations
                     b.HasData(
                         new
                         {
-                            CategoryId = "17caa7db-220c-478c-b049-be42900c3c95",
-                            CompanyId = "84057f93-c9d6-46cf-b018-e3ffd5cda383",
+                            CategoryId = "d2c7bc49-90b4-47c8-9ed6-df23c974f284",
+                            CompanyId = "e174e132-9e37-407b-9e85-8747e90d7f53",
                             Name = "Electronics"
                         },
                         new
                         {
-                            CategoryId = "2ea866bf-d98c-4da1-a99d-f67c0df95681",
-                            CompanyId = "a7fd0fb6-871d-4452-9b5a-7a376d8fa3c7",
+                            CategoryId = "1792c9c9-285e-439a-bc94-97e3d6c64dca",
+                            CompanyId = "34111bfb-255b-4346-9d36-3beb91fa1c27",
                             Name = "Furniture"
                         },
                         new
                         {
-                            CategoryId = "634430fe-2f01-42d5-aaf1-eda47c9ba543",
-                            CompanyId = "c1c55d49-79bd-4ca4-9b6a-afc74e371bfd",
+                            CategoryId = "5ee2e819-a35e-4356-870a-40f3dab99a96",
+                            CompanyId = "6e5f48e3-408c-480a-9833-31475d0a481d",
                             Name = "Clothing"
                         });
                 });
@@ -83,14 +86,7 @@ namespace PosSystem.Infrastracture.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("EmployeeId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LastName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -110,11 +106,7 @@ namespace PosSystem.Infrastracture.Migrations
 
                     b.HasIndex("Address");
 
-                    b.HasIndex("EmployeeId");
-
-                    b.HasIndex("FirstName");
-
-                    b.HasIndex("LastName");
+                    b.HasIndex("Name");
 
                     b.HasIndex("Number")
                         .IsUnique();
@@ -126,28 +118,25 @@ namespace PosSystem.Infrastracture.Migrations
                     b.HasData(
                         new
                         {
-                            ClientId = "521cfe59-b916-4f4d-a2a3-0f9d023cbbb2",
+                            ClientId = "da314426-bcd2-492f-a2b5-39628a6f202d",
                             Address = "123 Main St",
-                            FirstName = "John",
-                            LastName = "Doe",
+                            Name = "John",
                             Number = 1,
                             Phone = "1234567890"
                         },
                         new
                         {
-                            ClientId = "3d1cae27-407d-4901-ac90-35e972ec813a",
+                            ClientId = "eb1a6e87-657b-4c21-905e-e345f4bd2fff",
                             Address = "456 Elm St",
-                            FirstName = "Jane",
-                            LastName = "Doe",
+                            Name = "Jane",
                             Number = 2,
                             Phone = "0987654321"
                         },
                         new
                         {
-                            ClientId = "c918b848-0e0d-4d94-990f-fd1a7bc9e445",
+                            ClientId = "7eb580b7-fd3a-49fb-a8e2-364d1e9d8482",
                             Address = "789 Oak St",
-                            FirstName = "Jim",
-                            LastName = "Beam",
+                            Name = "Jim",
                             Number = 3,
                             Phone = "1112223333"
                         });
@@ -175,72 +164,18 @@ namespace PosSystem.Infrastracture.Migrations
                     b.HasData(
                         new
                         {
-                            CompanyId = "84057f93-c9d6-46cf-b018-e3ffd5cda383",
+                            CompanyId = "e174e132-9e37-407b-9e85-8747e90d7f53",
                             Name = "Tech Corp"
                         },
                         new
                         {
-                            CompanyId = "a7fd0fb6-871d-4452-9b5a-7a376d8fa3c7",
+                            CompanyId = "34111bfb-255b-4346-9d36-3beb91fa1c27",
                             Name = "Biz Inc"
                         },
                         new
                         {
-                            CompanyId = "c1c55d49-79bd-4ca4-9b6a-afc74e371bfd",
+                            CompanyId = "6e5f48e3-408c-480a-9833-31475d0a481d",
                             Name = "Retail LLC"
-                        });
-                });
-
-            modelBuilder.Entity("PosSystem.Core.Entities.Employee", b =>
-                {
-                    b.Property<string>("EmployeeId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("EmployeeId");
-
-                    b.HasIndex("FirstName");
-
-                    b.HasIndex("LastName");
-
-                    b.ToTable("Employees");
-
-                    b.HasData(
-                        new
-                        {
-                            EmployeeId = "895fcfbd-0257-4a6b-ad18-8686e19b7fae",
-                            DateOfBirth = new DateTime(1985, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Alice",
-                            LastName = "Smith"
-                        },
-                        new
-                        {
-                            EmployeeId = "0a8f0244-4c3a-4336-9bd9-ec9180807951",
-                            DateOfBirth = new DateTime(1990, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Bob",
-                            LastName = "Johnson"
-                        },
-                        new
-                        {
-                            EmployeeId = "3ff029bf-a4a2-4510-91c6-5301fe4ec389",
-                            DateOfBirth = new DateTime(1995, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Charlie",
-                            LastName = "Brown"
                         });
                 });
 
@@ -269,13 +204,6 @@ namespace PosSystem.Infrastracture.Migrations
                         .HasColumnType("decimal(18, 2)")
                         .HasComputedColumnSql("[TotalAmount] - [TotalDiscount] - [PaidAmount]");
 
-                    b.Property<string>("EmployeeId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<TimeSpan>("EndTime")
-                        .HasColumnType("time");
-
                     b.Property<decimal>("FinalAmount")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("decimal(18, 2)")
@@ -284,14 +212,15 @@ namespace PosSystem.Infrastracture.Migrations
                     b.Property<decimal>("PaidAmount")
                         .HasColumnType("decimal(18, 2)");
 
-                    b.Property<TimeSpan>("StartTime")
-                        .HasColumnType("time");
-
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18, 2)");
 
                     b.Property<decimal>("TotalDiscount")
                         .HasColumnType("decimal(18, 2)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -304,58 +233,52 @@ namespace PosSystem.Infrastracture.Migrations
 
                     b.HasIndex("Date");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Invoices");
 
                     b.HasData(
                         new
                         {
-                            Id = "93f4fff1-2a07-482b-97ab-fcef3be93565",
-                            BillDate = new DateTime(2024, 9, 11, 0, 29, 19, 957, DateTimeKind.Local).AddTicks(9672),
+                            Id = "a6be97f4-31ff-4c6a-8740-902351064c4f",
+                            BillDate = new DateTime(2024, 9, 17, 6, 1, 19, 480, DateTimeKind.Local).AddTicks(2154),
                             BillNumber = 1L,
-                            ClientId = "521cfe59-b916-4f4d-a2a3-0f9d023cbbb2",
-                            Date = new DateTime(2024, 9, 11, 0, 29, 19, 957, DateTimeKind.Local).AddTicks(9718),
+                            ClientId = "da314426-bcd2-492f-a2b5-39628a6f202d",
+                            Date = new DateTime(2024, 9, 17, 6, 1, 19, 480, DateTimeKind.Local).AddTicks(2224),
                             DueAmount = 0m,
-                            EmployeeId = "895fcfbd-0257-4a6b-ad18-8686e19b7fae",
-                            EndTime = new TimeSpan(0, 17, 0, 0, 0),
                             FinalAmount = 1000m,
                             PaidAmount = 1000m,
-                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
                             TotalAmount = 1000m,
-                            TotalDiscount = 0m
+                            TotalDiscount = 0m,
+                            UserId = "baca97ee-f2da-4e63-be4b-54a004200d2a"
                         },
                         new
                         {
-                            Id = "75cd73c7-f86a-48a5-b6de-0991f80b8649",
-                            BillDate = new DateTime(2024, 9, 11, 0, 29, 19, 957, DateTimeKind.Local).AddTicks(9725),
+                            Id = "013e9469-9f4a-4b07-9d00-d21d44afc4b3",
+                            BillDate = new DateTime(2024, 9, 17, 6, 1, 19, 480, DateTimeKind.Local).AddTicks(2230),
                             BillNumber = 2L,
-                            ClientId = "3d1cae27-407d-4901-ac90-35e972ec813a",
-                            Date = new DateTime(2024, 9, 11, 0, 29, 19, 957, DateTimeKind.Local).AddTicks(9729),
+                            ClientId = "eb1a6e87-657b-4c21-905e-e345f4bd2fff",
+                            Date = new DateTime(2024, 9, 17, 6, 1, 19, 480, DateTimeKind.Local).AddTicks(2238),
                             DueAmount = 0m,
-                            EmployeeId = "0a8f0244-4c3a-4336-9bd9-ec9180807951",
-                            EndTime = new TimeSpan(0, 18, 0, 0, 0),
                             FinalAmount = 50m,
                             PaidAmount = 50m,
-                            StartTime = new TimeSpan(0, 10, 0, 0, 0),
                             TotalAmount = 50m,
-                            TotalDiscount = 0m
+                            TotalDiscount = 0m,
+                            UserId = "cc655fe4-ba86-48a2-aa62-05d454a24b4d"
                         },
                         new
                         {
-                            Id = "d59456cc-77ab-4d88-8069-841a86845736",
-                            BillDate = new DateTime(2024, 9, 11, 0, 29, 19, 957, DateTimeKind.Local).AddTicks(9733),
+                            Id = "5fb504a4-2ee5-4a4c-a01c-bfe997cadb16",
+                            BillDate = new DateTime(2024, 9, 17, 6, 1, 19, 480, DateTimeKind.Local).AddTicks(2245),
                             BillNumber = 3L,
-                            ClientId = "c918b848-0e0d-4d94-990f-fd1a7bc9e445",
-                            Date = new DateTime(2024, 9, 11, 0, 29, 19, 957, DateTimeKind.Local).AddTicks(9737),
+                            ClientId = "7eb580b7-fd3a-49fb-a8e2-364d1e9d8482",
+                            Date = new DateTime(2024, 9, 17, 6, 1, 19, 480, DateTimeKind.Local).AddTicks(2592),
                             DueAmount = 0m,
-                            EmployeeId = "3ff029bf-a4a2-4510-91c6-5301fe4ec389",
-                            EndTime = new TimeSpan(0, 19, 0, 0, 0),
                             FinalAmount = 20m,
                             PaidAmount = 20m,
-                            StartTime = new TimeSpan(0, 11, 0, 0, 0),
                             TotalAmount = 20m,
-                            TotalDiscount = 0m
+                            TotalDiscount = 0m,
+                            UserId = "bf3d2e89-6ba6-4794-b6b7-7f9ee3ca6cfe"
                         });
                 });
 
@@ -408,39 +331,39 @@ namespace PosSystem.Infrastracture.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "44cd904f-82e9-420f-987a-8897c39ebc57",
+                            Id = "6d72b613-e248-47e6-8273-761870949448",
                             Discount = 0m,
                             FinalAmount = 1000m,
-                            InvoiceId = "93f4fff1-2a07-482b-97ab-fcef3be93565",
+                            InvoiceId = "a6be97f4-31ff-4c6a-8740-902351064c4f",
                             Price = 1000m,
-                            ProductId = "79d247",
+                            ProductId = "cefb5e",
                             Quantity = 1m,
                             TotalAmount = 1000m,
-                            UnitId = "27cb9365-ade2-471e-be53-a13e67c6ed7e"
+                            UnitId = "9d5b276a-5c24-4672-9ed9-34cfe5cca9ea"
                         },
                         new
                         {
-                            Id = "400b611d-39de-45b8-b34d-20fd4c1a462a",
+                            Id = "93bbbf8a-c437-48b3-bfd1-a98274871455",
                             Discount = 0m,
                             FinalAmount = 50m,
-                            InvoiceId = "75cd73c7-f86a-48a5-b6de-0991f80b8649",
+                            InvoiceId = "013e9469-9f4a-4b07-9d00-d21d44afc4b3",
                             Price = 50m,
-                            ProductId = "af9d5b",
+                            ProductId = "e19ce4",
                             Quantity = 1m,
                             TotalAmount = 50m,
-                            UnitId = "017cf13d-ce50-429e-b337-e115ba1d92cf"
+                            UnitId = "a099b55b-0330-423a-b2e3-90bc388dfe99"
                         },
                         new
                         {
-                            Id = "b5f6786a-c57f-40bb-8c3f-fb0c0a2c65ab",
+                            Id = "dfab5abf-665c-43dc-82e8-2c8a44643fb6",
                             Discount = 0m,
                             FinalAmount = 20m,
-                            InvoiceId = "d59456cc-77ab-4d88-8069-841a86845736",
+                            InvoiceId = "5fb504a4-2ee5-4a4c-a01c-bfe997cadb16",
                             Price = 20m,
-                            ProductId = "8404e5",
+                            ProductId = "2c1167",
                             Quantity = 1m,
                             TotalAmount = 20m,
-                            UnitId = "d396c365-d491-4d48-adc4-e3a13caf8440"
+                            UnitId = "1b3ed427-373b-431e-829b-cb46a619f80e"
                         });
                 });
 
@@ -458,9 +381,6 @@ namespace PosSystem.Infrastracture.Migrations
 
                     b.Property<string>("CompanyId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("EmployeeId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
@@ -488,8 +408,6 @@ namespace PosSystem.Infrastracture.Migrations
                     b.HasIndex("CompanyId")
                         .IsUnique();
 
-                    b.HasIndex("EmployeeId");
-
                     b.HasIndex("Name")
                         .IsUnique();
 
@@ -501,36 +419,36 @@ namespace PosSystem.Infrastracture.Migrations
                     b.HasData(
                         new
                         {
-                            ProductId = "79d247",
+                            ProductId = "cefb5e",
                             BuyingPrice = 800m,
-                            CategoryId = "17caa7db-220c-478c-b049-be42900c3c95",
-                            CompanyId = "84057f93-c9d6-46cf-b018-e3ffd5cda383",
+                            CategoryId = "d2c7bc49-90b4-47c8-9ed6-df23c974f284",
+                            CompanyId = "e174e132-9e37-407b-9e85-8747e90d7f53",
                             Name = "Laptop",
                             Quantity = 10,
                             SellingPrice = 1000m,
-                            UnitId = "27cb9365-ade2-471e-be53-a13e67c6ed7e"
+                            UnitId = "9d5b276a-5c24-4672-9ed9-34cfe5cca9ea"
                         },
                         new
                         {
-                            ProductId = "af9d5b",
+                            ProductId = "e19ce4",
                             BuyingPrice = 30m,
-                            CategoryId = "2ea866bf-d98c-4da1-a99d-f67c0df95681",
-                            CompanyId = "a7fd0fb6-871d-4452-9b5a-7a376d8fa3c7",
+                            CategoryId = "1792c9c9-285e-439a-bc94-97e3d6c64dca",
+                            CompanyId = "34111bfb-255b-4346-9d36-3beb91fa1c27",
                             Name = "Chair",
                             Quantity = 100,
                             SellingPrice = 50m,
-                            UnitId = "017cf13d-ce50-429e-b337-e115ba1d92cf"
+                            UnitId = "a099b55b-0330-423a-b2e3-90bc388dfe99"
                         },
                         new
                         {
-                            ProductId = "8404e5",
+                            ProductId = "2c1167",
                             BuyingPrice = 10m,
-                            CategoryId = "634430fe-2f01-42d5-aaf1-eda47c9ba543",
-                            CompanyId = "c1c55d49-79bd-4ca4-9b6a-afc74e371bfd",
+                            CategoryId = "5ee2e819-a35e-4356-870a-40f3dab99a96",
+                            CompanyId = "6e5f48e3-408c-480a-9833-31475d0a481d",
                             Name = "T-Shirt",
                             Quantity = 200,
                             SellingPrice = 20m,
-                            UnitId = "d396c365-d491-4d48-adc4-e3a13caf8440"
+                            UnitId = "1b3ed427-373b-431e-829b-cb46a619f80e"
                         });
                 });
 
@@ -556,17 +474,17 @@ namespace PosSystem.Infrastracture.Migrations
                     b.HasData(
                         new
                         {
-                            UnitId = "27cb9365-ade2-471e-be53-a13e67c6ed7e",
+                            UnitId = "9d5b276a-5c24-4672-9ed9-34cfe5cca9ea",
                             Name = "Piece"
                         },
                         new
                         {
-                            UnitId = "017cf13d-ce50-429e-b337-e115ba1d92cf",
+                            UnitId = "a099b55b-0330-423a-b2e3-90bc388dfe99",
                             Name = "Box"
                         },
                         new
                         {
-                            UnitId = "d396c365-d491-4d48-adc4-e3a13caf8440",
+                            UnitId = "1b3ed427-373b-431e-829b-cb46a619f80e",
                             Name = "Pack"
                         });
                 });
@@ -576,41 +494,76 @@ namespace PosSystem.Infrastracture.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("time");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
+                    b.HasIndex("FirstName");
+
+                    b.HasIndex("LastName");
+
+                    b.HasIndex("UserName")
                         .IsUnique();
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "baca97ee-f2da-4e63-be4b-54a004200d2a",
+                            EndTime = new TimeSpan(0, 17, 0, 0, 0),
+                            FirstName = "John",
+                            LastName = "Doe",
+                            Password = "$2a$11$g3VBtLqHZA6NFfOn7BpQ8euXt0Bu/s0IMfE77MI3NtN1OFjWAxKJS",
+                            Role = 0,
+                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
+                            UserName = "admin1"
+                        },
+                        new
+                        {
+                            Id = "cc655fe4-ba86-48a2-aa62-05d454a24b4d",
+                            EndTime = new TimeSpan(0, 16, 0, 0, 0),
+                            FirstName = "Jane",
+                            LastName = "Smith",
+                            Password = "$2a$11$D7cX7XTrWyMydVBMZ3wvj.0j.ZYqJ/UKO8R1qTe6UkDcpUthPFugu",
+                            Role = 1,
+                            StartTime = new TimeSpan(0, 8, 0, 0, 0),
+                            UserName = "jane.smith"
+                        },
+                        new
+                        {
+                            Id = "bf3d2e89-6ba6-4794-b6b7-7f9ee3ca6cfe",
+                            EndTime = new TimeSpan(0, 18, 0, 0, 0),
+                            FirstName = "Alice",
+                            LastName = "Johnson",
+                            Password = "$2a$11$OsEooJZF2IEBBMFSnMdCVu9e.fakMT0UA365OyWKR.Gr9pdcEpCYK",
+                            Role = 1,
+                            StartTime = new TimeSpan(0, 10, 0, 0, 0),
+                            UserName = "alice.johnson"
+                        });
                 });
 
             modelBuilder.Entity("PosSystem.Core.Entities.Category", b =>
@@ -624,13 +577,6 @@ namespace PosSystem.Infrastracture.Migrations
                     b.Navigation("Company");
                 });
 
-            modelBuilder.Entity("PosSystem.Core.Entities.Client", b =>
-                {
-                    b.HasOne("PosSystem.Core.Entities.Employee", null)
-                        .WithMany("Clients")
-                        .HasForeignKey("EmployeeId");
-                });
-
             modelBuilder.Entity("PosSystem.Core.Entities.Invoice", b =>
                 {
                     b.HasOne("PosSystem.Core.Entities.Client", "Client")
@@ -639,15 +585,15 @@ namespace PosSystem.Infrastracture.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("PosSystem.Core.Entities.Employee", "Employee")
+                    b.HasOne("PosSystem.Core.Entities.User", "User")
                         .WithMany("Invoices")
-                        .HasForeignKey("EmployeeId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Client");
 
-                    b.Navigation("Employee");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PosSystem.Core.Entities.InvoiceItem", b =>
@@ -691,10 +637,6 @@ namespace PosSystem.Infrastracture.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PosSystem.Core.Entities.Employee", null)
-                        .WithMany("Products")
-                        .HasForeignKey("EmployeeId");
-
                     b.HasOne("PosSystem.Core.Entities.Unit", "Unit")
                         .WithMany("Products")
                         .HasForeignKey("UnitId")
@@ -725,15 +667,6 @@ namespace PosSystem.Infrastracture.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("PosSystem.Core.Entities.Employee", b =>
-                {
-                    b.Navigation("Clients");
-
-                    b.Navigation("Invoices");
-
-                    b.Navigation("Products");
-                });
-
             modelBuilder.Entity("PosSystem.Core.Entities.Invoice", b =>
                 {
                     b.Navigation("Items");
@@ -747,6 +680,11 @@ namespace PosSystem.Infrastracture.Migrations
             modelBuilder.Entity("PosSystem.Core.Entities.Unit", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("PosSystem.Core.Entities.User", b =>
+                {
+                    b.Navigation("Invoices");
                 });
 #pragma warning restore 612, 618
         }

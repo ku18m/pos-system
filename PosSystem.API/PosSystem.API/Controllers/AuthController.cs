@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PosSystem.Contracts.User;
-using PosSystem.Core.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
+using PosSystem.Application.Contracts.User;
+using PosSystem.Application.Interfaces.IServices;
 
 namespace PosSystem.API.Controllers
 {
@@ -9,12 +8,20 @@ namespace PosSystem.API.Controllers
     [ApiController]
     public class AuthController(IAuthServices authServices) : ControllerBase
     {
+        /// <summary>
+        /// Endpoint for user login.
+        /// </summary>
+        /// <param name="userFromRequest">The user login contract containing the username and password.</param>
+        /// <returns>An IActionResult representing the login response.</returns>
+        [Produces("application/json")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync([FromBody] UserLoginContract userFromRequest)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var token = await authServices.LoginUserAsync(userFromRequest.Email, userFromRequest.Password);
+            var token = await authServices.LoginUserAsync(userFromRequest.Username, userFromRequest.Password);
 
             if (token == null)
             {

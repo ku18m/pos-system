@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PosSystem.Core.Entities;
+using PosSystem.Core.Enums;
 
 namespace PosSystem.Infrastracture.Persistence.Data
 {
@@ -9,7 +10,6 @@ namespace PosSystem.Infrastracture.Persistence.Data
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<InvoiceItem> InvoiceItems { get; set; }
         public DbSet<Client> Clients { get; set; }
-        public DbSet<Employee> Employees { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Company> Companies { get; set; }
@@ -56,9 +56,9 @@ namespace PosSystem.Infrastracture.Persistence.Data
                     .HasForeignKey(i => i.ClientId)
                     .OnDelete(DeleteBehavior.NoAction);
 
-                entity.HasOne(i => i.Employee)
+                entity.HasOne(i => i.User)
                     .WithMany(e => e.Invoices)
-                    .HasForeignKey(i => i.EmployeeId)
+                    .HasForeignKey(i => i.UserId)
                     .OnDelete(DeleteBehavior.NoAction);
 
                 entity.Property(e => e.TotalAmount)
@@ -203,13 +203,13 @@ namespace PosSystem.Infrastracture.Persistence.Data
             });
 
             // Configure the Employee Entity
-            modelBuilder.Entity<Employee>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
-                entity.HasKey(e => e.EmployeeId);
+                entity.HasKey(e => e.Id);
 
                 entity.HasMany(e => e.Invoices)
-                    .WithOne(i => i.Employee)
-                    .HasForeignKey(i => i.EmployeeId)
+                    .WithOne(i => i.User)
+                    .HasForeignKey(i => i.UserId)
                     .OnDelete(DeleteBehavior.NoAction);
             });
             #endregion
@@ -227,7 +227,7 @@ namespace PosSystem.Infrastracture.Persistence.Data
                 .HasIndex(i => i.ClientId);
 
             modelBuilder.Entity<Invoice>()
-                .HasIndex(i => i.EmployeeId);
+                .HasIndex(i => i.UserId);
 
             modelBuilder.Entity<Invoice>()
                 .HasIndex(i => i.Date);
@@ -247,10 +247,8 @@ namespace PosSystem.Infrastracture.Persistence.Data
                 .IsUnique();
 
             modelBuilder.Entity<Client>()
-                .HasIndex(c => c.FirstName);
+                .HasIndex(c => c.Name);
 
-            modelBuilder.Entity<Client>()
-                .HasIndex(c => c.LastName);
 
             modelBuilder.Entity<Client>()
                 .HasIndex(c => c.Phone);
@@ -297,14 +295,14 @@ namespace PosSystem.Infrastracture.Persistence.Data
 
             // Set User Indexes
             modelBuilder.Entity<User>()
-                .HasIndex(u => u.Email)
+                .HasIndex(u => u.UserName)
                 .IsUnique();
 
             // Set Employee Indexes
-            modelBuilder.Entity<Employee>()
+            modelBuilder.Entity<User>()
                 .HasIndex(e => e.FirstName);
 
-            modelBuilder.Entity<Employee>()
+            modelBuilder.Entity<User>()
                 .HasIndex(e => e.LastName);
 
             #endregion
@@ -312,16 +310,43 @@ namespace PosSystem.Infrastracture.Persistence.Data
             #region Seed_Data
             var clients = new[]
             {
-            new Client { FirstName = "John", LastName = "Doe", Number = 1, Phone = "1234567890", Address = "123 Main St" },
-            new Client { FirstName = "Jane", LastName = "Doe", Number = 2, Phone = "0987654321", Address = "456 Elm St" },
-            new Client { FirstName = "Jim", LastName = "Beam", Number = 3, Phone = "1112223333", Address = "789 Oak St" }
+            new Client { Name = "John", Number = 1, Phone = "1234567890", Address = "123 Main St" },
+            new Client { Name = "Jane", Number = 2, Phone = "0987654321", Address = "456 Elm St" },
+            new Client { Name = "Jim", Number = 3, Phone = "1112223333", Address = "789 Oak St" }
             };
 
-            var employees = new[]
+            var users = new List<User>
             {
-            new Employee { FirstName = "Alice", LastName = "Smith", DateOfBirth = new DateTime(1985, 1, 1) },
-            new Employee { FirstName = "Bob", LastName = "Johnson", DateOfBirth = new DateTime(1990, 2, 2) },
-            new Employee { FirstName = "Charlie", LastName = "Brown", DateOfBirth = new DateTime(1995, 3, 3) }
+                new User
+                {
+                    FirstName = "John",
+                    LastName = "Doe",
+                    UserName = "admin1",
+                    Password = BCrypt.Net.BCrypt.HashPassword("password123"),
+                    Role = UserType.Admin,
+                    StartTime = new TimeSpan(9, 0, 0),
+                    EndTime = new TimeSpan(17, 0, 0)
+                },
+                new User
+                {
+                    FirstName = "Jane",
+                    LastName = "Smith",
+                    UserName = "jane.smith",
+                    Password = BCrypt.Net.BCrypt.HashPassword("password123"),
+                    Role = UserType.Employee,
+                    StartTime = new TimeSpan(8, 0, 0),
+                    EndTime = new TimeSpan(16, 0, 0)
+                },
+                new User
+                {
+                    FirstName = "Alice",
+                    LastName = "Johnson",
+                    UserName = "alice.johnson",
+                    Password = BCrypt.Net.BCrypt.HashPassword("password123"),
+                    Role = UserType.Employee,
+                    StartTime = new TimeSpan(10, 0, 0),
+                    EndTime = new TimeSpan(18, 0, 0)
+                }
             };
 
             var companies = new[]
@@ -354,9 +379,9 @@ namespace PosSystem.Infrastracture.Persistence.Data
 
             var invoices = new[]
             {
-            new Invoice { BillDate = DateTime.Now, BillNumber = 1, ClientId = clients[0].ClientId, EmployeeId = employees[0].EmployeeId, TotalAmount = 1000, TotalDiscount = 0, FinalAmount = 1000, PaidAmount = 1000, DueAmount = 0, Date = DateTime.Now, StartTime = TimeSpan.FromHours(9), EndTime = TimeSpan.FromHours(17) },
-            new Invoice { BillDate = DateTime.Now, BillNumber = 2, ClientId = clients[1].ClientId, EmployeeId = employees[1].EmployeeId, TotalAmount = 50, TotalDiscount = 0, FinalAmount = 50, PaidAmount = 50, DueAmount = 0, Date = DateTime.Now, StartTime = TimeSpan.FromHours(10), EndTime = TimeSpan.FromHours(18) },
-            new Invoice { BillDate = DateTime.Now, BillNumber = 3, ClientId = clients[2].ClientId, EmployeeId = employees[2].EmployeeId, TotalAmount = 20, TotalDiscount = 0, FinalAmount = 20, PaidAmount = 20, DueAmount = 0, Date = DateTime.Now, StartTime = TimeSpan.FromHours(11), EndTime = TimeSpan.FromHours(19) }
+            new Invoice {BillDate = DateTime.Now, BillNumber = 1, ClientId = clients[0].ClientId, UserId = users[0].Id, TotalAmount = 1000, TotalDiscount = 0, FinalAmount = 1000, PaidAmount = 1000, DueAmount = 0, Date = DateTime.Now},
+            new Invoice {BillDate = DateTime.Now, BillNumber = 2, ClientId = clients[1].ClientId, UserId = users[1].Id, TotalAmount = 50, TotalDiscount = 0, FinalAmount = 50, PaidAmount = 50, DueAmount = 0, Date = DateTime.Now},
+            new Invoice { BillDate = DateTime.Now, BillNumber = 3, ClientId = clients[2].ClientId, UserId = users[2].Id, TotalAmount = 20, TotalDiscount = 0, FinalAmount = 20, PaidAmount = 20, DueAmount = 0, Date = DateTime.Now }
             };
 
             var invoiceItems = new[]
@@ -367,7 +392,7 @@ namespace PosSystem.Infrastracture.Persistence.Data
             };
 
             modelBuilder.Entity<Client>().HasData(clients);
-            modelBuilder.Entity<Employee>().HasData(employees);
+            modelBuilder.Entity<User>().HasData(users);
             modelBuilder.Entity<Company>().HasData(companies);
             modelBuilder.Entity<Category>().HasData(categories);
             modelBuilder.Entity<Unit>().HasData(units);

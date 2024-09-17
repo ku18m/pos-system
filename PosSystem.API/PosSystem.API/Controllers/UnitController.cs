@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PosSystem.Contracts.Company;
-using PosSystem.Contracts.Unit;
-using PosSystem.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+using PosSystem.Application.Contracts.Unit;
+using PosSystem.Application.Interfaces.IServices;
 
 namespace PosSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UnitController(UnitServices<AddUnitContract, ReturnUnitContract> service) : ControllerBase
+    public class UnitController(IUnitServices<AddUnitContract, ReturnUnitContract> service) : ControllerBase
     {
         [HttpPost]
         public async Task<IActionResult> AddUnit(AddUnitContract unit)

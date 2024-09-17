@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PosSystem.Core.Interfaces.Repositories;
+using PosSystem.Application.Interfaces.IRepositories;
 using PosSystem.Infrastracture.Persistence.Data;
 
 namespace PosSystem.Infrastracture.Persistence
@@ -40,6 +40,20 @@ namespace PosSystem.Infrastracture.Persistence
         public async Task Update(Entity entity)
         {
             _dbSet.Update(entity);
+        }
+
+        public Task<List<Entity>> GetPage(int page, int pageSize)
+        {
+            return _dbSet.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+        }
+
+        public async Task<int> GetTotalPages(int pageSize)
+        {
+            int totalCount = await _dbSet.CountAsync();
+
+            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+            return totalPages;
         }
     }
 }
