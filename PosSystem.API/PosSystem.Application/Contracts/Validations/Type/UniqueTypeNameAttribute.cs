@@ -20,7 +20,7 @@ namespace PosSystem.Application.Contracts.Validations.Type
 
                 if (company != null)
                 {
-                    return new ValidationResult("This company name is already taken.");
+                    return new ValidationResult("This type name is already taken.");
                 }
             }
 

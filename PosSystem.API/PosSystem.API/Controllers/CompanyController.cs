@@ -61,7 +61,7 @@ namespace PosSystem.API.Controllers
         /// <param name="pageSize">The page size (default is 10).</param>
         /// <returns>The page of companies.</returns>
         [HttpGet]
-        public async Task<IActionResult> GetCompanyPage([FromQuery] int pageNumber, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetCompanyPage([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
             try
             {

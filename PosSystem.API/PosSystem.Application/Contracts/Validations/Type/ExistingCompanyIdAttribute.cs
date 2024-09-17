@@ -5,9 +5,9 @@ namespace PosSystem.Application.Contracts.Validations.Type
 {
     public class ExistingCompanyIdAttribute : ValidationAttribute
     {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            var companyId = (string)value;
+            var companyId = value as string;
 
             if (companyId == null)
             {

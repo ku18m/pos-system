@@ -38,7 +38,7 @@ namespace PosSystem.API.Controllers
         /// Get all clients.
         /// </summary>
         /// <returns>The list of clients.</returns>
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -58,8 +58,8 @@ namespace PosSystem.API.Controllers
         /// <param name="pageNumber">The page number.</param>
         /// <param name="pageSize">The page size.</param>
         /// <returns>The page of clients.</returns>
-        [HttpGet("GetClientPage")]
-        public async Task<IActionResult> GetClientPage([FromQuery] int pageNumber, [FromQuery] int pageSize = 10)
+        [HttpGet]
+        public async Task<IActionResult> GetClientPage([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
             try
             {

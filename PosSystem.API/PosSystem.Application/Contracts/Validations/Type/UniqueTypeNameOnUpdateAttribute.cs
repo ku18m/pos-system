@@ -14,7 +14,7 @@ namespace PosSystem.Application.Contracts.Validations.Type
 
                 if (companyRepo == null)
                 {
-                    throw new InvalidOperationException("IClientRepository service is not available.");
+                    throw new InvalidOperationException("ICategoryRepository service is not available.");
                 }
 
                 var contract = (TypeOperationsContract)validationContext.ObjectInstance;
@@ -23,7 +23,7 @@ namespace PosSystem.Application.Contracts.Validations.Type
 
                 if (company != null && company.CategoryId != contract.Id)
                 {
-                    return new ValidationResult("This company name is already taken.");
+                    return new ValidationResult("This type name is already taken.");
                 }
             }
 
