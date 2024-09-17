@@ -1,12 +1,18 @@
-﻿namespace PosSystem.Application.Interfaces.IServices
+﻿using PosSystem.Application.Contracts;
+using PosSystem.Application.Contracts.Type;
+
+namespace PosSystem.Application.Interfaces.IServices
 {
-    public interface ITypeServices<TTypeIn, TTypeOut> where TTypeIn : class where TTypeOut : class
+    public interface ITypeServices
     {
-        Task<TTypeOut> Add(TTypeIn unit);
-        Task<List<TTypeOut>> GetAll();
+        Task<TypeOutContract> Add(TypeCreationContract unit);
+        Task<List<TypeOutContract>> GetAll();
         Task Delete(string id);
-        Task Edit(string id, TTypeIn unit);
-        Task<TTypeOut> GetById(string id);
-        Task<TTypeOut> GetByName(string name);
+        Task Edit(string id, TypeOperationsContract unit);
+        Task<TypeOutContract> GetById(string id);
+        Task<IEnumerable<TypeOutContract>> GetByName(string name);
+        Task<IEnumerable<TypeOutContract>> GetByCompanyId(string companyId);
+        Task<PaginatedOutContract<TypeOutContract>> GetTypePage(int page, int pageSize);
+        Task<IEnumerable<TypeShortOutContract>> GetAllShorted();
     }
 }

@@ -35,5 +35,13 @@ namespace PosSystem.Infrastracture.Persistence.Repositories
         {
             return await _dbSet.Where(c => c.Phone.Contains(phone)).ToListAsync();
         }
+
+        public async Task<int> GetNextClientNumber()
+        {
+            var sqlQuery = "SELECT current_value FROM sys.sequences WHERE name = ClientNumber";
+            var currentValue = await _context.Database.ExecuteSqlRawAsync(sqlQuery);
+
+            return currentValue + 1;
+        }
     }
 }

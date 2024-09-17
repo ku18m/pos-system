@@ -6,11 +6,9 @@ using PosSystem.Core.Entities;
 
 namespace PosSystem.Application.Services
 {
-    public class TypeServices<TTypeIn, TTypeOut>(IUnitOfWork unitOfWork, IMapper mapper) : ITypeServices<AddTypeContract, ReturnTypeContract>
-         where TTypeIn : class
-         where TTypeOut : class
+    public class TypeServices(IUnitOfWork unitOfWork, IMapper mapper) : ITypeServices
     {
-        public async Task<ReturnTypeContract> Add(AddTypeContract type)
+        public async Task<TypeOutContract> Add(TypeCreationContract type)
         {
             if (type == null)
                 throw new Exception("Enter type Name");
@@ -29,13 +27,13 @@ namespace PosSystem.Application.Services
             await unitOfWork.UnitRepository.Insert(newType);
             await unitOfWork.Save();
 
-            return mapper.Map<ReturnTypeContract>(newType);
+            return mapper.Map<TypeOutContract>(newType);
         }
-        public async Task<List<ReturnTypeContract>> GetAll()
+        public async Task<List<TypeOutContract>> GetAll()
         {
             var types = await unitOfWork.CategoryRepository.GetAll();
 
-            var typestoReturn = types.Select(type => new ReturnTypeContract
+            var typestoReturn = types.Select(type => new TypeOutContract
             {
                 Id = type.CategoryId,
                 Name = type.Name,
@@ -65,22 +63,22 @@ namespace PosSystem.Application.Services
             await unitOfWork.CategoryRepository.Update(existingType);
             await unitOfWork.Save();
         }
-        public async Task<ReturnTypeContract> GetById(string id)
+        public async Task<TypeOutContract> GetById(string id)
         {
             var unit = await unitOfWork.CategoryRepository.GetById(id);
             if (unit == null)
                 throw new Exception("Type not found");
 
-            return mapper.Map<ReturnTypeContract>(unit);
+            return mapper.Map<TypeOutContract>(unit);
         }
 
-        public async Task<ReturnTypeContract> GetByName(string name)
+        public async Task<TypeOutContract> GetByName(string name)
         {
             var unit = await unitOfWork.CategoryRepository.GetCategoryByName(name);
             if (unit == null)
                 throw new Exception("Type not found");
 
-            return mapper.Map<ReturnTypeContract>(unit);
+            return mapper.Map<TypeOutContract>(unit);
         }
     }
 }

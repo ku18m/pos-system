@@ -14,6 +14,8 @@ namespace PosSystem.API.Controllers
         /// <param name="userFromRequest">The user login contract containing the username and password.</param>
         /// <returns>An IActionResult representing the login response.</returns>
         [Produces("application/json")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync([FromBody] UserLoginContract userFromRequest)
         {

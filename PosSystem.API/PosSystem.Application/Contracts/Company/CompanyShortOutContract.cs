@@ -1,9 +1,8 @@
 ﻿namespace PosSystem.Application.Contracts.Company
 {
-    public class ReturnCompanyContract
+    public class CompanyShortOutContract
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public string? Note { get; set; }
     }
 }

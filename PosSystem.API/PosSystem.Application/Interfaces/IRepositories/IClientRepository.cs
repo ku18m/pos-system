@@ -9,5 +9,6 @@ namespace PosSystem.Application.Interfaces.IRepositories
         Task<IEnumerable<Client>> GetClientsByAddress(string address);
         Task<IEnumerable<Client>> GetClientsByPhone(string phone);
         Task<IEnumerable<Client>> GetClientsByName(string name);
+        Task<int> GetNextClientNumber();
     }
 }

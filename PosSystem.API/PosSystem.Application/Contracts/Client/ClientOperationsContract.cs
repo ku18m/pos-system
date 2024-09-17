@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PosSystem.Application.Contracts.Validations.Client;
+using System.ComponentModel.DataAnnotations;
 
 namespace PosSystem.Application.Contracts.Client
 {
@@ -7,6 +8,7 @@ namespace PosSystem.Application.Contracts.Client
         public string Id { get; set; }
 
         [Required]
+        [UniqueClientNameOnUpdate]
         public string Name { get; set; }
 
         [Required]

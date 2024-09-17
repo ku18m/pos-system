@@ -37,8 +37,8 @@ namespace PosSystem.Application
             #region Services Registeration
             builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<IAuthServices, AuthServices>();
-            builder.Services.AddScoped(typeof(ICompanyServices<,>), typeof(CompanyServices<,>));
-            builder.Services.AddScoped(typeof(IClientServices<,>), typeof(ClientServices<,>));
+            builder.Services.AddScoped<IClientServices, ClientServices>();
+            builder.Services.AddScoped<ICompanyServices, CompanyServices>();
             builder.Services.AddScoped(typeof(IUnitServices<,>), typeof(UnitServices<,>));
             builder.Services.AddScoped(typeof(ITypeServices<,>), typeof(TypeServices<,>));
 

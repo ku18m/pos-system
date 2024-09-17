@@ -1,7 +1,7 @@
 ﻿
 namespace PosSystem.Application.Contracts.Type
 {
-    public class ReturnTypeContract
+    public class TypeOutContract
     {
         public string Id { get; set; }
         public string Name { get; set; }
