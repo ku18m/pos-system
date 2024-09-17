@@ -6,7 +6,7 @@ using PosSystem.Core.Entities;
 
 namespace PosSystem.Application.Services
 {
-    public class ClientServices<TClientIn, TClientOut>(IUnitOfWork unitOfWork, IMapper mapper) : IClientServices<AddClientContract, ReturnClientContract>
+    public class ClientServices(IUnitOfWork unitOfWork, IMapper mapper) : IClientServices
     {
         public async Task<ReturnClientContract> Add(AddClientContract client)
         {

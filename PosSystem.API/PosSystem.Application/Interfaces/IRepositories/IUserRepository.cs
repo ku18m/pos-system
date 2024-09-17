@@ -4,6 +4,6 @@ namespace PosSystem.Application.Interfaces.IRepositories
 {
     public interface IUserRepository : IRepository<User>
     {
-        Task<User> GetUserByEmailAsync(string email);
+        Task<User> GetUserByUserNameAsync(string username);
     }
 }

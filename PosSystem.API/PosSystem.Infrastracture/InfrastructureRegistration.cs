@@ -6,6 +6,7 @@ using PosSystem.Application.Interfaces.IRepositories;
 using PosSystem.Application.Interfaces.IServices;
 using PosSystem.Infrastracture.Persistence;
 using PosSystem.Infrastracture.Persistence.Data;
+using PosSystem.Infrastracture.Persistence.Repositories;
 
 namespace PosSystem.Infrastracture
 {
@@ -21,6 +22,10 @@ namespace PosSystem.Infrastracture
 
 
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+            builder.Services.AddTransient<IUserRepository, UserRepository>();
+            builder.Services.AddTransient<IClientRepository, ClientRepository>();
+
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }

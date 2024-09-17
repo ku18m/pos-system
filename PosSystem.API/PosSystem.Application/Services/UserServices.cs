@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using PosSystem.Application.Contracts.User;
 using PosSystem.Application.Interfaces.IServices;
 using PosSystem.Core.Entities;
 
 namespace PosSystem.Application.Services
 {
-    public class UserServices<TUserIn, TUserOut>(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContext) : IUserServices<UserOperationsContract, UserOutContract>
+    public class UserServices(IUnitOfWork unitOfWork, IMapper mapper) : IUserServices
     {
-        public async Task<UserOutContract> CreateUserAsync(UserOperationsContract userFromRequest)
+        public async Task<UserOutContract?> CreateUserAsync(UserCreationContract userFromRequest)
         {
             userFromRequest.Password = BCrypt.Net.BCrypt.HashPassword(userFromRequest.Password);
 
@@ -16,12 +15,11 @@ namespace PosSystem.Application.Services
 
             await unitOfWork.UserRepository.Insert(userToInsert);
 
-            int result = 0;
             try
             {
                 await unitOfWork.Save();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -31,44 +29,118 @@ namespace PosSystem.Application.Services
             return userToReturn;
         }
 
-        public Task<UserOutContract> GetUserAsync()
+        public async Task<int> DeleteUserByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            int result;
+
+            await unitOfWork.UserRepository.Delete(id);
+
+            try
+            {
+                result = await unitOfWork.Save();
+            }
+            catch (Exception)
+            {
+                return 500;
+            }
+
+            if (result == 0)
+            {
+                return 404;
+            }
+
+            return 200;
         }
 
-        public Task<UserOutContract> UpdateUserAsync(string userId, UserOperationsContract userToUpdate)
+        public async Task<IEnumerable<UserOutContract>> GetAllUsersAsync()
         {
-            throw new NotImplementedException();
+            var users = await unitOfWork.UserRepository.GetAll();
+
+            var usersToReturn = mapper.Map<IEnumerable<UserOutContract>>(users);
+
+            return usersToReturn;
         }
 
-        public Task<UserOutContract> DeleteUserByIdAsync(string id)
+        public async Task<UserOutContract?> GetUserByIdAsync(string Id)
         {
-            throw new NotImplementedException();
+            var user = await unitOfWork.UserRepository.GetById(Id);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            var userToReturn = mapper.Map<UserOutContract>(user);
+
+            return userToReturn;
         }
 
-        public Task<UserOutContract> GetUserByIdAsync(string Id)
+        public async Task<UserOutContract?> GetUserByUsernameAsync(string username)
         {
-            throw new NotImplementedException();
+            var user = await unitOfWork.UserRepository.GetUserByUserNameAsync(username);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            var userToReturn = mapper.Map<UserOutContract>(user);
+
+            return userToReturn;
         }
 
-        public Task<IEnumerable<UserOutContract>> GetAllUsersAsync()
+        public async Task<UserOutContract?> UpdateUserAsync(string userId, UserOperationsContract userToUpdate)
         {
-            throw new NotImplementedException();
+            var user = await unitOfWork.UserRepository.GetById(userId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            userToUpdate.Password = BCrypt.Net.BCrypt.HashPassword(userToUpdate.Password);
+
+            var userToUpdateEntity = mapper.Map(userToUpdate, user);
+
+            await unitOfWork.UserRepository.Update(userToUpdateEntity);
+
+            try
+            {
+                await unitOfWork.Save();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            var userToReturn = mapper.Map<UserOutContract>(userToUpdateEntity);
+
+            return userToReturn;
         }
 
-        public Task<UserOutContract> GetUserByEmailAsync(string email)
+        public async Task<bool> UpdateUserPassword(string userId, string newPassword)
         {
-            throw new NotImplementedException();
-        }
+            var user = await unitOfWork.UserRepository.GetById(userId);
 
-        public Task<bool> UpdateUserPassword(string userId, string newPassword)
-        {
-            throw new NotImplementedException();
-        }
+            if (user == null)
+            {
+                return false;
+            }
 
-        public Task<bool> UpdateCurrentUserPassword(string oldPassword, string newPassword)
-        {
-            throw new NotImplementedException();
+            user.Password = BCrypt.Net.BCrypt.HashPassword(newPassword);
+
+            await unitOfWork.UserRepository.Update(user);
+
+            try
+            {
+                await unitOfWork.Save();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return true;
         }
     }
 }

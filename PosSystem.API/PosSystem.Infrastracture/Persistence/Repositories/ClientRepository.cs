@@ -11,12 +11,12 @@ namespace PosSystem.Infrastracture.Persistence.Repositories
         {
         }
 
-        public async Task<Client> GetClientByName(string name)
+        public async Task<Client?> GetClientByName(string name)
         {
-            return _dbSet.Where(c => c.FirstName == name).FirstOrDefault();
+            return _dbSet.Where(c => c.Name == name).FirstOrDefault();
         }
 
-        public async Task<Client> GetClientByPhone(string phone)
+        public async Task<Client?> GetClientByPhone(string phone)
         {
             return _dbSet.Where(c => c.Phone == phone).FirstOrDefault();
         }
@@ -28,7 +28,7 @@ namespace PosSystem.Infrastracture.Persistence.Repositories
 
         public async Task<IEnumerable<Client>> GetClientsByName(string name)
         {
-            return await _dbSet.Where(c => c.FullName.Contains(name)).ToListAsync();
+            return await _dbSet.Where(c => c.Name.Contains(name)).ToListAsync();
         }
 
         public async Task<IEnumerable<Client>> GetClientsByPhone(string phone)
