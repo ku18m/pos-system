@@ -1,5 +1,5 @@
-﻿using PosSystem.Core.Interfaces;
-using PosSystem.Core.Interfaces.Repositories;
+﻿using PosSystem.Application.Interfaces.IRepositories;
+using PosSystem.Application.Interfaces.IServices;
 using PosSystem.Infrastracture.Persistence.Data;
 using PosSystem.Infrastracture.Persistence.Repositories;
 
@@ -13,8 +13,6 @@ namespace PosSystem.Infrastracture.Persistence
         IClientRepository? _clientRepository;
 
         ICompanyRepository? _companyRepository;
-
-        IEmployeeRepository? _employeeRepository;
 
         IInvoiceRepository? _invoiceRepository;
 
@@ -55,16 +53,6 @@ namespace PosSystem.Infrastracture.Persistence
                 _companyRepository ??= new CompanyRepository(context);
 
                 return _companyRepository;
-            }
-        }
-
-        public IEmployeeRepository EmployeeRepository
-        {
-            get
-            {
-                _employeeRepository ??= new EmployeeRepository(context);
-
-                return _employeeRepository;
             }
         }
 

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace PosSystem.Core.Entities
@@ -9,11 +8,7 @@ namespace PosSystem.Core.Entities
         [Key]
         public string ClientId { get; set; }
 
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-
-        public string FullName => $"{FirstName} {LastName}";
+        public string Name { get; set; }
 
         public int Number { get; set; }
 

@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PosSystem.Application\PosSystem.Application.csproj" />
     <ProjectReference Include="..\PosSystem.Core\PosSystem.Core.csproj" />
   </ItemGroup>
 

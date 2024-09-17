@@ -9,9 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PosSystem.Infrastracture", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PosSystem.Core", "PosSystem.Core\PosSystem.Core.csproj", "{7F72FFD9-776E-4BF5-AEE2-61B1C3325482}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PosSystem.Services", "PosSystem.Services\PosSystem.Services.csproj", "{00E6BA52-BC91-4D96-89AB-84C2B669FBB2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PosSystem.Contracts", "PosSystem.Contracts\PosSystem.Contracts.csproj", "{72583EC0-8B0A-4973-908B-5A5AADCAE285}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PosSystem.Application", "PosSystem.Application\PosSystem.Application.csproj", "{53B37623-7165-4C67-93C2-012B1A9568E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,14 +29,10 @@ Global
 		{7F72FFD9-776E-4BF5-AEE2-61B1C3325482}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F72FFD9-776E-4BF5-AEE2-61B1C3325482}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F72FFD9-776E-4BF5-AEE2-61B1C3325482}.Release|Any CPU.Build.0 = Release|Any CPU
-		{00E6BA52-BC91-4D96-89AB-84C2B669FBB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{00E6BA52-BC91-4D96-89AB-84C2B669FBB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{00E6BA52-BC91-4D96-89AB-84C2B669FBB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{00E6BA52-BC91-4D96-89AB-84C2B669FBB2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72583EC0-8B0A-4973-908B-5A5AADCAE285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72583EC0-8B0A-4973-908B-5A5AADCAE285}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72583EC0-8B0A-4973-908B-5A5AADCAE285}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72583EC0-8B0A-4973-908B-5A5AADCAE285}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53B37623-7165-4C67-93C2-012B1A9568E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53B37623-7165-4C67-93C2-012B1A9568E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53B37623-7165-4C67-93C2-012B1A9568E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53B37623-7165-4C67-93C2-012B1A9568E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

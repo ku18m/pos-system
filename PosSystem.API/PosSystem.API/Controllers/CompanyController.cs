@@ -1,18 +1,25 @@
-﻿using AutoMapper;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PosSystem.Contracts.Company;
-using PosSystem.Core.Entities;
-using PosSystem.Core.Interfaces;
-using PosSystem.Services;
+using PosSystem.Application.Contracts.Company;
+using PosSystem.Application.Interfaces.IServices;
 
 namespace PosSystem.API.Controllers
 {
+    /// <summary>
+    /// Represents the controller for managing companies.
+    /// </summary>
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class CompanyController(CompanyServices<AddCompanyContract, ReturnCompanyContract> service ) : ControllerBase
+    public class CompanyController(ICompanyServices service) : ControllerBase
     {
+        /// <summary>
+        /// Adds a new company.
+        /// </summary>
+        /// <param name="company">The company creation contract.</param>
+        /// <returns>The created company.</returns>
         [HttpPost]
-        public async Task<IActionResult> AddCompany(AddCompanyContract company)
+        public async Task<IActionResult> AddCompany([FromBody] CompanyCreationContract company)
         {
             if (company == null)
                 return BadRequest("Enter Company Name");
@@ -33,6 +40,10 @@ namespace PosSystem.API.Controllers
             return BadRequest(ModelState);
         }
 
+        /// <summary>
+        /// Gets all companies.
+        /// </summary>
+        /// <returns>The list of all companies.</returns>
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
@@ -43,6 +54,31 @@ namespace PosSystem.API.Controllers
             return Ok(companies);
         }
 
+        /// <summary>
+        /// Gets a page of companies.
+        /// </summary>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="pageSize">The page size (default is 10).</param>
+        /// <returns>The page of companies.</returns>
+        [HttpGet]
+        public async Task<IActionResult> GetCompanyPage([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        {
+            try
+            {
+                var companies = await service.GetCompanyPage(pageNumber, pageSize);
+                return Ok(companies);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { Error = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Gets a company by its ID.
+        /// </summary>
+        /// <param name="id">The company ID.</param>
+        /// <returns>The company with the specified ID.</returns>
         [HttpGet("GetById")]
         public async Task<IActionResult> GetById(string id)
         {
@@ -57,6 +93,11 @@ namespace PosSystem.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes a company by its ID.
+        /// </summary>
+        /// <param name="id">The company ID.</param>
+        /// <returns>No content.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
@@ -71,8 +112,14 @@ namespace PosSystem.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Edits a company by its ID.
+        /// </summary>
+        /// <param name="id">The company ID.</param>
+        /// <param name="company">The company operations contract.</param>
+        /// <returns>A message indicating the success of the operation.</returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Edit(string id, [FromBody] AddCompanyContract company)
+        public async Task<IActionResult> Edit(string id, [FromBody] CompanyOperationsContract company)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -88,8 +135,13 @@ namespace PosSystem.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets a company by its name.
+        /// </summary>
+        /// <param name="name">The company name.</param>
+        /// <returns>The company with the specified name.</returns>
         [HttpGet("GetCompanyByName")]
-        public async Task<IActionResult> GetCompanyByName( string name)
+        public async Task<IActionResult> GetCompanyByName(string name)
         {
             try
             {
@@ -102,6 +154,11 @@ namespace PosSystem.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets companies by name.
+        /// </summary>
+        /// <param name="name">The company name.</param>
+        /// <returns>The list of companies with the specified name.</returns>
         [HttpGet("GetCompaniesByName")]
         public async Task<IActionResult> GetCompaniesByName(string name)
         {
@@ -116,6 +173,24 @@ namespace PosSystem.API.Controllers
             catch (Exception ex)
             {
                 return BadRequest(new { Error = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Gets all companies sorted.
+        /// </summary>
+        /// <returns>The list of all companies sorted.</returns>
+        [HttpGet("GetAllShorted")]
+        public async Task<IActionResult> GetAllShorted()
+        {
+            try
+            {
+                var companies = await service.GetAllShorted();
+                return Ok(companies);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { Error = ex.Message });
             }
         }
     }
