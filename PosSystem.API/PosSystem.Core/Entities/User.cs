@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PosSystem.Core.Enums;
 
 namespace PosSystem.Core.Entities
 {
@@ -16,17 +12,17 @@ namespace PosSystem.Core.Entities
 
         public string FullName => $"{FirstName} {LastName}";
 
-        public string Email { get; set; }
+        public string UserName { get; set; }
 
         public string Password { get; set; }
 
-        public string Role { get; set; }
+        public UserType Role { get; set; } = UserType.Employee;
 
-        public bool IsActive { get; set; } = true;
+        public TimeSpan StartTime { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public TimeSpan EndTime { get; set; }
 
-        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        public virtual ICollection<Invoice> Invoices { get; set; }
 
         public User()
         {
