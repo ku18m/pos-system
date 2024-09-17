@@ -1,6 +1,8 @@
-export interface IItems{
+export interface IItemsBack{
     id:string,
+    companyId:string,
     companyName:string,
+    typeId:string,
     typeName:string,
     name:string,
     sellingPrice:number,

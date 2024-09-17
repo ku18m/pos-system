@@ -3,12 +3,15 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { CompanyWithAPIService } from '../../../services/company-with-api.service';
 import { TypesWithAPIService } from '../../../services/types-with-api.service';
 import { ItemWithAPIService } from '../../../services/item-with-api.service';
-import { IItems } from '../../../Models/IItems';
+import { IItems } from './IItems';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-items',
   standalone: true,
-  imports: [ReactiveFormsModule,FormsModule],
+  imports: [ReactiveFormsModule,FormsModule,NavbarComponent,SidebarComponent,FooterComponent],
   templateUrl: './items.component.html',
   styleUrl: './items.component.css'
 })
@@ -37,7 +40,7 @@ export class ItemsComponent implements OnInit {
   ngOnInit(): void {
     this.companyService.getAllCompanies().subscribe({next:(response)=> this.companyList=response});
     this.itemService.getAllItems().subscribe({next:(items:IItems[])=>{  
-      this.ItemList = items.map(item => item.name);  
+      this.ItemList = items.map(item => item.id);  
     },
     error:(error) => {  
       console.error('Error fetching items:', error);  

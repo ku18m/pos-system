@@ -2,14 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClientsWithAPIService } from '../../../services/clients-with-api.service';
 import { InvoicesWithAPIService } from '../../../services/invoices-with-api.service';
-import { IInvoices } from '../../../Models/IInvoices';
 import { ItemWithAPIService } from '../../../services/item-with-api.service';
 import { UnitsWithAPIService } from '../../../services/units-with-api.service';
+import { IInvoices } from './IInvoices';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-invoices',
   standalone: true,
-  imports: [ReactiveFormsModule,FormsModule],
+  imports: [ReactiveFormsModule,FormsModule,NavbarComponent,SidebarComponent,FooterComponent],
   templateUrl: './invoices.component.html',
   styleUrl: './invoices.component.css'
 })
@@ -115,7 +118,7 @@ export class InvoicesComponent implements OnInit {
     this.clientService.getAllClients().subscribe({next:(response)=> this.clientList=response});
     this.itemService.getAllItems().subscribe({next:(response)=> this.itemList=response});
     this.invoiceService.getAllBills().subscribe({next:(bills:IInvoices[])=>{  
-    this.billList = bills.map(bill => bill.billsDate)}});
+    this.billList = bills.map(bill => bill.id)}});
     this.billsForm.get('billsNumber')?.disable();
     this.billsForm.get('total')?.disable();
     // ---------------------------------  END SECTION 1&2 --------------------------------------------
@@ -129,7 +132,7 @@ export class InvoicesComponent implements OnInit {
     // ---------------------------------  START SECTION 4 (oNiNIT)  --------------------------------------------
     this.invoiceService.getAllEmployees().subscribe({next:(response)=> this.employeeList=response});
     this.invoiceService.getAllBillEmployees().subscribe({next:(bills:IInvoices[])=>{  
-      this.employeeBillList = bills.map(bill => bill.date)}});
+      this.employeeBillList = bills.map(bill => bill.employeeName)}});
 
     // ---------------------------------  END SECTION 4 --------------------------------------------
 

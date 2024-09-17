@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CompanyWithAPIService } from '../../../services/company-with-api.service';
-import { ITypes } from '../../../Models/ITypes';
 import { TypesWithAPIService } from '../../../services/types-with-api.service';
+import { ITypes } from './ITypes';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-types',
   standalone: true,
-  imports: [ReactiveFormsModule,FormsModule],
+  imports: [ReactiveFormsModule,FormsModule,NavbarComponent,SidebarComponent,FooterComponent],
   templateUrl: './types.component.html',
   styleUrl: './types.component.css'
 })
@@ -28,7 +31,7 @@ export class TypesComponent implements OnInit {
   ngOnInit(): void {
     this.companyService.getAllCompanies().subscribe({next:(response)=> this.companyList=response});
     this.typeService.getAllTypes().subscribe({next:(types:ITypes[])=>{  
-      this.TypeList = types.map(type => type.name)}});
+      this.TypeList = types.map(type => type.id)}});
   }
 
 

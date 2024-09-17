@@ -9,6 +9,7 @@ import { InvoicesComponent } from './Components/Pages/invoices/invoices.componen
 import { ReportComponent } from './Components/Pages/report/report.component';
 import { StockComponent } from './Components/Pages/stock/stock.component';
 
+
 export const routes: Routes = [
     {path:'',component:HomeComponent},
     {path:'company',component:CompanyComponent},
