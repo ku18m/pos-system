@@ -2,6 +2,7 @@
 using PosSystem.Application.Interfaces.IRepositories;
 using PosSystem.Core.Entities;
 using PosSystem.Infrastracture.Persistence.Data;
+using PosSystem.Infrastracture.Persistence.Helpers;
 
 namespace PosSystem.Infrastracture.Persistence.Repositories
 {
@@ -24,5 +25,6 @@ namespace PosSystem.Infrastracture.Persistence.Repositories
         {
             return await _dbSet.Where(i => i.ProductId == productId).ToListAsync();
         }
+    
     }
 }

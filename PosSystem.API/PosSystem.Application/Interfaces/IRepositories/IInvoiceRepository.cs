@@ -9,5 +9,7 @@ namespace PosSystem.Application.Interfaces.IRepositories
         Task<IEnumerable<Invoice>> GetInvoicesByDateRange(DateTime start, DateTime end);
         Task<IEnumerable<Invoice>> GetInvoicesByTotalRange(decimal start, decimal end);
         Task<IEnumerable<Invoice>> GetAllDueInvoices();
+        Task<int> GetNextInvoiceNumber();
+
     }
 }
