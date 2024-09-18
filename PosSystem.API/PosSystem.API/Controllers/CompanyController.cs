@@ -177,7 +177,7 @@ namespace PosSystem.API.Controllers
         }
 
         /// <summary>
-        /// Gets all companies sorted.
+        /// Gets all companies in a short form.
         /// </summary>
         /// <returns>The list of all companies sorted.</returns>
         [HttpGet("GetAllShorted")]

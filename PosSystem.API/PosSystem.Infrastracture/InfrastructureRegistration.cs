@@ -27,6 +27,8 @@ namespace PosSystem.Infrastracture
             builder.Services.AddTransient<IClientRepository, ClientRepository>();
             builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
             builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddTransient<IUnitRepository, UnitRepository>();
+            builder.Services.AddTransient<IProductRepository, ProductRepository>();
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
         }

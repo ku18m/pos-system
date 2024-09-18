@@ -40,7 +40,8 @@ namespace PosSystem.Application
             builder.Services.AddScoped<IClientServices, ClientServices>();
             builder.Services.AddScoped<ICompanyServices, CompanyServices>();
             builder.Services.AddScoped<ITypeServices, TypeServices>();
-            builder.Services.AddScoped(typeof(IUnitServices<,>), typeof(UnitServices<,>));
+            builder.Services.AddScoped<IUnitServices, UnitServices>();
+            builder.Services.AddScoped<IProductServices, ProductServices>();
 
 
             #endregion

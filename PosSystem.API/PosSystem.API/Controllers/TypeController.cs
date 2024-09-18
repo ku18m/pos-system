@@ -174,9 +174,9 @@ namespace PosSystem.API.Controllers
         }
 
         /// <summary>
-        /// Gets all types sorted.
+        /// Gets all types in a short form.
         /// </summary>
-        /// <returns>The list of types sorted.</returns>
+        /// <returns>The list of types in a short form.</returns>
         [HttpGet("GetTypeShorted")]
         public async Task<IActionResult> GetTypeShorted()
         {
