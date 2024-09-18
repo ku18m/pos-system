@@ -41,5 +41,19 @@ namespace PosSystem.Infrastracture.Persistence
         {
             _dbSet.Update(entity);
         }
+
+        public Task<List<Entity>> GetPage(int page, int pageSize)
+        {
+            return _dbSet.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+        }
+
+        public async Task<int> GetTotalPages(int pageSize)
+        {
+            int totalCount = await _dbSet.CountAsync();
+
+            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+            return totalPages;
+        }
     }
 }

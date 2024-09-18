@@ -27,6 +27,22 @@ namespace PosSystem.Infrastracture.Migrations
                 startValue: 1000L);
 
             migrationBuilder.CreateTable(
+                name: "Clients",
+                columns: table => new
+                {
+                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Number = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR dbo.ClientNumber"),
+                    Phone = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clients", x => x.ClientId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Companies",
                 columns: table => new
                 {
@@ -37,22 +53,6 @@ namespace PosSystem.Infrastracture.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Companies", x => x.CompanyId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Employees",
-                columns: table => new
-                {
-                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Employees", x => x.EmployeeId);
                 });
 
             migrationBuilder.CreateTable(
@@ -73,14 +73,13 @@ namespace PosSystem.Infrastracture.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Role = table.Column<int>(type: "int", nullable: false),
+                    StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    EndTime = table.Column<TimeSpan>(type: "time", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -108,26 +107,34 @@ namespace PosSystem.Infrastracture.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Clients",
+                name: "Invoices",
                 columns: table => new
                 {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    BillDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BillNumber = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR dbo.BillNumber"),
                     ClientId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Number = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR dbo.ClientNumber"),
-                    Phone = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    FinalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false, computedColumnSql: "[TotalAmount] - [TotalDiscount]"),
+                    PaidAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DueAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false, computedColumnSql: "[TotalAmount] - [TotalDiscount] - [PaidAmount]"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clients", x => x.ClientId);
+                    table.PrimaryKey("PK_Invoices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Clients_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId");
+                        name: "FK_Invoices_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
+                        principalColumn: "ClientId");
+                    table.ForeignKey(
+                        name: "FK_Invoices_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -142,8 +149,7 @@ namespace PosSystem.Infrastracture.Migrations
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CompanyId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UnitId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UnitId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -160,48 +166,10 @@ namespace PosSystem.Infrastracture.Migrations
                         principalColumn: "CompanyId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Products_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId");
-                    table.ForeignKey(
                         name: "FK_Products_Units_UnitId",
                         column: x => x.UnitId,
                         principalTable: "Units",
                         principalColumn: "UnitId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Invoices",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    BillDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BillNumber = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR dbo.BillNumber"),
-                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    FinalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false, computedColumnSql: "[TotalAmount] - [TotalDiscount]"),
-                    PaidAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DueAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false, computedColumnSql: "[TotalAmount] - [TotalDiscount] - [PaidAmount]"),
-                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
-                    EndTime = table.Column<TimeSpan>(type: "time", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Invoices", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Invoices_Clients_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Clients",
-                        principalColumn: "ClientId");
-                    table.ForeignKey(
-                        name: "FK_Invoices_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId");
                 });
 
             migrationBuilder.CreateTable(
@@ -241,12 +209,12 @@ namespace PosSystem.Infrastracture.Migrations
 
             migrationBuilder.InsertData(
                 table: "Clients",
-                columns: new[] { "ClientId", "Address", "EmployeeId", "FirstName", "LastName", "Notes", "Number", "Phone" },
+                columns: new[] { "ClientId", "Address", "Name", "Notes", "Number", "Phone" },
                 values: new object[,]
                 {
-                    { "3d1cae27-407d-4901-ac90-35e972ec813a", "456 Elm St", null, "Jane", "Doe", null, 2, "0987654321" },
-                    { "521cfe59-b916-4f4d-a2a3-0f9d023cbbb2", "123 Main St", null, "John", "Doe", null, 1, "1234567890" },
-                    { "c918b848-0e0d-4d94-990f-fd1a7bc9e445", "789 Oak St", null, "Jim", "Beam", null, 3, "1112223333" }
+                    { "7eb580b7-fd3a-49fb-a8e2-364d1e9d8482", "789 Oak St", "Jim", null, 3, "1112223333" },
+                    { "da314426-bcd2-492f-a2b5-39628a6f202d", "123 Main St", "John", null, 1, "1234567890" },
+                    { "eb1a6e87-657b-4c21-905e-e345f4bd2fff", "456 Elm St", "Jane", null, 2, "0987654321" }
                 });
 
             migrationBuilder.InsertData(
@@ -254,19 +222,9 @@ namespace PosSystem.Infrastracture.Migrations
                 columns: new[] { "CompanyId", "Name", "Notes" },
                 values: new object[,]
                 {
-                    { "84057f93-c9d6-46cf-b018-e3ffd5cda383", "Tech Corp", null },
-                    { "a7fd0fb6-871d-4452-9b5a-7a376d8fa3c7", "Biz Inc", null },
-                    { "c1c55d49-79bd-4ca4-9b6a-afc74e371bfd", "Retail LLC", null }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Employees",
-                columns: new[] { "EmployeeId", "Address", "DateOfBirth", "FirstName", "LastName", "PhoneNumber" },
-                values: new object[,]
-                {
-                    { "0a8f0244-4c3a-4336-9bd9-ec9180807951", null, new DateTime(1990, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "Bob", "Johnson", null },
-                    { "3ff029bf-a4a2-4510-91c6-5301fe4ec389", null, new DateTime(1995, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "Charlie", "Brown", null },
-                    { "895fcfbd-0257-4a6b-ad18-8686e19b7fae", null, new DateTime(1985, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Alice", "Smith", null }
+                    { "34111bfb-255b-4346-9d36-3beb91fa1c27", "Biz Inc", null },
+                    { "6e5f48e3-408c-480a-9833-31475d0a481d", "Retail LLC", null },
+                    { "e174e132-9e37-407b-9e85-8747e90d7f53", "Tech Corp", null }
                 });
 
             migrationBuilder.InsertData(
@@ -274,9 +232,19 @@ namespace PosSystem.Infrastracture.Migrations
                 columns: new[] { "UnitId", "Name", "Notes" },
                 values: new object[,]
                 {
-                    { "017cf13d-ce50-429e-b337-e115ba1d92cf", "Box", null },
-                    { "27cb9365-ade2-471e-be53-a13e67c6ed7e", "Piece", null },
-                    { "d396c365-d491-4d48-adc4-e3a13caf8440", "Pack", null }
+                    { "1b3ed427-373b-431e-829b-cb46a619f80e", "Pack", null },
+                    { "9d5b276a-5c24-4672-9ed9-34cfe5cca9ea", "Piece", null },
+                    { "a099b55b-0330-423a-b2e3-90bc388dfe99", "Box", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "EndTime", "FirstName", "LastName", "Password", "Role", "StartTime", "UserName" },
+                values: new object[,]
+                {
+                    { "baca97ee-f2da-4e63-be4b-54a004200d2a", new TimeSpan(0, 17, 0, 0, 0), "John", "Doe", "$2a$11$g3VBtLqHZA6NFfOn7BpQ8euXt0Bu/s0IMfE77MI3NtN1OFjWAxKJS", 0, new TimeSpan(0, 9, 0, 0, 0), "admin1" },
+                    { "bf3d2e89-6ba6-4794-b6b7-7f9ee3ca6cfe", new TimeSpan(0, 18, 0, 0, 0), "Alice", "Johnson", "$2a$11$OsEooJZF2IEBBMFSnMdCVu9e.fakMT0UA365OyWKR.Gr9pdcEpCYK", 1, new TimeSpan(0, 10, 0, 0, 0), "alice.johnson" },
+                    { "cc655fe4-ba86-48a2-aa62-05d454a24b4d", new TimeSpan(0, 16, 0, 0, 0), "Jane", "Smith", "$2a$11$D7cX7XTrWyMydVBMZ3wvj.0j.ZYqJ/UKO8R1qTe6UkDcpUthPFugu", 1, new TimeSpan(0, 8, 0, 0, 0), "jane.smith" }
                 });
 
             migrationBuilder.InsertData(
@@ -284,29 +252,29 @@ namespace PosSystem.Infrastracture.Migrations
                 columns: new[] { "CategoryId", "CompanyId", "Name", "Notes" },
                 values: new object[,]
                 {
-                    { "17caa7db-220c-478c-b049-be42900c3c95", "84057f93-c9d6-46cf-b018-e3ffd5cda383", "Electronics", null },
-                    { "2ea866bf-d98c-4da1-a99d-f67c0df95681", "a7fd0fb6-871d-4452-9b5a-7a376d8fa3c7", "Furniture", null },
-                    { "634430fe-2f01-42d5-aaf1-eda47c9ba543", "c1c55d49-79bd-4ca4-9b6a-afc74e371bfd", "Clothing", null }
+                    { "1792c9c9-285e-439a-bc94-97e3d6c64dca", "34111bfb-255b-4346-9d36-3beb91fa1c27", "Furniture", null },
+                    { "5ee2e819-a35e-4356-870a-40f3dab99a96", "6e5f48e3-408c-480a-9833-31475d0a481d", "Clothing", null },
+                    { "d2c7bc49-90b4-47c8-9ed6-df23c974f284", "e174e132-9e37-407b-9e85-8747e90d7f53", "Electronics", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "Invoices",
-                columns: new[] { "Id", "BillDate", "BillNumber", "ClientId", "Date", "EmployeeId", "EndTime", "PaidAmount", "StartTime", "TotalAmount", "TotalDiscount" },
+                columns: new[] { "Id", "BillDate", "BillNumber", "ClientId", "Date", "PaidAmount", "TotalAmount", "TotalDiscount", "UserId" },
                 values: new object[,]
                 {
-                    { "75cd73c7-f86a-48a5-b6de-0991f80b8649", new DateTime(2024, 9, 11, 0, 29, 19, 957, DateTimeKind.Local).AddTicks(9725), 2L, "3d1cae27-407d-4901-ac90-35e972ec813a", new DateTime(2024, 9, 11, 0, 29, 19, 957, DateTimeKind.Local).AddTicks(9729), "0a8f0244-4c3a-4336-9bd9-ec9180807951", new TimeSpan(0, 18, 0, 0, 0), 50m, new TimeSpan(0, 10, 0, 0, 0), 50m, 0m },
-                    { "93f4fff1-2a07-482b-97ab-fcef3be93565", new DateTime(2024, 9, 11, 0, 29, 19, 957, DateTimeKind.Local).AddTicks(9672), 1L, "521cfe59-b916-4f4d-a2a3-0f9d023cbbb2", new DateTime(2024, 9, 11, 0, 29, 19, 957, DateTimeKind.Local).AddTicks(9718), "895fcfbd-0257-4a6b-ad18-8686e19b7fae", new TimeSpan(0, 17, 0, 0, 0), 1000m, new TimeSpan(0, 9, 0, 0, 0), 1000m, 0m },
-                    { "d59456cc-77ab-4d88-8069-841a86845736", new DateTime(2024, 9, 11, 0, 29, 19, 957, DateTimeKind.Local).AddTicks(9733), 3L, "c918b848-0e0d-4d94-990f-fd1a7bc9e445", new DateTime(2024, 9, 11, 0, 29, 19, 957, DateTimeKind.Local).AddTicks(9737), "3ff029bf-a4a2-4510-91c6-5301fe4ec389", new TimeSpan(0, 19, 0, 0, 0), 20m, new TimeSpan(0, 11, 0, 0, 0), 20m, 0m }
+                    { "013e9469-9f4a-4b07-9d00-d21d44afc4b3", new DateTime(2024, 9, 17, 6, 1, 19, 480, DateTimeKind.Local).AddTicks(2230), 2L, "eb1a6e87-657b-4c21-905e-e345f4bd2fff", new DateTime(2024, 9, 17, 6, 1, 19, 480, DateTimeKind.Local).AddTicks(2238), 50m, 50m, 0m, "cc655fe4-ba86-48a2-aa62-05d454a24b4d" },
+                    { "5fb504a4-2ee5-4a4c-a01c-bfe997cadb16", new DateTime(2024, 9, 17, 6, 1, 19, 480, DateTimeKind.Local).AddTicks(2245), 3L, "7eb580b7-fd3a-49fb-a8e2-364d1e9d8482", new DateTime(2024, 9, 17, 6, 1, 19, 480, DateTimeKind.Local).AddTicks(2592), 20m, 20m, 0m, "bf3d2e89-6ba6-4794-b6b7-7f9ee3ca6cfe" },
+                    { "a6be97f4-31ff-4c6a-8740-902351064c4f", new DateTime(2024, 9, 17, 6, 1, 19, 480, DateTimeKind.Local).AddTicks(2154), 1L, "da314426-bcd2-492f-a2b5-39628a6f202d", new DateTime(2024, 9, 17, 6, 1, 19, 480, DateTimeKind.Local).AddTicks(2224), 1000m, 1000m, 0m, "baca97ee-f2da-4e63-be4b-54a004200d2a" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "ProductId", "BuyingPrice", "CategoryId", "CompanyId", "EmployeeId", "Name", "Notes", "Quantity", "SellingPrice", "UnitId" },
+                columns: new[] { "ProductId", "BuyingPrice", "CategoryId", "CompanyId", "Name", "Notes", "Quantity", "SellingPrice", "UnitId" },
                 values: new object[,]
                 {
-                    { "79d247", 800m, "17caa7db-220c-478c-b049-be42900c3c95", "84057f93-c9d6-46cf-b018-e3ffd5cda383", null, "Laptop", null, 10, 1000m, "27cb9365-ade2-471e-be53-a13e67c6ed7e" },
-                    { "8404e5", 10m, "634430fe-2f01-42d5-aaf1-eda47c9ba543", "c1c55d49-79bd-4ca4-9b6a-afc74e371bfd", null, "T-Shirt", null, 200, 20m, "d396c365-d491-4d48-adc4-e3a13caf8440" },
-                    { "af9d5b", 30m, "2ea866bf-d98c-4da1-a99d-f67c0df95681", "a7fd0fb6-871d-4452-9b5a-7a376d8fa3c7", null, "Chair", null, 100, 50m, "017cf13d-ce50-429e-b337-e115ba1d92cf" }
+                    { "2c1167", 10m, "5ee2e819-a35e-4356-870a-40f3dab99a96", "6e5f48e3-408c-480a-9833-31475d0a481d", "T-Shirt", null, 200, 20m, "1b3ed427-373b-431e-829b-cb46a619f80e" },
+                    { "cefb5e", 800m, "d2c7bc49-90b4-47c8-9ed6-df23c974f284", "e174e132-9e37-407b-9e85-8747e90d7f53", "Laptop", null, 10, 1000m, "9d5b276a-5c24-4672-9ed9-34cfe5cca9ea" },
+                    { "e19ce4", 30m, "1792c9c9-285e-439a-bc94-97e3d6c64dca", "34111bfb-255b-4346-9d36-3beb91fa1c27", "Chair", null, 100, 50m, "a099b55b-0330-423a-b2e3-90bc388dfe99" }
                 });
 
             migrationBuilder.InsertData(
@@ -314,9 +282,9 @@ namespace PosSystem.Infrastracture.Migrations
                 columns: new[] { "Id", "Discount", "InvoiceId", "Price", "ProductId", "Quantity", "UnitId" },
                 values: new object[,]
                 {
-                    { "400b611d-39de-45b8-b34d-20fd4c1a462a", 0m, "75cd73c7-f86a-48a5-b6de-0991f80b8649", 50m, "af9d5b", 1m, "017cf13d-ce50-429e-b337-e115ba1d92cf" },
-                    { "44cd904f-82e9-420f-987a-8897c39ebc57", 0m, "93f4fff1-2a07-482b-97ab-fcef3be93565", 1000m, "79d247", 1m, "27cb9365-ade2-471e-be53-a13e67c6ed7e" },
-                    { "b5f6786a-c57f-40bb-8c3f-fb0c0a2c65ab", 0m, "d59456cc-77ab-4d88-8069-841a86845736", 20m, "8404e5", 1m, "d396c365-d491-4d48-adc4-e3a13caf8440" }
+                    { "6d72b613-e248-47e6-8273-761870949448", 0m, "a6be97f4-31ff-4c6a-8740-902351064c4f", 1000m, "cefb5e", 1m, "9d5b276a-5c24-4672-9ed9-34cfe5cca9ea" },
+                    { "93bbbf8a-c437-48b3-bfd1-a98274871455", 0m, "013e9469-9f4a-4b07-9d00-d21d44afc4b3", 50m, "e19ce4", 1m, "a099b55b-0330-423a-b2e3-90bc388dfe99" },
+                    { "dfab5abf-665c-43dc-82e8-2c8a44643fb6", 0m, "5fb504a4-2ee5-4a4c-a01c-bfe997cadb16", 20m, "2c1167", 1m, "1b3ed427-373b-431e-829b-cb46a619f80e" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -336,19 +304,9 @@ namespace PosSystem.Infrastracture.Migrations
                 column: "Address");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Clients_EmployeeId",
+                name: "IX_Clients_Name",
                 table: "Clients",
-                column: "EmployeeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Clients_FirstName",
-                table: "Clients",
-                column: "FirstName");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Clients_LastName",
-                table: "Clients",
-                column: "LastName");
+                column: "Name");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clients_Number",
@@ -366,16 +324,6 @@ namespace PosSystem.Infrastracture.Migrations
                 table: "Companies",
                 column: "Name",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Employees_FirstName",
-                table: "Employees",
-                column: "FirstName");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Employees_LastName",
-                table: "Employees",
-                column: "LastName");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InvoiceItems_InvoiceId",
@@ -414,9 +362,9 @@ namespace PosSystem.Infrastracture.Migrations
                 column: "Date");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Invoices_EmployeeId",
+                name: "IX_Invoices_UserId",
                 table: "Invoices",
-                column: "EmployeeId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
@@ -429,11 +377,6 @@ namespace PosSystem.Infrastracture.Migrations
                 table: "Products",
                 column: "CompanyId",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_EmployeeId",
-                table: "Products",
-                column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_Name",
@@ -454,9 +397,19 @@ namespace PosSystem.Infrastracture.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_Email",
+                name: "IX_Users_FirstName",
                 table: "Users",
-                column: "Email",
+                column: "FirstName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_LastName",
+                table: "Users",
+                column: "LastName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_UserName",
+                table: "Users",
+                column: "UserName",
                 unique: true);
         }
 
@@ -465,9 +418,6 @@ namespace PosSystem.Infrastracture.Migrations
         {
             migrationBuilder.DropTable(
                 name: "InvoiceItems");
-
-            migrationBuilder.DropTable(
-                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Invoices");
@@ -479,13 +429,13 @@ namespace PosSystem.Infrastracture.Migrations
                 name: "Clients");
 
             migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Units");
-
-            migrationBuilder.DropTable(
-                name: "Employees");
 
             migrationBuilder.DropTable(
                 name: "Companies");

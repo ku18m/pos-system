@@ -1,9 +1,12 @@
-﻿namespace PosSystem.Application.Contracts.Unit
+﻿
+namespace PosSystem.Application.Contracts.Type
 {
-    public class ReturnUnitContract
+    public class TypeOutContract
     {
         public string Id { get; set; }
         public string Name { get; set; }
         public string? Note { get; set; }
+        public string CompanyName { get; set; }  
+
     }
 }

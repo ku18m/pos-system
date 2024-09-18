@@ -1,13 +1,18 @@
-﻿namespace PosSystem.Application.Interfaces.IServices
+﻿using PosSystem.Application.Contracts;
+using PosSystem.Application.Contracts.Company;
+
+namespace PosSystem.Application.Interfaces.IServices
 {
-    public interface ICompanyServices<TCompanyIn, TCompanyOut> where TCompanyIn : class where TCompanyOut : class
+    public interface ICompanyServices
     {
-        Task<TCompanyOut> Add(TCompanyIn company);
-        Task<List<TCompanyOut>> GetAll();
+        Task<CompanyOutContract> Add(CompanyCreationContract company);
+        Task<List<CompanyOutContract>> GetAll();
         Task Delete(string id);
-        Task Edit(string id, TCompanyIn company);
-        Task<TCompanyOut> GetById(string id);
-        Task<TCompanyOut> GetByName(string name);
-        Task<IEnumerable<TCompanyOut>> GetCompaniesByName(string name);
+        Task Edit(string id, CompanyOperationsContract company);
+        Task<CompanyOutContract> GetById(string id);
+        Task<CompanyOutContract> GetByName(string name);
+        Task<IEnumerable<CompanyOutContract>> GetCompaniesByName(string name);
+        Task<PaginatedOutContract<CompanyOutContract>> GetCompanyPage(int pageNumber, int pageSize);
+        Task<IEnumerable<CompanyShortOutContract>> GetAllShorted();
     }
 }

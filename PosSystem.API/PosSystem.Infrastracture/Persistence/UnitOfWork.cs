@@ -14,8 +14,6 @@ namespace PosSystem.Infrastracture.Persistence
 
         ICompanyRepository? _companyRepository;
 
-        IEmployeeRepository? _employeeRepository;
-
         IInvoiceRepository? _invoiceRepository;
 
         IInvoiceItemRepository? _invoiceItemRepository;
@@ -55,16 +53,6 @@ namespace PosSystem.Infrastracture.Persistence
                 _companyRepository ??= new CompanyRepository(context);
 
                 return _companyRepository;
-            }
-        }
-
-        public IEmployeeRepository EmployeeRepository
-        {
-            get
-            {
-                _employeeRepository ??= new EmployeeRepository(context);
-
-                return _employeeRepository;
             }
         }
 

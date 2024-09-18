@@ -1,6 +1,8 @@
 using Microsoft.OpenApi.Models;
+using PosSystem.API.SwaggerSchemaFilters;
 using PosSystem.Application;
 using PosSystem.Infrastracture;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new() { Title = "PosSystem.API", Version = "v1" });
+    c.SwaggerDoc("v1", new() { Title = "PosSystem.API", Version = "v1", Description = "API for PosSystem" });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -43,6 +45,14 @@ builder.Services.AddSwaggerGen(c =>
             Array.Empty<string>()
         }
     });
+
+    c.SchemaFilter<TimeSpanSchemaFilter>();
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+
+    c.EnableAnnotations();
 });
 
 

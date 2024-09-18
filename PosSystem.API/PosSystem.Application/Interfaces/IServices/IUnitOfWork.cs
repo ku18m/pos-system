@@ -7,7 +7,6 @@ namespace PosSystem.Application.Interfaces.IServices
         ICategoryRepository CategoryRepository { get; }
         IClientRepository ClientRepository { get; }
         ICompanyRepository CompanyRepository { get; }
-        IEmployeeRepository EmployeeRepository { get; }
         IInvoiceRepository InvoiceRepository { get; }
         IInvoiceItemRepository InvoiceItemRepository { get; }
         IProductRepository ProductRepository { get; }

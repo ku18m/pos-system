@@ -1,15 +1,21 @@
-﻿namespace PosSystem.Application.Interfaces.IServices
+﻿using PosSystem.Application.Contracts;
+using PosSystem.Application.Contracts.Client;
+
+namespace PosSystem.Application.Interfaces.IServices
 {
-    public interface IClientServices<TClientIn, TClientOut> where TClientIn : class where TClientOut : class
+    public interface IClientServices
     {
-        Task<TClientOut> Add(TClientIn client);
-        Task<List<TClientOut>> GetAll();
+        Task<ClientOutContract> Add(ClientCreationContract client);
+        Task<List<ClientOutContract>> GetAll();
         Task DeleteById(string id);
-        Task Edit(string id, TClientIn client);
-        Task<TClientOut> GetById(string id);
-        Task<TClientOut> GetByName(string name);
-        Task<IEnumerable<TClientOut>> GetClientsByName(string name);
-        Task<TClientOut> GetByPhone(string phone);
-        Task<IEnumerable<TClientOut>> GetClientsByAddress(string address);
+        Task Edit(string id, ClientOperationsContract client);
+        Task<ClientOutContract> GetById(string id);
+        Task<ClientOutContract> GetByName(string name);
+        Task<IEnumerable<ClientOutContract>> GetClientsByName(string name);
+        Task<ClientOutContract> GetByPhone(string phone);
+        Task<IEnumerable<ClientOutContract>> GetClientsByAddress(string address);
+        Task<PaginatedOutContract<ClientOutContract>> GetClientPage(int pageNumber, int pageSize);
+        Task<IEnumerable<ClientShortOutContract>> GetAllShorted();
+        Task<int> GetNextClientNumber();
     }
 }

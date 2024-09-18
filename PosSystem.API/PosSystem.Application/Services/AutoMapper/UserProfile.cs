@@ -8,6 +8,8 @@ namespace PosSystem.Application.Services.AutoMapper
     {
         public UserProfile()
         {
+            CreateMap<UserCreationContract, User>();
+
             CreateMap<UserOperationsContract, User>();
 
             CreateMap<User, UserOutContract>();

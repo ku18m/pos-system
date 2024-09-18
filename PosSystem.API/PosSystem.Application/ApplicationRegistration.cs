@@ -35,12 +35,13 @@ namespace PosSystem.Application
             builder.Services.AddHttpContextAccessor();
 
             #region Services Registeration
-            builder.Services.AddScoped(typeof(IUserServices<,>), typeof(UserServices<,>));
+            builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<IAuthServices, AuthServices>();
-            builder.Services.AddScoped(typeof(ICompanyServices<,>), typeof(CompanyServices<,>));
-            builder.Services.AddScoped(typeof(IClientServices<,>), typeof(ClientServices<,>));
-            builder.Services.AddScoped(typeof(IUnitServices<,>), typeof(UnitServices<,>));
-            builder.Services.AddScoped(typeof(ITypeServices<,>), typeof(TypeServices<,>));
+            builder.Services.AddScoped<IClientServices, ClientServices>();
+            builder.Services.AddScoped<ICompanyServices, CompanyServices>();
+            builder.Services.AddScoped<ITypeServices, TypeServices>();
+            builder.Services.AddScoped<IUnitServices, UnitServices>();
+            builder.Services.AddScoped<IProductServices, ProductServices>();
 
 
             #endregion

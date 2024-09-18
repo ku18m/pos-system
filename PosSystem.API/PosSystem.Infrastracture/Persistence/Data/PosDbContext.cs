@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PosSystem.Core.Entities;
 using PosSystem.Core.Enums;
+using PosSystem.Infrastracture.Persistence.Helpers;
 
 namespace PosSystem.Infrastracture.Persistence.Data
 {
@@ -35,6 +36,9 @@ namespace PosSystem.Infrastracture.Persistence.Data
             modelBuilder.HasSequence<int>("ClientNumber", schema: "dbo")
                 .StartsAt(1000)
                 .IncrementsBy(1);
+
+            // Define the SequenceValue Helper Entity
+            modelBuilder.Entity<SequenceValue>().HasNoKey();
             #endregion
 
             #region Entities_Configurations
@@ -263,16 +267,13 @@ namespace PosSystem.Infrastracture.Persistence.Data
                 .IsUnique();
 
             modelBuilder.Entity<Product>()
-                .HasIndex(p => p.CompanyId)
-                .IsUnique();
+                .HasIndex(p => p.CompanyId);
 
             modelBuilder.Entity<Product>()
-                .HasIndex(p => p.CategoryId)
-                .IsUnique();
+                .HasIndex(p => p.CategoryId);
 
             modelBuilder.Entity<Product>()
-                .HasIndex(p => p.UnitId)
-                .IsUnique();
+                .HasIndex(p => p.UnitId);
 
 
             // Set Category Indexes

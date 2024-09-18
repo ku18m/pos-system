@@ -5,9 +5,9 @@ namespace PosSystem.Application.Services
 {
     public class AuthServices(IUnitOfWork unitOfWork, TokenGeneratorHelper tokenGenerator) : IAuthServices
     {
-        public async Task<string> LoginUserAsync(string email, string password)
+        public async Task<string?> LoginUserAsync(string username, string password)
         {
-            var user = await unitOfWork.UserRepository.GetUserByEmailAsync(email);
+            var user = await unitOfWork.UserRepository.GetUserByUserNameAsync(username);
 
             if (user == null)
             {
