@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Route, Router, RouterModule } from '@angular/router';
 import { AuthWithApiService } from '../../../services/auth-with-api.service';
 
 @Component({
@@ -18,75 +18,79 @@ import { AuthWithApiService } from '../../../services/auth-with-api.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    username: new FormControl('', [
+      Validators.required,
+      Validators.minLength(5),
+    ]),
     password: new FormControl('', [
       Validators.required,
       Validators.pattern(
         /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
       ),
     ]),
+    rememberMe: new FormControl(false),
   });
 
   constructor(
-    private formbuilder: FormBuilder,
     private router: Router,
     private authService: AuthWithApiService
   ) {}
 
-  get getEmail() {
-    return this.loginForm.controls['email'];
+  ngOnInit(): void {}
+
+  get getUserName() {
+    return this.loginForm.controls['username'];
   }
   get getPassword() {
     return this.loginForm.controls['password'];
   }
-
-  // Submit the login form
-  loginSubmit() {
-    if (this.loginForm.valid) {
-      console.log('Form Submitted:', this.loginForm.value);
-      const credentials = {
-        email: this.getEmail.value!,
-        password: this.getPassword.value!,
-      };
-
-      // Call the login function from AuthWithApiService
-      this.authService.login(credentials).subscribe({
-        next: (response) => {
-          // Handle success
-          if (response.success) {
-            alert('Login Succefully');
-            this.router.navigate(['/home']);
-          } else {
-            alert('Invalid email or password');
-          }
-        },
-        error: (error) => {
-          // Handle error
-          console.error('Login error', error);
-          alert('Something went wrong! Please try again.');
-        },
-        complete: () => {
-          // Handle completion (optional)
-          console.log('Login request completed');
-        },
-      });
-    }
+  get getRememberMe() {
+    return this.loginForm.controls['rememberMe'];
   }
 
-  // loginSubmit() {
-  //   const { email, password } = this.loginForm.value;
-  //   if (this.loginForm.valid) {
-  //     this.authService.getByEmail(email as string).subscribe({
-  //       next: () => {
-  //         alert('Login Successfully');
-  //         this.loginForm.reset();
-  //         this.router.navigate(['home']);
-  //       },
-  //     });
-  //   } else {
-  //     alert('Something went wrong');
-  //   }
-  // }
+  loginSubmit(): void {
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched(); // Ensures all fields are marked if the form is invalid
+      return;
+    }
+
+    //const { email, password, rememberMe } = this.loginForm.value;
+    const username = this.loginForm.get('username')?.value as string;
+    const password = this.loginForm.get('password')?.value as string;
+    const rememberMe = this.loginForm.get('rememberMe')?.value as boolean;
+
+    this.authService.login({ username, password, rememberMe }).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.router.navigate(['/home']);
+        } else {
+          this.handleError('Invalid username or password');
+        }
+      },
+      error: (error) => {
+        this.handleError('Login failed. Please try again later.', error);
+      },
+    });
+  }
+
+  // Handle errors from the API
+  private handleError(message: string, error?: any): void {
+    console.error(message, error?.message);
+    alert(message);
+  }
+
+  // Getters for form controls
+  get emailControl() {
+    return this.loginForm.get('username');
+  }
+
+  get passwordControl() {
+    return this.loginForm.get('password');
+  }
+
+  get rememberMeControl() {
+    return this.loginForm.get('rememberMe');
+  }
 }

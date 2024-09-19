@@ -19,8 +19,8 @@
                   type="text"
                   id="pname"
                   name="name"
-                  placeholder="Enter your email"
-                  formControlName="email"
+                  placeholder="Enter your username"
+                  formControlName="username"
                   class="form-control form-control-lg"
                   style="
                     background-color: #f4f5f7;
@@ -31,15 +31,16 @@
                 />
                 <small
                   *ngIf="
-                    getEmail.invalid && (getEmail.dirty || getEmail.touched)
+                    getUserName.invalid &&
+                    (getUserName.dirty || getUserName.touched)
                   "
                   class="form-text text-danger"
                 >
-                  <div *ngIf="getEmail.errors?.['required']">
-                    Email is Required
+                  <div *ngIf="getUserName.errors?.['required']">
+                    UserName is Required
                   </div>
-                  <div *ngIf="getEmail.errors?.['email']">
-                    Email should be valid
+                  <div *ngIf="getUserName.errors?.['minlength']">
+                    UserName should be valid
                   </div>
                 </small>
               </div>
