@@ -29,6 +29,7 @@ namespace PosSystem.Infrastracture.Persistence
         {
             _dbSet.AddAsync(entity);
         }
+
         public async Task Delete(string id)
         {
             var entity = await _dbSet.FindAsync(id);
@@ -37,6 +38,7 @@ namespace PosSystem.Infrastracture.Persistence
                 _dbSet.Remove(entity);
             }
         }
+
         public async Task Update(Entity entity)
         {
             _dbSet.Update(entity);

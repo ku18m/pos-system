@@ -1,10 +1,6 @@
 ﻿using PosSystem.Application.Contracts.InvoiceItem;
-using System;
-using System.Collections.Generic;
+using PosSystem.Application.Contracts.Validations.Invoice;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PosSystem.Application.Contracts.Invoice
 {
@@ -13,25 +9,22 @@ namespace PosSystem.Application.Contracts.Invoice
         public string Id { get; set; }
 
         [Required]
-        public DateTime BillDate { get; set; } = DateTime.Now;
+        public DateTime Date { get; set; } = DateTime.Now;
+        public DateTime BillDate { get; set; }
 
         [Range(0, int.MaxValue)]
-        public int PaidUp { get; set; }
+        public decimal PaidUp { get; set; }
+
 
         [Range(0, int.MaxValue)]
-        public int Net { get; set; }
+        public decimal TotalDiscount { get; set; }
 
-        [Range(0, int.MaxValue)]
-        public int DiscountValue { get; set; }
-
-        [Range(0, 100)]
-        public int DiscountPercentage { get; set; }
-        public int BillsTotal { get; set; }
-        
-        [Required]
-        public List<InvoiceItemCreationContract> InvoiceItems { get; set; } = new List<InvoiceItemCreationContract>();
+        public decimal TotalAmount { get; set; }
 
         [Required]
+        public List<InvoiceItemOperationsContract> InvoiceItems { get; set; } = new List<InvoiceItemOperationsContract>();
+
+        [ExistingClientId]
         public string ClientId { get; set; }
 
         [Required]

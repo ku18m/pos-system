@@ -37,8 +37,8 @@ namespace PosSystem.Infrastracture.Persistence.Data
                 .StartsAt(1000)
                 .IncrementsBy(1);
 
-            // Define the SequenceValue Helper Entity
-            modelBuilder.Entity<SequenceValue>().HasNoKey();
+            // Ignore the SequenceValue Helper Entity
+            modelBuilder.Ignore<SequenceValue>();
             #endregion
 
             #region Entities_Configurations
@@ -100,7 +100,7 @@ namespace PosSystem.Infrastracture.Persistence.Data
             // Configure the Product Entity
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.HasKey(e => e.ProductId);
+                entity.HasKey(p => p.ProductId);
 
                 entity.HasOne(p => p.Category)
                     .WithMany(c => c.Products)
@@ -122,10 +122,13 @@ namespace PosSystem.Infrastracture.Persistence.Data
                     .HasForeignKey(ii => ii.ProductId)
                     .OnDelete(DeleteBehavior.NoAction);
 
-                entity.Property(e => e.SellingPrice)
+                entity.Property(p => p.Quantity)
                     .HasColumnType("decimal(18, 2)");
 
-                entity.Property(e => e.BuyingPrice)
+                entity.Property(p => p.SellingPrice)
+                    .HasColumnType("decimal(18, 2)");
+
+                entity.Property(p => p.BuyingPrice)
                     .HasColumnType("decimal(18, 2)");
             });
 
@@ -137,7 +140,7 @@ namespace PosSystem.Infrastracture.Persistence.Data
                 entity.HasOne(ii => ii.Invoice)
                     .WithMany(i => i.Items)
                     .HasForeignKey(ii => ii.InvoiceId)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(ii => ii.Product)
                     .WithMany(p => p.InvoiceItems)
@@ -153,13 +156,6 @@ namespace PosSystem.Infrastracture.Persistence.Data
                 entity.Property(e => e.TotalAmount)
                     .HasColumnType("decimal(18, 2)")
                     .HasComputedColumnSql("[Quantity] * [Price]");
-
-                entity.Property(e => e.Discount)
-                    .HasColumnType("decimal(18, 2)");
-                
-                entity.Property(e => e.FinalAmount)
-                    .HasColumnType("decimal(18, 2)")
-                    .HasComputedColumnSql("([Quantity] * [Price]) - [Discount]");
             });
 
             // Configure the Category Entity
@@ -197,6 +193,11 @@ namespace PosSystem.Infrastracture.Persistence.Data
                 entity.HasMany(u => u.Products)
                     .WithOne(p => p.Unit)
                     .HasForeignKey(p => p.UnitId)
+                    .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasMany(u => u.InvoiceItems)
+                    .WithOne(ii => ii.Unit)
+                    .HasForeignKey(ii => ii.UnitId)
                     .OnDelete(DeleteBehavior.NoAction);
             });
 
@@ -387,9 +388,9 @@ namespace PosSystem.Infrastracture.Persistence.Data
 
             var invoiceItems = new[]
             {
-            new InvoiceItem { InvoiceId = invoices[0].Id, ProductId = products[0].ProductId, UnitId = units[0].UnitId, Quantity = 1, Price = 1000, TotalAmount = 1000, Discount = 0, FinalAmount = 1000 },
-            new InvoiceItem { InvoiceId = invoices[1].Id, ProductId = products[1].ProductId, UnitId = units[1].UnitId, Quantity = 1, Price = 50, TotalAmount = 50, Discount = 0, FinalAmount = 50 },
-            new InvoiceItem { InvoiceId = invoices[2].Id, ProductId = products[2].ProductId, UnitId = units[2].UnitId, Quantity = 1, Price = 20, TotalAmount = 20, Discount = 0, FinalAmount = 20 }
+            new InvoiceItem { InvoiceId = invoices[0].Id, ProductId = products[0].ProductId, UnitId = units[0].UnitId, Quantity = 1, Price = 1000, TotalAmount = 1000 },
+            new InvoiceItem { InvoiceId = invoices[1].Id, ProductId = products[1].ProductId, UnitId = units[1].UnitId, Quantity = 1, Price = 50, TotalAmount = 50 },
+            new InvoiceItem {InvoiceId = invoices[2].Id, ProductId = products[2].ProductId, UnitId = units[2].UnitId, Quantity = 1, Price = 20, TotalAmount = 20 }
             };
 
             modelBuilder.Entity<Client>().HasData(clients);

@@ -1,8 +1,5 @@
-﻿ 
-
+﻿using PosSystem.Application.Contracts;
 using PosSystem.Application.Contracts.Invoice;
-using PosSystem.Application.Contracts;
-using PosSystem.Core.Entities;
 
 namespace PosSystem.Application.Interfaces.IServices
 {
@@ -11,16 +8,11 @@ namespace PosSystem.Application.Interfaces.IServices
         Task<InvoiceOutContract> AddInvoice(InvoiceCreationContract invoice);
         Task<IEnumerable<InvoiceOutContract>> GetAllInvoices();
         Task DeleteInvoice(string id);
-
         Task<InvoiceOutContract> UpdateInvoice(string id, InvoiceOperationsContract invoice);
         Task<InvoiceOutContract> GetInvoiceById(string id);
-      
-        Task<PaginatedOutContract<InvoiceOutContract>> GetInvoicePage(int pageNumber, int pageSize);
+        Task<PaginatedOutContract<InvoiceOutContract>> GetInvoicesPage(int pageNumber, int pageSize);
         Task<IEnumerable<InvoiceShortOutContract>> GetAllInvoicesShorted();
         Task<int> GetNextInvoiceNumber();
-        Task<IEnumerable<Invoice>> GetInvoicesByDateRange(DateTime start, DateTime end);
-
-
-
+        Task<IEnumerable<InvoiceOutContract>> GetInvoicesByDateRange(DateTime start, DateTime end);
     }
 }
