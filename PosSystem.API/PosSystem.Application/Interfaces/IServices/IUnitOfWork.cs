@@ -14,5 +14,11 @@ namespace PosSystem.Application.Interfaces.IServices
         IUserRepository UserRepository { get; }
 
         Task<int> Save();
+
+        Task BeginTransactionAsync();
+
+        Task CommitTransactionAsync();
+
+        Task RollbackTransactionAsync();
     }
 }

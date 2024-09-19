@@ -38,7 +38,7 @@ namespace PosSystem.Infrastracture.Persistence.Repositories
         }
         public async Task<int> GetNextInvoiceNumber()
         {
-            var sqlQuery = @"SELECT current_value AS CurrentValue FROM sys.sequences WHERE name = 'InvoiceNumber'";
+            var sqlQuery = @"SELECT current_value AS CurrentValue FROM sys.sequences WHERE name = 'BillNumber'";
             var currentValue = await _context.Set<SequenceValue>().FromSqlRaw(sqlQuery).FirstAsync();
 
             return currentValue.CurrentValue + 1;

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PosSystem.Application.Contracts.InvoiceItem;
 
 namespace PosSystem.Application.Contracts.Invoice
 {
@@ -13,11 +8,13 @@ namespace PosSystem.Application.Contracts.Invoice
         public int Number { get; set; }
 
         public DateTime BillDate { get; set; } 
-        public int PaidUp { get; set; }
-        public int Net { get; set; }
-        public int DiscountValue { get; set; }
-        public int DiscountPercentage { get; set; }
-        public int BillsTotal { get; set; }
+        public DateTime Date { get; set; }
+        public decimal TotalAmount { get; set; }
+        public decimal TotalDiscount { get; set; }
+        public decimal Net { get; set; }
+        public decimal PaidUp { get; set; }
+        public decimal Remaining { get; set; }
+        public List<InvoiceItemOutContract> InvoiceItems { get; set; } = new List<InvoiceItemOutContract>();
         public string ClientName { get; set; }
         public string EmployeeName { get; set; }
     }

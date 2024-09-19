@@ -145,7 +145,7 @@ namespace PosSystem.Infrastracture.Migrations
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SellingPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     BuyingPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CompanyId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -182,9 +182,7 @@ namespace PosSystem.Infrastracture.Migrations
                     UnitId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false, computedColumnSql: "[Quantity] * [Price]"),
-                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    FinalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false, computedColumnSql: "([Quantity] * [Price]) - [Discount]")
+                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false, computedColumnSql: "[Quantity] * [Price]")
                 },
                 constraints: table =>
                 {
@@ -193,7 +191,8 @@ namespace PosSystem.Infrastracture.Migrations
                         name: "FK_InvoiceItems_Invoices_InvoiceId",
                         column: x => x.InvoiceId,
                         principalTable: "Invoices",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_InvoiceItems_Products_ProductId",
                         column: x => x.ProductId,
@@ -203,8 +202,7 @@ namespace PosSystem.Infrastracture.Migrations
                         name: "FK_InvoiceItems_Units_UnitId",
                         column: x => x.UnitId,
                         principalTable: "Units",
-                        principalColumn: "UnitId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "UnitId");
                 });
 
             migrationBuilder.InsertData(
@@ -212,9 +210,9 @@ namespace PosSystem.Infrastracture.Migrations
                 columns: new[] { "ClientId", "Address", "Name", "Notes", "Number", "Phone" },
                 values: new object[,]
                 {
-                    { "7eb580b7-fd3a-49fb-a8e2-364d1e9d8482", "789 Oak St", "Jim", null, 3, "1112223333" },
-                    { "da314426-bcd2-492f-a2b5-39628a6f202d", "123 Main St", "John", null, 1, "1234567890" },
-                    { "eb1a6e87-657b-4c21-905e-e345f4bd2fff", "456 Elm St", "Jane", null, 2, "0987654321" }
+                    { "01b7952b-fde0-4d7c-a53e-e70999a469e6", "123 Main St", "John", null, 1, "1234567890" },
+                    { "85593aa9-5f7e-4c67-95a8-bd4a6474e9d8", "456 Elm St", "Jane", null, 2, "0987654321" },
+                    { "d9b29e24-d2e8-45a5-b3ae-9d3f4aedf8aa", "789 Oak St", "Jim", null, 3, "1112223333" }
                 });
 
             migrationBuilder.InsertData(
@@ -222,9 +220,9 @@ namespace PosSystem.Infrastracture.Migrations
                 columns: new[] { "CompanyId", "Name", "Notes" },
                 values: new object[,]
                 {
-                    { "34111bfb-255b-4346-9d36-3beb91fa1c27", "Biz Inc", null },
-                    { "6e5f48e3-408c-480a-9833-31475d0a481d", "Retail LLC", null },
-                    { "e174e132-9e37-407b-9e85-8747e90d7f53", "Tech Corp", null }
+                    { "4e8fbcb7-6d6e-4d85-ad5c-2e160d59a217", "Tech Corp", null },
+                    { "74a3c775-2340-4e03-95c6-eee183a6f070", "Retail LLC", null },
+                    { "85f36626-6316-4051-92da-d05f54a3eeaa", "Biz Inc", null }
                 });
 
             migrationBuilder.InsertData(
@@ -232,9 +230,9 @@ namespace PosSystem.Infrastracture.Migrations
                 columns: new[] { "UnitId", "Name", "Notes" },
                 values: new object[,]
                 {
-                    { "1b3ed427-373b-431e-829b-cb46a619f80e", "Pack", null },
-                    { "9d5b276a-5c24-4672-9ed9-34cfe5cca9ea", "Piece", null },
-                    { "a099b55b-0330-423a-b2e3-90bc388dfe99", "Box", null }
+                    { "22ba30c6-5d60-4d48-a17a-eb8e152797eb", "Pack", null },
+                    { "6d33b20d-10e2-4cc1-9a8f-ed9095bf043e", "Piece", null },
+                    { "fc92090b-105f-4923-854c-bd362bde7f8d", "Box", null }
                 });
 
             migrationBuilder.InsertData(
@@ -242,9 +240,9 @@ namespace PosSystem.Infrastracture.Migrations
                 columns: new[] { "Id", "EndTime", "FirstName", "LastName", "Password", "Role", "StartTime", "UserName" },
                 values: new object[,]
                 {
-                    { "baca97ee-f2da-4e63-be4b-54a004200d2a", new TimeSpan(0, 17, 0, 0, 0), "John", "Doe", "$2a$11$g3VBtLqHZA6NFfOn7BpQ8euXt0Bu/s0IMfE77MI3NtN1OFjWAxKJS", 0, new TimeSpan(0, 9, 0, 0, 0), "admin1" },
-                    { "bf3d2e89-6ba6-4794-b6b7-7f9ee3ca6cfe", new TimeSpan(0, 18, 0, 0, 0), "Alice", "Johnson", "$2a$11$OsEooJZF2IEBBMFSnMdCVu9e.fakMT0UA365OyWKR.Gr9pdcEpCYK", 1, new TimeSpan(0, 10, 0, 0, 0), "alice.johnson" },
-                    { "cc655fe4-ba86-48a2-aa62-05d454a24b4d", new TimeSpan(0, 16, 0, 0, 0), "Jane", "Smith", "$2a$11$D7cX7XTrWyMydVBMZ3wvj.0j.ZYqJ/UKO8R1qTe6UkDcpUthPFugu", 1, new TimeSpan(0, 8, 0, 0, 0), "jane.smith" }
+                    { "e5fcfa12-a3d2-4fd7-abbe-ffc919409a6b", new TimeSpan(0, 17, 0, 0, 0), "John", "Doe", "$2a$11$CtJBer78S24mWh5qAfH6buKl2PB/q3wSiypg6YzasdXOJG/Hn9UJC", 0, new TimeSpan(0, 9, 0, 0, 0), "admin1" },
+                    { "f246b47b-80c2-411b-b8fa-fa90f994403b", new TimeSpan(0, 18, 0, 0, 0), "Alice", "Johnson", "$2a$11$J0ZF5KzUPdVHEXcBLCNfjOfXzMC7joyHDbPuNqxltFrL44YRaGs7u", 1, new TimeSpan(0, 10, 0, 0, 0), "alice.johnson" },
+                    { "f49141da-adf2-4fcd-a756-aeb96f346e72", new TimeSpan(0, 16, 0, 0, 0), "Jane", "Smith", "$2a$11$nrFhIDyJsyvWtnbXPqIzCO9dbhgOkjWtOzzjXgn6Cm8hHWaPw2q72", 1, new TimeSpan(0, 8, 0, 0, 0), "jane.smith" }
                 });
 
             migrationBuilder.InsertData(
@@ -252,9 +250,9 @@ namespace PosSystem.Infrastracture.Migrations
                 columns: new[] { "CategoryId", "CompanyId", "Name", "Notes" },
                 values: new object[,]
                 {
-                    { "1792c9c9-285e-439a-bc94-97e3d6c64dca", "34111bfb-255b-4346-9d36-3beb91fa1c27", "Furniture", null },
-                    { "5ee2e819-a35e-4356-870a-40f3dab99a96", "6e5f48e3-408c-480a-9833-31475d0a481d", "Clothing", null },
-                    { "d2c7bc49-90b4-47c8-9ed6-df23c974f284", "e174e132-9e37-407b-9e85-8747e90d7f53", "Electronics", null }
+                    { "760bb6fe-1dec-4485-8781-ccd980bff780", "74a3c775-2340-4e03-95c6-eee183a6f070", "Clothing", null },
+                    { "7e076ad1-ebaf-4803-83f1-68e9e995269b", "4e8fbcb7-6d6e-4d85-ad5c-2e160d59a217", "Electronics", null },
+                    { "82e8bc6a-7107-42b3-8759-c90bf1b9da63", "85f36626-6316-4051-92da-d05f54a3eeaa", "Furniture", null }
                 });
 
             migrationBuilder.InsertData(
@@ -262,9 +260,9 @@ namespace PosSystem.Infrastracture.Migrations
                 columns: new[] { "Id", "BillDate", "BillNumber", "ClientId", "Date", "PaidAmount", "TotalAmount", "TotalDiscount", "UserId" },
                 values: new object[,]
                 {
-                    { "013e9469-9f4a-4b07-9d00-d21d44afc4b3", new DateTime(2024, 9, 17, 6, 1, 19, 480, DateTimeKind.Local).AddTicks(2230), 2L, "eb1a6e87-657b-4c21-905e-e345f4bd2fff", new DateTime(2024, 9, 17, 6, 1, 19, 480, DateTimeKind.Local).AddTicks(2238), 50m, 50m, 0m, "cc655fe4-ba86-48a2-aa62-05d454a24b4d" },
-                    { "5fb504a4-2ee5-4a4c-a01c-bfe997cadb16", new DateTime(2024, 9, 17, 6, 1, 19, 480, DateTimeKind.Local).AddTicks(2245), 3L, "7eb580b7-fd3a-49fb-a8e2-364d1e9d8482", new DateTime(2024, 9, 17, 6, 1, 19, 480, DateTimeKind.Local).AddTicks(2592), 20m, 20m, 0m, "bf3d2e89-6ba6-4794-b6b7-7f9ee3ca6cfe" },
-                    { "a6be97f4-31ff-4c6a-8740-902351064c4f", new DateTime(2024, 9, 17, 6, 1, 19, 480, DateTimeKind.Local).AddTicks(2154), 1L, "da314426-bcd2-492f-a2b5-39628a6f202d", new DateTime(2024, 9, 17, 6, 1, 19, 480, DateTimeKind.Local).AddTicks(2224), 1000m, 1000m, 0m, "baca97ee-f2da-4e63-be4b-54a004200d2a" }
+                    { "1468aa44-79dc-4652-8a52-760be80e18fb", new DateTime(2024, 9, 19, 11, 51, 36, 391, DateTimeKind.Local).AddTicks(1444), 3L, "d9b29e24-d2e8-45a5-b3ae-9d3f4aedf8aa", new DateTime(2024, 9, 19, 11, 51, 36, 391, DateTimeKind.Local).AddTicks(1454), 20m, 20m, 0m, "f246b47b-80c2-411b-b8fa-fa90f994403b" },
+                    { "35b31972-8417-46ff-910c-a7319c42fd6f", new DateTime(2024, 9, 19, 11, 51, 36, 391, DateTimeKind.Local).AddTicks(1433), 2L, "85593aa9-5f7e-4c67-95a8-bd4a6474e9d8", new DateTime(2024, 9, 19, 11, 51, 36, 391, DateTimeKind.Local).AddTicks(1438), 50m, 50m, 0m, "f49141da-adf2-4fcd-a756-aeb96f346e72" },
+                    { "7a731996-b5f2-4ff1-b56c-125f1657b9b0", new DateTime(2024, 9, 19, 11, 51, 36, 391, DateTimeKind.Local).AddTicks(1330), 1L, "01b7952b-fde0-4d7c-a53e-e70999a469e6", new DateTime(2024, 9, 19, 11, 51, 36, 391, DateTimeKind.Local).AddTicks(1422), 1000m, 1000m, 0m, "e5fcfa12-a3d2-4fd7-abbe-ffc919409a6b" }
                 });
 
             migrationBuilder.InsertData(
@@ -272,19 +270,19 @@ namespace PosSystem.Infrastracture.Migrations
                 columns: new[] { "ProductId", "BuyingPrice", "CategoryId", "CompanyId", "Name", "Notes", "Quantity", "SellingPrice", "UnitId" },
                 values: new object[,]
                 {
-                    { "2c1167", 10m, "5ee2e819-a35e-4356-870a-40f3dab99a96", "6e5f48e3-408c-480a-9833-31475d0a481d", "T-Shirt", null, 200, 20m, "1b3ed427-373b-431e-829b-cb46a619f80e" },
-                    { "cefb5e", 800m, "d2c7bc49-90b4-47c8-9ed6-df23c974f284", "e174e132-9e37-407b-9e85-8747e90d7f53", "Laptop", null, 10, 1000m, "9d5b276a-5c24-4672-9ed9-34cfe5cca9ea" },
-                    { "e19ce4", 30m, "1792c9c9-285e-439a-bc94-97e3d6c64dca", "34111bfb-255b-4346-9d36-3beb91fa1c27", "Chair", null, 100, 50m, "a099b55b-0330-423a-b2e3-90bc388dfe99" }
+                    { "059ace", 10m, "760bb6fe-1dec-4485-8781-ccd980bff780", "74a3c775-2340-4e03-95c6-eee183a6f070", "T-Shirt", null, 200m, 20m, "22ba30c6-5d60-4d48-a17a-eb8e152797eb" },
+                    { "41da07", 30m, "82e8bc6a-7107-42b3-8759-c90bf1b9da63", "85f36626-6316-4051-92da-d05f54a3eeaa", "Chair", null, 100m, 50m, "fc92090b-105f-4923-854c-bd362bde7f8d" },
+                    { "e89ff6", 800m, "7e076ad1-ebaf-4803-83f1-68e9e995269b", "4e8fbcb7-6d6e-4d85-ad5c-2e160d59a217", "Laptop", null, 10m, 1000m, "6d33b20d-10e2-4cc1-9a8f-ed9095bf043e" }
                 });
 
             migrationBuilder.InsertData(
                 table: "InvoiceItems",
-                columns: new[] { "Id", "Discount", "InvoiceId", "Price", "ProductId", "Quantity", "UnitId" },
+                columns: new[] { "Id", "InvoiceId", "Price", "ProductId", "Quantity", "UnitId" },
                 values: new object[,]
                 {
-                    { "6d72b613-e248-47e6-8273-761870949448", 0m, "a6be97f4-31ff-4c6a-8740-902351064c4f", 1000m, "cefb5e", 1m, "9d5b276a-5c24-4672-9ed9-34cfe5cca9ea" },
-                    { "93bbbf8a-c437-48b3-bfd1-a98274871455", 0m, "013e9469-9f4a-4b07-9d00-d21d44afc4b3", 50m, "e19ce4", 1m, "a099b55b-0330-423a-b2e3-90bc388dfe99" },
-                    { "dfab5abf-665c-43dc-82e8-2c8a44643fb6", 0m, "5fb504a4-2ee5-4a4c-a01c-bfe997cadb16", 20m, "2c1167", 1m, "1b3ed427-373b-431e-829b-cb46a619f80e" }
+                    { "80e1fba2-5763-4398-896b-36191256c59d", "1468aa44-79dc-4652-8a52-760be80e18fb", 20m, "059ace", 1m, "22ba30c6-5d60-4d48-a17a-eb8e152797eb" },
+                    { "a6a3537f-2148-4821-9af4-ee363c3fd59c", "7a731996-b5f2-4ff1-b56c-125f1657b9b0", 1000m, "e89ff6", 1m, "6d33b20d-10e2-4cc1-9a8f-ed9095bf043e" },
+                    { "e7fca972-6014-4536-b01b-dd87b1474ce7", "35b31972-8417-46ff-910c-a7319c42fd6f", 50m, "41da07", 1m, "fc92090b-105f-4923-854c-bd362bde7f8d" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -369,14 +367,12 @@ namespace PosSystem.Infrastracture.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
-                column: "CategoryId",
-                unique: true);
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CompanyId",
                 table: "Products",
-                column: "CompanyId",
-                unique: true);
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_Name",
@@ -387,8 +383,7 @@ namespace PosSystem.Infrastracture.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Products_UnitId",
                 table: "Products",
-                column: "UnitId",
-                unique: true);
+                column: "UnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Units_Name",

@@ -1,21 +1,32 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PosSystem.Application.Contracts.Invoice;
-using PosSystem.Application.Contracts.Product;
 using PosSystem.Application.Interfaces.IServices;
-using PosSystem.Application.Services;
+using System.Security.Claims;
 
 namespace PosSystem.API.Controllers
 {
+    /// <summary>
+    /// Controller for managing invoices.
+    /// </summary>
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class InvoiceController(IInvoiceServices invoiceService) : ControllerBase
     {
+        /// <summary>
+        /// Adds a new invoice.
+        /// </summary>
+        /// <param name="invoice">The invoice creation contract.</param>
+        /// <returns>The added invoice.</returns>
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] InvoiceCreationContract invoice)
         {
             if (invoice == null)
                 return BadRequest("Invoice information must be provided.");
+
+            if (invoice.EmployeeId == null)
+                invoice.EmployeeId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             if (ModelState.IsValid)
             {
@@ -26,11 +37,17 @@ namespace PosSystem.API.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("Error", ex.Message);
+                    return StatusCode(500, ex.Message);
                 }
             }
+
             return BadRequest(ModelState);
         }
+
+        /// <summary>
+        /// Gets all invoices.
+        /// </summary>
+        /// <returns>All invoices.</returns>
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
@@ -44,12 +61,19 @@ namespace PosSystem.API.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        /// <summary>
+        /// Gets a page of invoices.
+        /// </summary>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="pageSize">The page size.</param>
+        /// <returns>A page of invoices.</returns>
         [HttpGet]
         public async Task<IActionResult> GetPage([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
             try
             {
-                var invoices = await invoiceService.GetInvoicePage(pageNumber, pageSize);
+                var invoices = await invoiceService.GetInvoicesPage(pageNumber, pageSize);
                 return Ok(invoices);
             }
             catch (Exception ex)
@@ -57,6 +81,12 @@ namespace PosSystem.API.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        /// <summary>
+        /// Gets an invoice by ID.
+        /// </summary>
+        /// <param name="id">The ID of the invoice.</param>
+        /// <returns>The invoice with the specified ID.</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
@@ -70,6 +100,13 @@ namespace PosSystem.API.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        /// <summary>
+        /// Updates an invoice.
+        /// </summary>
+        /// <param name="id">The ID of the invoice.</param>
+        /// <param name="invoiceUpdateContract">The invoice update contract.</param>
+        /// <returns>The updated invoice.</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(string id, [FromBody] InvoiceOperationsContract invoiceUpdateContract)
         {
@@ -90,6 +127,12 @@ namespace PosSystem.API.Controllers
             }
             return BadRequest(ModelState);
         }
+
+        /// <summary>
+        /// Deletes an invoice.
+        /// </summary>
+        /// <param name="id">The ID of the invoice.</param>
+        /// <returns>No content.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
@@ -103,6 +146,11 @@ namespace PosSystem.API.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        /// <summary>
+        /// Gets all invoices in a short form.
+        /// </summary>
+        /// <returns>All invoices in a shortform.</returns>
         [HttpGet("GetAllShorted")]
         public async Task<IActionResult> GetAllShorted()
         {
@@ -116,6 +164,11 @@ namespace PosSystem.API.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        /// <summary>
+        /// Gets the next invoice number.
+        /// </summary>
+        /// <returns>The next invoice number.</returns>
         [HttpGet("GetNextInvoiceNumber")]
         public async Task<IActionResult> GetNextClientNumber()
         {
@@ -129,6 +182,13 @@ namespace PosSystem.API.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        /// <summary>
+        /// Gets invoices by date range.
+        /// </summary>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns>Invoices within the specified date range.</returns>
         [HttpGet("GetByDateRange")]
         public async Task<IActionResult> GetInvoicesByDateRange([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
@@ -145,7 +205,5 @@ namespace PosSystem.API.Controllers
                 return NotFound(ex.Message);
             }
         }
-    
-
-}
+    }
 }

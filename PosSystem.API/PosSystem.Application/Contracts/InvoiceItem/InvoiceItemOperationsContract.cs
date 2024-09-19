@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using PosSystem.Application.Contracts.Validations.InvoiceItem;
+using PosSystem.Application.Contracts.Validations.Product;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PosSystem.Application.Contracts.InvoiceItem
 {
     public class InvoiceItemOperationsContract
     {
-        [Range(0, int.MaxValue)]
-        public int Quantity { get; set; }
-
-        [Range(0, int.MaxValue)]
-        public int Total { get; set; }
-
-        [Range(0, int.MaxValue)]
-        public int SellingPrice { get; set; }
+        public string InvoiceItemId { get; set; }
 
         [Required]
         public string ItemId { get; set; }
 
-        [Required]
+        [Range(0, int.MaxValue)]
+        [QuantityAvailableInStockOnUpdate]
+        public decimal Quantity { get; set; }
 
-        public string InvoiceId { get; set; }
+        [ExistingUnitId]
+        public string UnitId { get; set; }
+
+        [Range(0, int.MaxValue)]
+        public decimal SellingPrice { get; set; }
     }
 }

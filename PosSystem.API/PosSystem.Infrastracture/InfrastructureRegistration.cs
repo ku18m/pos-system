@@ -18,6 +18,7 @@ namespace PosSystem.Infrastracture
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
                 options.UseLazyLoadingProxies();
+                options.EnableSensitiveDataLogging();
             });
 
 
@@ -29,6 +30,8 @@ namespace PosSystem.Infrastracture
             builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
             builder.Services.AddTransient<IUnitRepository, UnitRepository>();
             builder.Services.AddTransient<IProductRepository, ProductRepository>();
+            builder.Services.AddTransient<IInvoiceRepository, InvoiceRepository>();
+            builder.Services.AddTransient<IInvoiceItemRepository, InvoiceItemRepository>();
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
