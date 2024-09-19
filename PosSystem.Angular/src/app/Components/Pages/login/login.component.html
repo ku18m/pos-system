@@ -1,0 +1,108 @@
+<div
+  class="container-fluid vh-100 d-flex justify-content-center align-items-center"
+  style="background-color: #f4f4f9"
+>
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+      <div
+        class="card shadow-lg border-0"
+        style="border-radius: 1rem; background-color: #ffffff"
+      >
+        <div class="card-body p-5 text-center">
+          <div class="mb-md-5 mt-md-4 pb-5">
+            <div class="text-center">
+              <h1 class="mb-4" style="color: #5a67d8">Billing System Login</h1>
+            </div>
+            <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
+              <div class="form-outline mb-4">
+                <input
+                  type="text"
+                  id="pname"
+                  name="name"
+                  placeholder="Enter your email"
+                  formControlName="email"
+                  class="form-control form-control-lg"
+                  style="
+                    background-color: #f4f5f7;
+                    border: 1px solid #ddd;
+                    padding: 10px;
+                    border-radius: 8px;
+                  "
+                />
+                <small
+                  *ngIf="
+                    getEmail.invalid && (getEmail.dirty || getEmail.touched)
+                  "
+                  class="form-text text-danger"
+                >
+                  <div *ngIf="getEmail.errors?.['required']">
+                    Email is Required
+                  </div>
+                  <div *ngIf="getEmail.errors?.['email']">
+                    Email should be valid
+                  </div>
+                </small>
+              </div>
+
+              <div class="form-outline mb-4">
+                <input
+                  type="password"
+                  id="pname"
+                  name="password"
+                  placeholder="Enter your password"
+                  formControlName="password"
+                  class="form-control form-control-lg"
+                  style="
+                    background-color: #f4f5f7;
+                    border: 1px solid #ddd;
+                    padding: 10px;
+                    border-radius: 8px;
+                  "
+                />
+                <small
+                  *ngIf="
+                    getPassword.invalid &&
+                    (getPassword.dirty || getPassword.touched)
+                  "
+                  class="form-text text-danger"
+                >
+                  <div *ngIf="getPassword.errors?.['required']">
+                    Password is Required
+                  </div>
+                  <div *ngIf="getPassword.errors?.['pattern']">
+                    Password should be valid
+                  </div>
+                </small>
+              </div>
+              <!-- Remember Me Checkbox -->
+              <div class="form-check mb-4">
+                <input
+                  type="checkbox"
+                  id="rememberMe"
+                  formControlName="rememberMe"
+                  class="form-check-input"
+                />
+                <label class="form-check-label" for="rememberMe"
+                  >Remember Me</label
+                >
+              </div>
+              <button
+                type="submit"
+                [disabled]="loginForm.invalid"
+                class="btn btn-lg btn-block"
+                style="
+                  background-color: #5a67d8;
+                  color: white;
+                  padding: 10px 20px;
+                  border-radius: 8px;
+                "
+              >
+                Login
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
