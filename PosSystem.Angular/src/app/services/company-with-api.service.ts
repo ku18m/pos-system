@@ -1,22 +1,34 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ICompany } from '../Components/Pages/company/ICompany';
+
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompanyWithAPIService {
-  baseURL="http://localhost:3005/company";
+  baseURL="https://localhost:44376/api/Company";
+  
   constructor(private http:HttpClient) { }
 
-  getAllCompanies():Observable<ICompany[]>{
-    return this.http.get<ICompany[]>(this.baseURL);
-  }
+  
+  getAllCompanies(token:string): Observable<any> {  
+     
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`); // Set the authorization header  
 
-  addCompany(company: any)  {  
-    return this.http.post(this.baseURL, company);  
+    return this.http.get<any[]>(this.baseURL, { headers }); // Make the API call  
+  }  
+
+  addCompanyWithNotes(token:string ,companyName: string, notes: string): Observable<any> {   
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`); // Set the authorization header  
+
+    const body = { name: companyName, notes }; // Prepare the request body with company name and notes  
+
+    return this.http.post(this.baseURL, body, { headers }); // Make the API call  
   }  
  
-}
+ 
+  
+}  
+

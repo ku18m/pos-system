@@ -71,6 +71,18 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", builder =>
+    {
+        builder.AllowAnyOrigin() // Allows any origin  
+               .AllowAnyMethod() // Allows any HTTP method (GET, POST, etc.)  
+               .AllowAnyHeader(); // Allows any header  
+    });
+});
+
+builder.Services.AddControllers();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -80,9 +92,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
+
+app.UseCors("AllowAllOrigins");
 
 app.UseAuthorization();
 

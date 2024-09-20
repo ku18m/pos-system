@@ -1,3 +1,4 @@
 export interface ICompany{
-    id:string
+    id:string,
+    name:string
 }

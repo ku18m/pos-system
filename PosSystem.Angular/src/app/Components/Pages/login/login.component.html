@@ -1,0 +1,28 @@
+<div class="container">
+  <img src="images/logo.png">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="username">
+      <label for="UserName" class="userLabel">username</label>
+      <input id="UserName" formControlName="email" type="text" [(ngModel)]="userName">
+      <div *ngIf="loginForm.get('email') as emailControl">
+        <div *ngIf="emailControl.invalid && emailControl.touched">
+          <small class="text-danger" *ngIf="emailControl.errors?.['required']">Email is required.</small>
+        </div>
+      </div>
+    </div>
+    <div class="password">
+      <label for="password">password</label>
+      <input id="password" formControlName="password" type="password" [(ngModel)]="password">
+      <div *ngIf="loginForm.get('password') as passwordControl">
+        <div *ngIf="passwordControl.invalid && passwordControl.touched">
+          <small class="text-danger ms-4" *ngIf="passwordControl.errors?.['required']">Password is required.</small>
+          <small class="text-danger ms-4" *ngIf="passwordControl.errors?.['minlength']">Password must be at least 6
+            characters
+            long.</small>
+        </div>
+      </div>
+    </div>
+    <div class="text-danger">{{loginError}}</div>
+    <button type="submit" [disabled]="loginForm.invalid">Login</button>
+  </form>
+</div>

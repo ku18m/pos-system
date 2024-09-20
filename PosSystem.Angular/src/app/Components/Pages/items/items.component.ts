@@ -38,7 +38,7 @@ export class ItemsComponent implements OnInit {
 
   constructor(private companyService:CompanyWithAPIService, private typeService:TypesWithAPIService, private itemService:ItemWithAPIService){}
   ngOnInit(): void {
-    this.companyService.getAllCompanies().subscribe({next:(response)=> this.companyList=response});
+    // this.companyService.getAllCompanies().subscribe({next:(response)=> this.companyList=response});
     this.itemService.getAllItems().subscribe({next:(items:IItems[])=>{  
       this.ItemList = items.map(item => item.id);  
     },

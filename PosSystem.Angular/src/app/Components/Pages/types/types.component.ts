@@ -29,9 +29,9 @@ export class TypesComponent implements OnInit {
   constructor(private companyService:CompanyWithAPIService, private typeService:TypesWithAPIService){}
 
   ngOnInit(): void {
-    this.companyService.getAllCompanies().subscribe({next:(response)=> this.companyList=response});
-    this.typeService.getAllTypes().subscribe({next:(types:ITypes[])=>{  
-      this.TypeList = types.map(type => type.id)}});
+    // this.companyService.getAllCompanies().subscribe({next:(response)=> this.companyList=response});
+    // this.typeService.getAllTypes().subscribe({next:(types:ITypes[])=>{  
+    //   this.TypeList = types.map(type => type.id)}});
   }
 
 
