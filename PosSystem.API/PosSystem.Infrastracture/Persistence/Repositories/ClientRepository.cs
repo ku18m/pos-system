@@ -40,7 +40,7 @@ namespace PosSystem.Infrastracture.Persistence.Repositories
         public async Task<int> GetNextClientNumber()
         {
             var sqlQuery = @"SELECT current_value AS CurrentValue FROM sys.sequences WHERE name = 'ClientNumber'";
-            var currentValue = await _context.Set<SequenceValue>().FromSqlRaw(sqlQuery).FirstAsync();
+            var currentValue = await _context.Database.SqlQueryRaw<SequenceValue>(sqlQuery).FirstAsync();
 
             return currentValue.CurrentValue + 1;
         }
