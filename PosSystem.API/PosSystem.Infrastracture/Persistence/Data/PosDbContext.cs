@@ -28,7 +28,7 @@ namespace PosSystem.Infrastracture.Persistence.Data
 
             #region Main_Sequences
             // Define The BillNumber sequence for the Invoice Entity
-            modelBuilder.HasSequence<long>("BillNumber", schema: "dbo")
+            modelBuilder.HasSequence<int>("BillNumber", schema: "dbo")
                 .StartsAt(1000000)
                 .IncrementsBy(1);
 
@@ -312,9 +312,9 @@ namespace PosSystem.Infrastracture.Persistence.Data
             #region Seed_Data
             var clients = new[]
             {
-            new Client { Name = "John", Number = 1, Phone = "1234567890", Address = "123 Main St" },
-            new Client { Name = "Jane", Number = 2, Phone = "0987654321", Address = "456 Elm St" },
-            new Client { Name = "Jim", Number = 3, Phone = "1112223333", Address = "789 Oak St" }
+            new Client { Name = "John", Phone = "1234567890", Address = "123 Main St" },
+            new Client { Name = "Jane", Phone = "0987654321", Address = "456 Elm St" },
+            new Client { Name = "Jim", Phone = "1112223333", Address = "789 Oak St" }
             };
 
             var users = new List<User>
@@ -381,9 +381,9 @@ namespace PosSystem.Infrastracture.Persistence.Data
 
             var invoices = new[]
             {
-            new Invoice {BillDate = DateTime.Now, BillNumber = 1, ClientId = clients[0].ClientId, UserId = users[0].Id, TotalAmount = 1000, TotalDiscount = 0, FinalAmount = 1000, PaidAmount = 1000, DueAmount = 0, Date = DateTime.Now},
-            new Invoice {BillDate = DateTime.Now, BillNumber = 2, ClientId = clients[1].ClientId, UserId = users[1].Id, TotalAmount = 50, TotalDiscount = 0, FinalAmount = 50, PaidAmount = 50, DueAmount = 0, Date = DateTime.Now},
-            new Invoice { BillDate = DateTime.Now, BillNumber = 3, ClientId = clients[2].ClientId, UserId = users[2].Id, TotalAmount = 20, TotalDiscount = 0, FinalAmount = 20, PaidAmount = 20, DueAmount = 0, Date = DateTime.Now }
+            new Invoice {BillDate = DateTime.Now, ClientId = clients[0].ClientId, UserId = users[0].Id, TotalAmount = 1000, TotalDiscount = 0, FinalAmount = 1000, PaidAmount = 1000, DueAmount = 0, Date = DateTime.Now},
+            new Invoice {BillDate = DateTime.Now, ClientId = clients[1].ClientId, UserId = users[1].Id, TotalAmount = 50, TotalDiscount = 0, FinalAmount = 50, PaidAmount = 50, DueAmount = 0, Date = DateTime.Now},
+            new Invoice { BillDate = DateTime.Now, ClientId = clients[2].ClientId, UserId = users[2].Id, TotalAmount = 20, TotalDiscount = 0, FinalAmount = 20, PaidAmount = 20, DueAmount = 0, Date = DateTime.Now }
             };
 
             var invoiceItems = new[]

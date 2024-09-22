@@ -239,7 +239,7 @@ namespace PosSystem.API.Controllers
             try
             {
                 var clientNumber = await clientService.GetNextClientNumber();
-                return Ok(clientNumber);
+                return Ok(new { clientNumber });
             }
             catch (Exception ex)
             {

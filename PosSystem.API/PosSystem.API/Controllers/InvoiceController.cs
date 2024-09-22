@@ -170,12 +170,12 @@ namespace PosSystem.API.Controllers
         /// </summary>
         /// <returns>The next invoice number.</returns>
         [HttpGet("GetNextInvoiceNumber")]
-        public async Task<IActionResult> GetNextClientNumber()
+        public async Task<IActionResult> GetNextInvoiceNumber()
         {
             try
             {
                 var invoiceNumber = await invoiceService.GetNextInvoiceNumber();
-                return Ok(invoiceNumber);
+                return Ok(new { invoiceNumber });
             }
             catch (Exception ex)
             {
