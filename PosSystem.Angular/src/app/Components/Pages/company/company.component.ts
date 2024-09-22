@@ -29,15 +29,10 @@ export class CompanyComponent implements OnInit {
 
   constructor(private companyService: CompanyWithAPIService) { }
   ngOnInit() {
-    // console.log(this.tokin)
     this.companyService.getAllCompanies(this.tokin).subscribe({  
-      next: (element) => { 
-          // console.log(element.data)
-          
-          // this.companyList = data.map(company => company.name);  
+      next: (element) => {
           for(var i=0;i<element.data.length;i++){
             this.companyList.push(element.data[i].name);
-            // console.log(this.companyList)
           }
       }});
 
@@ -57,13 +52,6 @@ export class CompanyComponent implements OnInit {
       console.log(this.companyList)
       
       
-    // if (this.companyList.includes(this.companyName)) {
-    
-    //   this.duplicateError = `${this.companyName} has already existed before`;
-    // }
-    // else{
-    //   this.duplicateError = null;
-    // }
 
     this.companyList.forEach((company)=>{
       if(company==this.companyName)
@@ -77,26 +65,18 @@ export class CompanyComponent implements OnInit {
     
       
     //adding company
-    if (this.companyName != null && this.companyName != "") {
-      if (this.companyName && this.companyNotes) {  
+    if (this.companyName != null && this.companyName != "") {  
         this.companyService.addCompanyWithNotes(this.tokin,this.companyName, this.companyNotes).subscribe(  
           response => {  
             console.log('Company added successfully:', response);  
-            // Handle success (e.g., clear the input or notify the user)  
             this.companyName = ''; // Clear input  
             this.companyNotes = ''; // Clear input 
             this.duplicateError=null; 
           },  
           error => {  
             console.error('Error adding company:', error);  
-            // Handle error (e.g., show a message to the user)  
           }  
-        );  
-
-      
-        
-      
-    }
+        ); 
 
   }
 }

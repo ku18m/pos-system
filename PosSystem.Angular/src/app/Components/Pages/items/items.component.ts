@@ -59,7 +59,7 @@ export class ItemsComponent implements OnInit {
   })
 
   ChangeType(){
-    this.typeService.getAllTypes().subscribe({next:(response)=>this.typeList=response});
+    // this.typeService.getAllTypes().subscribe({next:(response)=>this.typeList=response});
 
   }
 

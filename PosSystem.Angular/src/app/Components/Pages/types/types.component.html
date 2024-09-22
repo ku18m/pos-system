@@ -8,7 +8,7 @@
         <select  class="form-control dropdown-toggle"  data-bs-toggle="dropdown" [(ngModel)]="companyValue" name="CompanyValue" formControlName="companyName" >
             <option disabled selected>-- Choose From Companies --</option>
             @for(company of companyList; track $index){
-                <option>{{company.name}}</option>
+                <option>{{company}}</option>
             }
         </select>
     </div>
