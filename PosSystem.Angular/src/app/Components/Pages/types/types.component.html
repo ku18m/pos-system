@@ -5,7 +5,7 @@
     <form [formGroup]="typeForm">
     <div class="input">
         <label>Company Name:</label>
-        <select  class="form-control dropdown-toggle"  data-bs-toggle="dropdown" [(ngModel)]="companyValue" name="CompanyValue" formControlName="companyName" >
+        <select  class="form-control dropdown-toggle"  data-bs-toggle="dropdown" [(ngModel)]="companyValue" name="CompanyValue" formControlName="companyName" (change)="onChange()"  >
             <option disabled selected>-- Choose From Companies --</option>
             @for(company of companyList; track $index){
                 <option>{{company}}</option>

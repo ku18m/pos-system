@@ -26,6 +26,7 @@ export class TypesComponent implements OnInit {
   duplicateError: any;
   TypeRequiredError: string | null = null;
   token: any = localStorage.getItem('token');
+  companyID:any;
 
   constructor(private companyService: CompanyWithAPIService, private typeService: TypesWithAPIService) { }
 
@@ -50,7 +51,20 @@ export class TypesComponent implements OnInit {
     companyName: new FormControl(""),
     name: new FormControl("", [Validators.required]),
     notes: new FormControl("")
-  })
+  });
+
+  onChange(){
+    this.companyService.getAllCompanies(this.token).subscribe({
+      next: (element) => {
+        this.companyList.forEach((item)=>{
+          if(this.companyValue==item){
+            this.companyID=item.id;
+          }
+        })
+      }
+    });
+
+  }
 
   Submit(e: any) {
     e.preventDefault();
@@ -79,7 +93,7 @@ export class TypesComponent implements OnInit {
       })
     //adding type
     if (this.companyValue != "-- Choose From Companies --" && this.typeName != null && this.typeName != "" ) { 
-        this.typeService.addTypeWithNotes(this.token,this.typeName, this.notes).subscribe(  
+        this.typeService.addTypeWithNotes(this.token,this.typeName, this.notes,this.companyID).subscribe(  
           response => {  
             console.log('Type added successfully:', response);  
             this.typeName = ''; // Clear input  

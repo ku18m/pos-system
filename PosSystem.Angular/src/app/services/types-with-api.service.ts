@@ -19,10 +19,10 @@ export class TypesWithAPIService {
     return this.http.get<any[]>(this.GetAllURL, { headers }); // Make the API call  
   }  
 
-  addTypeWithNotes(token:string ,typeName: string, notes: string): Observable<any> {   
+  addTypeWithNotes(token:string ,typeName: string, notes: string,companyID:string): Observable<any> {   
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`); // Set the authorization header  
 
-    const body = { name: typeName, notes }; // Prepare the request body with company name and notes  
+    const body = { name: typeName, notes, companyID }; // Prepare the request body with company name and notes  
 
     return this.http.post(this.AddURL, body, { headers }); // Make the API call  
   }  
