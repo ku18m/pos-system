@@ -6,7 +6,7 @@
 
         public DateTime BillDate { get; set; }
 
-        public long BillNumber { get; set; }
+        public int BillNumber { get; set; }
 
         public string ClientId { get; set; }
         public virtual Client Client { get; set; }

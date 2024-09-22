@@ -12,7 +12,7 @@ using PosSystem.Infrastracture.Persistence.Data;
 namespace PosSystem.Infrastracture.Migrations
 {
     [DbContext(typeof(PosDbContext))]
-    [Migration("20240919085137_initDB")]
+    [Migration("20240922224724_initDB")]
     partial class initDB
     {
         /// <inheritdoc />
@@ -28,7 +28,7 @@ namespace PosSystem.Infrastracture.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.HasSequence("BillNumber", "dbo")
+            modelBuilder.HasSequence<int>("BillNumber", "dbo")
                 .StartsAt(1000000L);
 
             modelBuilder.HasSequence<int>("ClientNumber", "dbo")
@@ -62,20 +62,20 @@ namespace PosSystem.Infrastracture.Migrations
                     b.HasData(
                         new
                         {
-                            CategoryId = "7e076ad1-ebaf-4803-83f1-68e9e995269b",
-                            CompanyId = "4e8fbcb7-6d6e-4d85-ad5c-2e160d59a217",
+                            CategoryId = "ea6d20db-6e8f-4394-b384-e3977b309bb9",
+                            CompanyId = "34e7fd45-27b4-44e6-b4d7-a8bdf9b979ff",
                             Name = "Electronics"
                         },
                         new
                         {
-                            CategoryId = "82e8bc6a-7107-42b3-8759-c90bf1b9da63",
-                            CompanyId = "85f36626-6316-4051-92da-d05f54a3eeaa",
+                            CategoryId = "5481552c-42c9-47ab-aeab-7e7fd4a9df3d",
+                            CompanyId = "f39227bf-be19-43b8-9cfd-6bce63404190",
                             Name = "Furniture"
                         },
                         new
                         {
-                            CategoryId = "760bb6fe-1dec-4485-8781-ccd980bff780",
-                            CompanyId = "74a3c775-2340-4e03-95c6-eee183a6f070",
+                            CategoryId = "809b0924-652f-4758-a779-c8476775d639",
+                            CompanyId = "d36cc123-8515-4cec-afc2-65ad7a315578",
                             Name = "Clothing"
                         });
                 });
@@ -121,26 +121,26 @@ namespace PosSystem.Infrastracture.Migrations
                     b.HasData(
                         new
                         {
-                            ClientId = "01b7952b-fde0-4d7c-a53e-e70999a469e6",
+                            ClientId = "5abff7b1-5c8f-4228-a132-2e0487050ca5",
                             Address = "123 Main St",
                             Name = "John",
-                            Number = 1,
+                            Number = 0,
                             Phone = "1234567890"
                         },
                         new
                         {
-                            ClientId = "85593aa9-5f7e-4c67-95a8-bd4a6474e9d8",
+                            ClientId = "b37b4bde-c4de-4bf8-bd10-961e185e045f",
                             Address = "456 Elm St",
                             Name = "Jane",
-                            Number = 2,
+                            Number = 0,
                             Phone = "0987654321"
                         },
                         new
                         {
-                            ClientId = "d9b29e24-d2e8-45a5-b3ae-9d3f4aedf8aa",
+                            ClientId = "2fa4aa37-e828-43a0-9654-09195e1fd031",
                             Address = "789 Oak St",
                             Name = "Jim",
-                            Number = 3,
+                            Number = 0,
                             Phone = "1112223333"
                         });
                 });
@@ -167,17 +167,17 @@ namespace PosSystem.Infrastracture.Migrations
                     b.HasData(
                         new
                         {
-                            CompanyId = "4e8fbcb7-6d6e-4d85-ad5c-2e160d59a217",
+                            CompanyId = "34e7fd45-27b4-44e6-b4d7-a8bdf9b979ff",
                             Name = "Tech Corp"
                         },
                         new
                         {
-                            CompanyId = "85f36626-6316-4051-92da-d05f54a3eeaa",
+                            CompanyId = "f39227bf-be19-43b8-9cfd-6bce63404190",
                             Name = "Biz Inc"
                         },
                         new
                         {
-                            CompanyId = "74a3c775-2340-4e03-95c6-eee183a6f070",
+                            CompanyId = "d36cc123-8515-4cec-afc2-65ad7a315578",
                             Name = "Retail LLC"
                         });
                 });
@@ -190,9 +190,9 @@ namespace PosSystem.Infrastracture.Migrations
                     b.Property<DateTime>("BillDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("BillNumber")
+                    b.Property<int>("BillNumber")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasDefaultValueSql("NEXT VALUE FOR dbo.BillNumber");
 
                     b.Property<string>("ClientId")
@@ -243,45 +243,45 @@ namespace PosSystem.Infrastracture.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7a731996-b5f2-4ff1-b56c-125f1657b9b0",
-                            BillDate = new DateTime(2024, 9, 19, 11, 51, 36, 391, DateTimeKind.Local).AddTicks(1330),
-                            BillNumber = 1L,
-                            ClientId = "01b7952b-fde0-4d7c-a53e-e70999a469e6",
-                            Date = new DateTime(2024, 9, 19, 11, 51, 36, 391, DateTimeKind.Local).AddTicks(1422),
+                            Id = "1aca300d-0dd6-48d3-bce1-00b2ddacdbfa",
+                            BillDate = new DateTime(2024, 9, 23, 1, 47, 24, 105, DateTimeKind.Local).AddTicks(7760),
+                            BillNumber = 0,
+                            ClientId = "5abff7b1-5c8f-4228-a132-2e0487050ca5",
+                            Date = new DateTime(2024, 9, 23, 1, 47, 24, 105, DateTimeKind.Local).AddTicks(7826),
                             DueAmount = 0m,
                             FinalAmount = 1000m,
                             PaidAmount = 1000m,
                             TotalAmount = 1000m,
                             TotalDiscount = 0m,
-                            UserId = "e5fcfa12-a3d2-4fd7-abbe-ffc919409a6b"
+                            UserId = "1032808d-8b4d-43a4-92e1-0aeb2015e526"
                         },
                         new
                         {
-                            Id = "35b31972-8417-46ff-910c-a7319c42fd6f",
-                            BillDate = new DateTime(2024, 9, 19, 11, 51, 36, 391, DateTimeKind.Local).AddTicks(1433),
-                            BillNumber = 2L,
-                            ClientId = "85593aa9-5f7e-4c67-95a8-bd4a6474e9d8",
-                            Date = new DateTime(2024, 9, 19, 11, 51, 36, 391, DateTimeKind.Local).AddTicks(1438),
+                            Id = "abb18280-7675-480f-986b-31918fd40773",
+                            BillDate = new DateTime(2024, 9, 23, 1, 47, 24, 105, DateTimeKind.Local).AddTicks(7832),
+                            BillNumber = 0,
+                            ClientId = "b37b4bde-c4de-4bf8-bd10-961e185e045f",
+                            Date = new DateTime(2024, 9, 23, 1, 47, 24, 105, DateTimeKind.Local).AddTicks(7837),
                             DueAmount = 0m,
                             FinalAmount = 50m,
                             PaidAmount = 50m,
                             TotalAmount = 50m,
                             TotalDiscount = 0m,
-                            UserId = "f49141da-adf2-4fcd-a756-aeb96f346e72"
+                            UserId = "e1343516-a29d-458a-a03a-c9352b1ac80f"
                         },
                         new
                         {
-                            Id = "1468aa44-79dc-4652-8a52-760be80e18fb",
-                            BillDate = new DateTime(2024, 9, 19, 11, 51, 36, 391, DateTimeKind.Local).AddTicks(1444),
-                            BillNumber = 3L,
-                            ClientId = "d9b29e24-d2e8-45a5-b3ae-9d3f4aedf8aa",
-                            Date = new DateTime(2024, 9, 19, 11, 51, 36, 391, DateTimeKind.Local).AddTicks(1454),
+                            Id = "4fa5da51-71fe-44d9-a900-a57512fea3c1",
+                            BillDate = new DateTime(2024, 9, 23, 1, 47, 24, 105, DateTimeKind.Local).AddTicks(7841),
+                            BillNumber = 0,
+                            ClientId = "2fa4aa37-e828-43a0-9654-09195e1fd031",
+                            Date = new DateTime(2024, 9, 23, 1, 47, 24, 105, DateTimeKind.Local).AddTicks(7850),
                             DueAmount = 0m,
                             FinalAmount = 20m,
                             PaidAmount = 20m,
                             TotalAmount = 20m,
                             TotalDiscount = 0m,
-                            UserId = "f246b47b-80c2-411b-b8fa-fa90f994403b"
+                            UserId = "a60c93e5-a443-4490-92a1-1f114359c09a"
                         });
                 });
 
@@ -326,33 +326,33 @@ namespace PosSystem.Infrastracture.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a6a3537f-2148-4821-9af4-ee363c3fd59c",
-                            InvoiceId = "7a731996-b5f2-4ff1-b56c-125f1657b9b0",
+                            Id = "0b41a6c8-f0c8-4f21-a5c1-7600f7df3b2e",
+                            InvoiceId = "1aca300d-0dd6-48d3-bce1-00b2ddacdbfa",
                             Price = 1000m,
-                            ProductId = "e89ff6",
+                            ProductId = "90cbeb",
                             Quantity = 1m,
                             TotalAmount = 1000m,
-                            UnitId = "6d33b20d-10e2-4cc1-9a8f-ed9095bf043e"
+                            UnitId = "236bbc46-221f-4d3e-8ab8-4df84a4704e8"
                         },
                         new
                         {
-                            Id = "e7fca972-6014-4536-b01b-dd87b1474ce7",
-                            InvoiceId = "35b31972-8417-46ff-910c-a7319c42fd6f",
+                            Id = "05a3dd83-3cad-4a8a-8fb8-4c6c97c7c65a",
+                            InvoiceId = "abb18280-7675-480f-986b-31918fd40773",
                             Price = 50m,
-                            ProductId = "41da07",
+                            ProductId = "7e376f",
                             Quantity = 1m,
                             TotalAmount = 50m,
-                            UnitId = "fc92090b-105f-4923-854c-bd362bde7f8d"
+                            UnitId = "a0867397-4142-46f5-a0fd-f12b4e224b01"
                         },
                         new
                         {
-                            Id = "80e1fba2-5763-4398-896b-36191256c59d",
-                            InvoiceId = "1468aa44-79dc-4652-8a52-760be80e18fb",
+                            Id = "711a060b-e737-4d8a-870c-cc9db63d4ab3",
+                            InvoiceId = "4fa5da51-71fe-44d9-a900-a57512fea3c1",
                             Price = 20m,
-                            ProductId = "059ace",
+                            ProductId = "02d01a",
                             Quantity = 1m,
                             TotalAmount = 20m,
-                            UnitId = "22ba30c6-5d60-4d48-a17a-eb8e152797eb"
+                            UnitId = "e2ae3d55-d7b5-4b5b-a263-93f019543c62"
                         });
                 });
 
@@ -405,36 +405,36 @@ namespace PosSystem.Infrastracture.Migrations
                     b.HasData(
                         new
                         {
-                            ProductId = "e89ff6",
+                            ProductId = "90cbeb",
                             BuyingPrice = 800m,
-                            CategoryId = "7e076ad1-ebaf-4803-83f1-68e9e995269b",
-                            CompanyId = "4e8fbcb7-6d6e-4d85-ad5c-2e160d59a217",
+                            CategoryId = "ea6d20db-6e8f-4394-b384-e3977b309bb9",
+                            CompanyId = "34e7fd45-27b4-44e6-b4d7-a8bdf9b979ff",
                             Name = "Laptop",
                             Quantity = 10m,
                             SellingPrice = 1000m,
-                            UnitId = "6d33b20d-10e2-4cc1-9a8f-ed9095bf043e"
+                            UnitId = "236bbc46-221f-4d3e-8ab8-4df84a4704e8"
                         },
                         new
                         {
-                            ProductId = "41da07",
+                            ProductId = "7e376f",
                             BuyingPrice = 30m,
-                            CategoryId = "82e8bc6a-7107-42b3-8759-c90bf1b9da63",
-                            CompanyId = "85f36626-6316-4051-92da-d05f54a3eeaa",
+                            CategoryId = "5481552c-42c9-47ab-aeab-7e7fd4a9df3d",
+                            CompanyId = "f39227bf-be19-43b8-9cfd-6bce63404190",
                             Name = "Chair",
                             Quantity = 100m,
                             SellingPrice = 50m,
-                            UnitId = "fc92090b-105f-4923-854c-bd362bde7f8d"
+                            UnitId = "a0867397-4142-46f5-a0fd-f12b4e224b01"
                         },
                         new
                         {
-                            ProductId = "059ace",
+                            ProductId = "02d01a",
                             BuyingPrice = 10m,
-                            CategoryId = "760bb6fe-1dec-4485-8781-ccd980bff780",
-                            CompanyId = "74a3c775-2340-4e03-95c6-eee183a6f070",
+                            CategoryId = "809b0924-652f-4758-a779-c8476775d639",
+                            CompanyId = "d36cc123-8515-4cec-afc2-65ad7a315578",
                             Name = "T-Shirt",
                             Quantity = 200m,
                             SellingPrice = 20m,
-                            UnitId = "22ba30c6-5d60-4d48-a17a-eb8e152797eb"
+                            UnitId = "e2ae3d55-d7b5-4b5b-a263-93f019543c62"
                         });
                 });
 
@@ -460,17 +460,17 @@ namespace PosSystem.Infrastracture.Migrations
                     b.HasData(
                         new
                         {
-                            UnitId = "6d33b20d-10e2-4cc1-9a8f-ed9095bf043e",
+                            UnitId = "236bbc46-221f-4d3e-8ab8-4df84a4704e8",
                             Name = "Piece"
                         },
                         new
                         {
-                            UnitId = "fc92090b-105f-4923-854c-bd362bde7f8d",
+                            UnitId = "a0867397-4142-46f5-a0fd-f12b4e224b01",
                             Name = "Box"
                         },
                         new
                         {
-                            UnitId = "22ba30c6-5d60-4d48-a17a-eb8e152797eb",
+                            UnitId = "e2ae3d55-d7b5-4b5b-a263-93f019543c62",
                             Name = "Pack"
                         });
                 });
@@ -519,33 +519,33 @@ namespace PosSystem.Infrastracture.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e5fcfa12-a3d2-4fd7-abbe-ffc919409a6b",
+                            Id = "1032808d-8b4d-43a4-92e1-0aeb2015e526",
                             EndTime = new TimeSpan(0, 17, 0, 0, 0),
                             FirstName = "John",
                             LastName = "Doe",
-                            Password = "$2a$11$CtJBer78S24mWh5qAfH6buKl2PB/q3wSiypg6YzasdXOJG/Hn9UJC",
+                            Password = "$2a$11$C/yKwAw2sqD2u9zEWmkcVeCQBM0594ZhXzIZFSuvZ78760iubWtT2",
                             Role = 0,
                             StartTime = new TimeSpan(0, 9, 0, 0, 0),
                             UserName = "admin1"
                         },
                         new
                         {
-                            Id = "f49141da-adf2-4fcd-a756-aeb96f346e72",
+                            Id = "e1343516-a29d-458a-a03a-c9352b1ac80f",
                             EndTime = new TimeSpan(0, 16, 0, 0, 0),
                             FirstName = "Jane",
                             LastName = "Smith",
-                            Password = "$2a$11$nrFhIDyJsyvWtnbXPqIzCO9dbhgOkjWtOzzjXgn6Cm8hHWaPw2q72",
+                            Password = "$2a$11$ikucYIr2aK.PxfTTQWuw4elOEjrnF79QJUkduJ/JPP2gQcqUc4/K6",
                             Role = 1,
                             StartTime = new TimeSpan(0, 8, 0, 0, 0),
                             UserName = "jane.smith"
                         },
                         new
                         {
-                            Id = "f246b47b-80c2-411b-b8fa-fa90f994403b",
+                            Id = "a60c93e5-a443-4490-92a1-1f114359c09a",
                             EndTime = new TimeSpan(0, 18, 0, 0, 0),
                             FirstName = "Alice",
                             LastName = "Johnson",
-                            Password = "$2a$11$J0ZF5KzUPdVHEXcBLCNfjOfXzMC7joyHDbPuNqxltFrL44YRaGs7u",
+                            Password = "$2a$11$hfJnaeH/4agUjpjUN9cla.Wtdk5Qy7CHdCgUogQ.Hlgc079wXaK.e",
                             Role = 1,
                             StartTime = new TimeSpan(0, 10, 0, 0, 0),
                             UserName = "alice.johnson"
