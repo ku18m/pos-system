@@ -24,6 +24,8 @@ export class ItemsComponent implements OnInit {
   quantity:any;
   notes:any;
   ItemList:string[]=[];
+  tokin:any=localStorage.getItem('token');
+
   companyNameRequiredError:any;
   typeNameRequiredError:any;
   itemNameRequiredError:any;
@@ -33,18 +35,18 @@ export class ItemsComponent implements OnInit {
   companyList:any;
   typeList:any;
   buyGreaterThanSellError:any;
-  
+
 
 
   constructor(private companyService:CompanyWithAPIService, private typeService:TypesWithAPIService, private itemService:ItemWithAPIService){}
   ngOnInit(): void {
     // this.companyService.getAllCompanies().subscribe({next:(response)=> this.companyList=response});
-    this.itemService.getAllItems().subscribe({next:(items:IItems[])=>{  
-      this.ItemList = items.map(item => item.id);  
+    this.itemService.getAllItems(this.tokin).subscribe({next:(items:IItems[])=>{
+      this.ItemList = items.map(item => item.id);
     },
-    error:(error) => {  
-      console.error('Error fetching items:', error);  
-    },  
+    error:(error) => {
+      console.error('Error fetching items:', error);
+    },
   });
   }
 
@@ -82,34 +84,34 @@ export class ItemsComponent implements OnInit {
       this.typeNameRequiredError=null;
 
 
-    if (this.itemName==null || this.itemName=="") {  
+    if (this.itemName==null || this.itemName=="") {
       this.itemNameRequiredError = 'Item Name Is Required';
       this.itemNameDuplicateError=null;
-    }  
+    }
     else
         this.itemNameRequiredError = null;
 
 
-    if (this.ItemList.includes(this.itemName)) {  
-      this.itemNameDuplicateError = `${this.itemName} has already existed before`; 
-    } 
+    if (this.ItemList.includes(this.itemName)) {
+      this.itemNameDuplicateError = `${this.itemName} has already existed before`;
+    }
     else
-        this.itemNameDuplicateError=null; 
+        this.itemNameDuplicateError=null;
 
 
 
     if(this.sellingPrice<0)
       {
         this.sellingError="Selling Price Must Be Greater Than Or Equal Zero";
-      } 
+      }
     else
         this.sellingError=null;
 
 
     if(this.buyingPrice<0)
       {
-        this.buyingError="Buying Price Must Be Greater Than Or Equal Zero"; 
-      } 
+        this.buyingError="Buying Price Must Be Greater Than Or Equal Zero";
+      }
     else
         this.buyingError=null;
 
@@ -117,8 +119,8 @@ export class ItemsComponent implements OnInit {
     if(this.buyingPrice>this.sellingPrice)
       {
         this.buyGreaterThanSellError="Buying Price Must Be Less Than Or Equal Selling Price";
-        
-      } 
+
+      }
     else
         this.buyingError=null;
 
@@ -126,26 +128,26 @@ export class ItemsComponent implements OnInit {
 
     //adding type
     if(this.companyName != "-- Choose From Companies --" && this.typeName != "-- Choose From Types --" && this.itemName!=null && this.itemName!="" && !this.ItemList.includes(this.itemName)&& this.sellingPrice>=0 && this.buyingPrice>=0&&this.buyingPrice<=this.sellingPrice){
-    const newItem:any = { companyName: this.companyName, typeName:this.typeName,name:this.itemName,sellingPrice:this.sellingPrice,buyingPrice:this.buyingPrice,quantity:this.quantity, notes:this.notes , itemCode:Math.random()*100 };  
+    const newItem:any = { companyName: this.companyName, typeName:this.typeName,name:this.itemName,sellingPrice:this.sellingPrice,buyingPrice:this.buyingPrice,quantity:this.quantity, notes:this.notes , itemCode:Math.random()*100 };
 
-    this.itemService.addItem(newItem).subscribe({  
-      next: () => {  
-        console.log('Item added successfully!');  
-        this.ItemList.push(newItem);  
-        this.itemForm.reset(); 
-        this.companyName="-- Choose From Companies --";  
-        this.typeName="-- Choose From Types --";  
-      },  
-      error: (error) => {  
-        console.error('Error adding Item:', error);  
-      }  
-    });  
+    this.itemService.addItem(this.tokin,newItem).subscribe({
+      next: () => {
+        console.log('Item added successfully!');
+        this.ItemList.push(newItem);
+        this.itemForm.reset();
+        this.companyName="-- Choose From Companies --";
+        this.typeName="-- Choose From Types --";
+      },
+      error: (error) => {
+        console.error('Error adding Item:', error);
+      }
+    });
   }
-  }  
+  }
   Cancel(){
-    this.itemForm.reset(); 
-    this.companyName="-- Choose From Companies --";  
-    this.typeName="-- Choose From Types --"; 
+    this.itemForm.reset();
+    this.companyName="-- Choose From Companies --";
+    this.typeName="-- Choose From Types --";
     this.companyNameRequiredError=null;
     this.typeNameRequiredError=null;
     this.itemNameRequiredError=null;

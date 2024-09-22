@@ -16,6 +16,8 @@ export class StockComponent implements OnInit {
 
   items:any="-- Choose From Items --";
   itemList:any[]=[];
+  tokin:any=localStorage.getItem('token');
+
   code:any;
   name:any;
   quantity:any;
@@ -23,7 +25,7 @@ export class StockComponent implements OnInit {
 
   constructor(private itemService:ItemWithAPIService){}
   ngOnInit(): void {
-    this.itemService.getAllItems().subscribe({next:(response)=> this.itemList=response});
+    this.itemService.getAllItems(this.tokin).subscribe({next:(response)=> this.itemList=response});
   }
 
   Search(){
