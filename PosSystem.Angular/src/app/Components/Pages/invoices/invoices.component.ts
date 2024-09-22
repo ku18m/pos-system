@@ -37,7 +37,7 @@ export class InvoicesComponent implements OnInit {
   quantityRequiredError:any;
   quantityZeroError:any;
   codeNum:any;
-  billTableItem:{code:number,name:string,unit:string,quantity:number,sellingPrice:number,discount:number,total:number,balance:number}[]=[];
+  billTableItem:{id:string,name:string,unit:string,quantity:number,sellingPrice:number,discount:number,total:number,balance:number}[]=[];
   unitList:any[]=[];
   // outOFStockError:any;
   quantityGraterError:any;
@@ -114,11 +114,37 @@ export class InvoicesComponent implements OnInit {
 
   ngOnInit(): void {
     // ---------------------------------  START SECTION 1&2 (oNiNIT)  --------------------------------------------
-    this.unitService.getAllUnits().subscribe({next:(response)=> this.unitList=response});
-    this.clientService.getAllClients().subscribe({next:(response)=> this.clientList=response});
-    this.itemService.getAllItems().subscribe({next:(response)=> this.itemList=response});
-    this.invoiceService.getAllBills().subscribe({next:(bills:IInvoices[])=>{  
-    this.billList = bills.map(bill => bill.id)}});
+    this.billNumber=1000000;
+    
+
+    this.invoiceService.GetAllClients().subscribe({
+      next:(response)=>{
+        const res=response.data;
+        res.forEach((element:any) => {
+          this.clientList.push(element);
+        });
+      }
+    });
+
+    this.invoiceService.GetAllItems().subscribe({
+      next:(response)=>{
+        const res=response.data;
+        res.forEach((element:any) => {
+          this.itemList.push(element);
+        });
+      }
+    })
+
+    this.invoiceService.GetAllUnits().subscribe({
+      next:(response)=>{
+        const res=response.data;
+        res.forEach((element:any) => {
+          this.unitList.push(element);
+        });
+        
+      }
+    });
+
     this.billsForm.get('billsNumber')?.disable();
     this.billsForm.get('total')?.disable();
     // ---------------------------------  END SECTION 1&2 --------------------------------------------
@@ -171,7 +197,7 @@ export class InvoicesComponent implements OnInit {
       this.itemList.forEach(item =>{
         if(item.name==this.itemName)
         {
-          this.codeNum=item.itemCode;
+          this.codeNum=item.id;
         }
           
       
@@ -181,8 +207,18 @@ export class InvoicesComponent implements OnInit {
     console.log(this.itemName);
   }
 
-  billSubmit(e:any){
+  FirstSectionSubmit(e:any){
     e.preventDefault();
+    this.billNumber=this.invoiceService.GetBillNumber().subscribe({
+      next:(response)=>{
+        return response.data;
+      }
+      // ,
+      // error:(error)=>{
+      //   this.billNumber=1000000;
+      // }
+    });
+
     console.log(this.billsForm.status);
     this.itemList.forEach(item=>{
       if(this.itemName==item.name){
@@ -192,7 +228,7 @@ export class InvoicesComponent implements OnInit {
       }
     })
     
-    this.billTableItem.push({code:this.codeNum,name:this.itemName,unit:this.unit,quantity:this.quantity,sellingPrice:this.sellingPrice,discount:this.discount,total:this.total,balance:this.balance});
+    this.billTableItem.push({id:this.codeNum,name:this.itemName,unit:this.unit,quantity:this.quantity,sellingPrice:this.sellingPrice,discount:this.discount,total:this.total,balance:this.balance});
 
     // ---------------------------------  START SECTION 3 (FUNCTIONS)  --------------------------------------------
     this.billTableItem.forEach(bill=>{

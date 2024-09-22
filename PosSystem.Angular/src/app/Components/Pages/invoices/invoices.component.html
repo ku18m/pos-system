@@ -64,7 +64,7 @@
             <input type="text" class="form-control total-input" formControlName="total" [(ngModel)]="total"/>
         </div>
         <div class="button-add">
-            <button (click)="billSubmit($event)" class=" bg-success rounded text-light"><i class="bi bi-floppy text-light m-1"></i>Add</button>
+            <button (click)="FirstSectionSubmit($event)" class=" bg-success rounded text-light"><i class="bi bi-floppy text-light m-1"></i>Add</button>
         </div>
     </form>
 </div>
@@ -89,7 +89,7 @@
     <tbody>
         @for(bill of billTableItem;track $index){
             <tr>
-                <td>{{bill.code}}</td>
+                <td>{{bill.id}}</td>
                 <td>{{bill.name}}</td>
                 <td>{{bill.unit}}</td>
                 <td>{{bill.quantity}}</td>

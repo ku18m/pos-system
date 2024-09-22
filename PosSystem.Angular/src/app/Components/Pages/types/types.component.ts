@@ -44,6 +44,8 @@ export class TypesComponent implements OnInit {
             this.TypeList.push(element[i].name);
           }
       }});
+
+      
   }
 
 
@@ -54,17 +56,12 @@ export class TypesComponent implements OnInit {
   });
 
   onChange(){
-    this.companyService.getAllCompanies(this.token).subscribe({
-      next: (element) => {
-        this.companyList.forEach((item)=>{
-          if(this.companyValue==item){
-            this.companyID=item.id;
-            console.log(this.companyID)
-          }
-        })
+    
+    this.companyService.GetCompany(this.token,this.companyValue).subscribe({
+      next:(element)=>{
+        this.companyID=element.id;
       }
     });
-
   }
 
   Submit(e: any) {

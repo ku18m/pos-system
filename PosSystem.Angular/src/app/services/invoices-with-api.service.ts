@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IEmployee } from '../Components/Pages/Employee/IEmployee';
@@ -8,6 +8,15 @@ import { IInvoices } from '../Components/Pages/invoices/IInvoices';
   providedIn: 'root'
 })
 export class InvoicesWithAPIService {
+  token:any=localStorage.getItem('token');
+
+  numberURL="https://localhost:44376/api/Invoice/GetNextInvoiceNumber";
+
+  clientURL="https://localhost:44376/api/Client";
+  itemURL="https://localhost:44376/api/Product"
+  unitURL="https://localhost:44376/api/Unit";
+  invoiceURL="https://localhost:44376/api/Invoice";
+
 
   billURL="http://localhost:3010/bill";
   discountURL="http://localhost:3011/discount";
@@ -40,4 +49,28 @@ export class InvoicesWithAPIService {
     return this.http.post(this.billEmployeeURL, employee);  
   }  
 
+  GetBillNumber(): Observable<any> {   
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`); // Set the authorization header  
+
+    return this.http.get(`${this.numberURL}`, { headers }); // Make the API call  
+  }
+
+
+  GetAllClients(): Observable<any> {   
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`); // Set the authorization header  
+    
+    return this.http.get(`${this.clientURL}`, { headers }); // Make the API call  
+  }
+
+  GetAllItems(): Observable<any> {   
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`); // Set the authorization header  
+    
+    return this.http.get(`${this.itemURL}`, { headers }); // Make the API call  
+  }
+
+  GetAllUnits(): Observable<any> {   
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`); // Set the authorization header  
+    
+    return this.http.get(`${this.unitURL}`, { headers }); // Make the API call  
+  }
 }
