@@ -28,12 +28,13 @@ export class LoginComponent {
 
 
   onSubmit() {
-    if (this.loginForm.valid) {
+    
       this.authService.login(this.userName, this.password).subscribe({
         next: response => {
           // Assuming the token is returned in the response  
           const token = response.token; // Adjust this based on your API response  
           localStorage.setItem('token', token); // Store the token in local storage
+          this.loginError =null;
         },
         error: (error) => {
           this.loginError = "Invalid UserName or Password";
@@ -57,4 +58,4 @@ export class LoginComponent {
       });
     }
   }
-}
+

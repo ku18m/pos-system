@@ -59,6 +59,7 @@ export class TypesComponent implements OnInit {
         this.companyList.forEach((item)=>{
           if(this.companyValue==item){
             this.companyID=item.id;
+            console.log(this.companyID)
           }
         })
       }
