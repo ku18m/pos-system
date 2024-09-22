@@ -2,6 +2,7 @@
 using PosSystem.Application.Interfaces.IRepositories;
 using PosSystem.Core.Entities;
 using PosSystem.Infrastracture.Persistence.Data;
+using PosSystem.Infrastracture.Persistence.Helpers;
 
 namespace PosSystem.Infrastracture.Persistence.Repositories
 {
@@ -34,6 +35,13 @@ namespace PosSystem.Infrastracture.Persistence.Repositories
         public async Task<IEnumerable<Invoice>> GetAllDueInvoices()
         {
             return await _dbSet.Where(i => i.DueAmount > 0).ToListAsync();
+        }
+        public async Task<int> GetNextInvoiceNumber()
+        {
+            var sqlQuery = @"SELECT current_value AS CurrentValue FROM sys.sequences WHERE name = 'BillNumber'";
+            var currentValue = await _context.Set<SequenceValue>().FromSqlRaw(sqlQuery).FirstAsync();
+
+            return currentValue.CurrentValue + 1;
         }
     }
 }

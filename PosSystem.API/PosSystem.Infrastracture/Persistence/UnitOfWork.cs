@@ -1,4 +1,6 @@
-﻿using PosSystem.Application.Interfaces.IRepositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using PosSystem.Application.Interfaces.IRepositories;
 using PosSystem.Application.Interfaces.IServices;
 using PosSystem.Infrastracture.Persistence.Data;
 using PosSystem.Infrastracture.Persistence.Repositories;
@@ -7,7 +9,10 @@ namespace PosSystem.Infrastracture.Persistence
 {
     class UnitOfWork(PosDbContext context) : IUnitOfWork
     {
-        #region Private Members
+        private IDbContextTransaction? _transaction;
+
+        #region Private Repositories
+
         ICategoryRepository? _categoryRepository;
 
         IClientRepository? _clientRepository;
@@ -23,9 +28,11 @@ namespace PosSystem.Infrastracture.Persistence
         IUnitRepository? _unitRepository;
 
         IUserRepository? _userRepository;
+
         #endregion
 
         #region Repositories Getters
+
         public ICategoryRepository CategoryRepository
         {
             get
@@ -105,16 +112,74 @@ namespace PosSystem.Infrastracture.Persistence
                 return _userRepository;
             }
         }
+
+        #endregion
+
+        #region Transaction Management
+
+        public async Task BeginTransactionAsync()
+        {
+            _transaction = await context.Database.BeginTransactionAsync();
+        }
+
+        public async Task CommitTransactionAsync()
+        {
+            if (_transaction != null)
+            {
+                await _transaction.CommitAsync();
+
+                await _transaction.DisposeAsync();
+
+                _transaction = null;
+            }
+        }
+
+        public async Task RollbackTransactionAsync()
+        {
+            if (_transaction != null)
+            {
+                await _transaction.RollbackAsync();
+
+                await _transaction.DisposeAsync();
+
+                _transaction = null;
+            }
+        }
+
         #endregion
 
         public void Dispose()
         {
             context.Dispose();
+
+            _transaction?.Dispose();
         }
 
         public async Task<int> Save()
         {
-            return await context.SaveChangesAsync();
+            int result;
+
+            try
+            {
+                result = await context.SaveChangesAsync();
+
+                if (_transaction != null)
+                {
+                    await CommitTransactionAsync();
+                }
+            }
+            catch (Exception)
+            {
+                if (_transaction != null)
+                {
+                    await RollbackTransactionAsync();
+                }
+
+                throw;
+            }
+
+
+            return result;
         }
     }
 }

@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PosSystem.Application.Contracts.Client;
 using PosSystem.Application.Interfaces.IServices;
 
 namespace PosSystem.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ClientController(IClientServices clientService) : ControllerBase
@@ -210,7 +212,7 @@ namespace PosSystem.API.Controllers
         }
 
         /// <summary>
-        /// Get all clients sorted.
+        /// Get all clients in a short form.
         /// </summary>
         /// <returns>The list of clients.</returns>
         [HttpGet("GetAllShorted")]
@@ -220,6 +222,24 @@ namespace PosSystem.API.Controllers
             {
                 var clients = await clientService.GetAllShorted();
                 return Ok(clients);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Get next client number from the database sequence.
+        /// </summary>
+        /// <returns>The next client number.</returns>
+        [HttpGet("GetNextClientNumber")]
+        public async Task<IActionResult> GetNextClientNumber()
+        {
+            try
+            {
+                var clientNumber = await clientService.GetNextClientNumber();
+                return Ok(clientNumber);
             }
             catch (Exception ex)
             {

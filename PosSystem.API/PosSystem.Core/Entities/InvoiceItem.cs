@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PosSystem.Core.Entities
+﻿namespace PosSystem.Core.Entities
 {
     public class InvoiceItem
     {
@@ -24,10 +18,6 @@ namespace PosSystem.Core.Entities
         public decimal Price { get; set; }
 
         public decimal TotalAmount { get; set; }
-
-        public decimal Discount { get; set; }
-
-        public decimal FinalAmount { get; set; }
 
 
         public InvoiceItem()

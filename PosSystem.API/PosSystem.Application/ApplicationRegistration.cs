@@ -35,18 +35,23 @@ namespace PosSystem.Application
             builder.Services.AddHttpContextAccessor();
 
             #region Services Registeration
+
             builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<IAuthServices, AuthServices>();
             builder.Services.AddScoped<IClientServices, ClientServices>();
             builder.Services.AddScoped<ICompanyServices, CompanyServices>();
             builder.Services.AddScoped<ITypeServices, TypeServices>();
-            builder.Services.AddScoped(typeof(IUnitServices<,>), typeof(UnitServices<,>));
-
+            builder.Services.AddScoped<IUnitServices, UnitServices>();
+            builder.Services.AddScoped<IProductServices, ProductServices>();
+            builder.Services.AddScoped<IInvoiceServices, InvoiceServices>();
+            builder.Services.AddScoped<ISalesServices, SalesServices>();
 
             #endregion
 
             #region Helpers Registeration
+
             builder.Services.AddTransient<TokenGeneratorHelper>();
+
             #endregion
         }
     }
