@@ -20,6 +20,7 @@ export class UnitComponent implements OnInit {
   requiredError:any;
   duplicateError:any;
   unitList:string[]=[];
+  tokin:any=localStorage.getItem('token');
   unitForm=new FormGroup({
     name:new FormControl("",[Validators.required]),
     notes:new FormControl("")
@@ -28,57 +29,56 @@ export class UnitComponent implements OnInit {
   constructor(private unitService:UnitsWithAPIService){}
 
   ngOnInit(): void {
-    this.unitService.getAllUnits().subscribe({next:(units:IUnits[])=>{  
+    this.unitService.getAllUnits(this.tokin).subscribe({next:(units:IUnits[])=>{
       this.unitList = units.map(unit => unit.id
-      );  
+      );
     },
-    error:(error) => {  
-      console.error('Error fetching companies:', error);  
-    },  
+    error:(error) => {
+      console.error('Error fetching units:', error);
+    },
   });
-    
+
   }
 
   Submit(e:any){
     e.preventDefault();
     console.log(this.unitForm.status);
-    if (this.unitName==null || this.unitName=="") {  
+    if (this.unitName==null || this.unitName=="") {
       this.requiredError = 'Unit Name Is Required';
       this.duplicateError=null;
-       
-      return;  
-    }  
+
+      return;
+    }
     else
         this.requiredError = null;
-    if (this.unitList.includes(this.unitName)) {  
-      this.duplicateError = `${this.unitName} has already existed before`; 
-      
-      return;  
-    } 
+    if (this.unitList.includes(this.unitName)) {
+      this.duplicateError = `${this.unitName} has already existed before`;
+
+      return;
+    }
     else
-        this.duplicateError=null; 
-    //adding company
+        this.duplicateError=null;
     if(this.unitName!=null && this.unitName!="" && !this.unitList.includes(this.unitName)){
 
-    
-    const newUnit:any = { name: this.unitName, notes:this.notes };  
 
-    this.unitService.addUnit(newUnit).subscribe({  
-      next: () => {  
-        console.log('Unit added successfully!');  
-        this.unitList.push(newUnit);  
-        this.unitForm.reset();   
-      },  
-      error: (error) => {  
-        console.error('Error adding unit:', error);  
-      }  
+    const newUnit:any = { name: this.unitName, notes:this.notes };
+
+    this.unitService.addUnit(this.tokin,this.unitName,this.notes).subscribe({
+      next: () => {
+        console.log('Unit added successfully!');
+        this.unitList.push(newUnit);
+        this.unitForm.reset();
+      },
+      error: (error) => {
+        console.error('Error adding unit:', error);
+      }
     });
-  }  
-  }  
+  }
+  }
 
   Cancel(){
     this.unitForm.reset();
     this.requiredError=null;
-    this.duplicateError=null; 
+    this.duplicateError=null;
   }
 }

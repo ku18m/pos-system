@@ -25,6 +25,8 @@ export class ReportComponent implements OnInit {
       discount: number,
       total: number}[]=[];
   itemList:any[]=[];
+  tokin:any=localStorage.getItem('token');
+
   code:any;
   name:any;
   buyingPrice:any;
@@ -35,23 +37,23 @@ export class ReportComponent implements OnInit {
   constructor(private invoiceService:InvoicesWithAPIService, private itemService:ItemWithAPIService){}
 
   ngOnInit(): void {
-    this.invoiceService.getAllBills().subscribe({next:(bills:any)=>{  
+    this.invoiceService.getAllBills().subscribe({next:(bills:any)=>{
       this.billDateList = bills}});
-    this.invoiceService.getAllBills().subscribe({next:(bills:any)=>{  
+    this.invoiceService.getAllBills().subscribe({next:(bills:any)=>{
       this.billDateList = bills}});
-      this.itemService.getAllItems().subscribe({next:(response)=> this.itemList=response});
+      this.itemService.getAllItems(this.tokin).subscribe({next:(response)=> this.itemList=response});
   }
 
   Submit(e:any){
     e.preventDefault();
-    const d1 = new Date(this.fromPeriod);  
+    const d1 = new Date(this.fromPeriod);
     const d2 = new Date(this.toPeriod);
-    
+
     this.billDateList.forEach(bill=>{
-      
+
       if(new Date(bill.billsDate)>=d1 && new Date(bill.billsDate)<=d2 )
       {
-        
+
         console.log(bill.itemName)
         this.itemList.forEach(item =>
         {
@@ -64,7 +66,7 @@ export class ReportComponent implements OnInit {
           }
         }
 
-        
+
 
         )
       }

@@ -111,13 +111,14 @@ export class InvoicesComponent implements OnInit {
   // ---------------------------------  END SECTION 4 --------------------------------------------
 
   constructor(private unitService:UnitsWithAPIService, private clientService:ClientsWithAPIService,private invoiceService:InvoicesWithAPIService,private itemService:ItemWithAPIService){}
+  tokin:any=localStorage.getItem('token');
 
   ngOnInit(): void {
     // ---------------------------------  START SECTION 1&2 (oNiNIT)  --------------------------------------------
-    this.unitService.getAllUnits().subscribe({next:(response)=> this.unitList=response});
-    this.clientService.getAllClients().subscribe({next:(response)=> this.clientList=response});
-    this.itemService.getAllItems().subscribe({next:(response)=> this.itemList=response});
-    this.invoiceService.getAllBills().subscribe({next:(bills:IInvoices[])=>{  
+    this.unitService.getAllUnits(this.tokin).subscribe({next:(response)=> this.unitList=response});
+    this.clientService.getAllClients(this.tokin).subscribe({next:(response)=> this.clientList=response});
+    this.itemService.getAllItems(this.tokin).subscribe({next:(response)=> this.itemList=response});
+    this.invoiceService.getAllBills().subscribe({next:(bills:IInvoices[])=>{
     this.billList = bills.map(bill => bill.id)}});
     this.billsForm.get('billsNumber')?.disable();
     this.billsForm.get('total')?.disable();
@@ -131,7 +132,7 @@ export class InvoicesComponent implements OnInit {
 
     // ---------------------------------  START SECTION 4 (oNiNIT)  --------------------------------------------
     this.invoiceService.getAllEmployees().subscribe({next:(response)=> this.employeeList=response});
-    this.invoiceService.getAllBillEmployees().subscribe({next:(bills:IInvoices[])=>{  
+    this.invoiceService.getAllBillEmployees().subscribe({next:(bills:IInvoices[])=>{
       this.employeeBillList = bills.map(bill => bill.employeeName)}});
 
     // ---------------------------------  END SECTION 4 --------------------------------------------
@@ -164,7 +165,7 @@ export class InvoicesComponent implements OnInit {
             // this.outOFStockError=null;
             this.quantity="";
             this.billsForm.get('quantity')?.enable();
-            
+
           }
         }
         });
@@ -173,9 +174,9 @@ export class InvoicesComponent implements OnInit {
         {
           this.codeNum=item.itemCode;
         }
-          
-      
-      
+
+
+
     });
 
     console.log(this.itemName);
@@ -188,10 +189,10 @@ export class InvoicesComponent implements OnInit {
       if(this.itemName==item.name){
         item.quantity=item.quantity-this.quantity;
         console.log(item.quantity)
-        this.itemService.updateItemQuantity(item.id, item);  
+        this.itemService.updateItemQuantity(item.id, item);
       }
     })
-    
+
     this.billTableItem.push({code:this.codeNum,name:this.itemName,unit:this.unit,quantity:this.quantity,sellingPrice:this.sellingPrice,discount:this.discount,total:this.total,balance:this.balance});
 
     // ---------------------------------  START SECTION 3 (FUNCTIONS)  --------------------------------------------
@@ -201,9 +202,9 @@ export class InvoicesComponent implements OnInit {
 
 
   // ---------------------------------  END SECTION 3 --------------------------------------------
-    if (this.billDate==null) {  
+    if (this.billDate==null) {
       this.billRequiredError = 'Bill Date Is Required';
-    }  
+    }
     else
         this.billRequiredError = null;
 
@@ -221,15 +222,15 @@ export class InvoicesComponent implements OnInit {
       else
       this.itemRequiredError=null;
 
-      if (this.quantity==null || this.quantity=="") {  
+      if (this.quantity==null || this.quantity=="") {
         this.quantityRequiredError = 'Quantity Is Required';
-      }  
+      }
       else
           this.quantityRequiredError = null;
 
-      if (this.quantity==0) {  
+      if (this.quantity==0) {
         this.quantityZeroError = 'Quantity  Must Be Greater Than Zero';
-      }  
+      }
       else
           this.quantityZeroError = null;
 
@@ -249,26 +250,26 @@ export class InvoicesComponent implements OnInit {
     //adding bill
     if(this.billDate!=null && this.clientName != "-- Choose From Clients --" && this.itemName != "-- Choose From Items --" && this.quantity!=null && this.quantity!="" && this.quantity!=0 ){
 
-    
-    const newBill:any = { billsDate: this.billDate, billsNumber:this.billNumber, clientName:this.clientName, itemName:this.itemName, sellingPrice:this.sellingPrice,unit:this.unit, quantity:this.quantity, discount:this.discount, total:this.total };  
 
-    this.invoiceService.addBill(newBill).subscribe({  
-      next: () => {  
-        console.log('Bill added successfully!');  
-        this.billList.push(newBill);  
-        this.billsForm.reset();  
-        this.clientName === "-- Choose From Clients --"; 
-        this.itemName === "-- Choose From Items --"; 
-        this.unit === "-- Choose From Units --"; 
-      },  
-      error: (error) => {  
-        console.error('Error adding bill:', error);  
-      }  
+    const newBill:any = { billsDate: this.billDate, billsNumber:this.billNumber, clientName:this.clientName, itemName:this.itemName, sellingPrice:this.sellingPrice,unit:this.unit, quantity:this.quantity, discount:this.discount, total:this.total };
+
+    this.invoiceService.addBill(newBill).subscribe({
+      next: () => {
+        console.log('Bill added successfully!');
+        this.billList.push(newBill);
+        this.billsForm.reset();
+        this.clientName === "-- Choose From Clients --";
+        this.itemName === "-- Choose From Items --";
+        this.unit === "-- Choose From Units --";
+      },
+      error: (error) => {
+        console.error('Error adding bill:', error);
+      }
     });
 
-    
-  }  
-  }  
+
+  }
+  }
   // ---------------------------------  END SECTION 1&2 --------------------------------------------
 
   // ---------------------------------  START SECTION 3 (FUNCTIONS)  --------------------------------------------
@@ -289,7 +290,7 @@ export class InvoicesComponent implements OnInit {
       else
         this.discountValueError=null;
 
-        
+
     }
 
     calculateDiscount(){
@@ -297,9 +298,9 @@ export class InvoicesComponent implements OnInit {
     }
 
     calculateNet(){
-      
+
         this.net=this.billsTotal-this.discountValue;
-      
+
     }
 
     checkPaid(){
@@ -309,8 +310,8 @@ export class InvoicesComponent implements OnInit {
         }
         else
           this.paidError=null;
-  
-          
+
+
       }
 
       calculateRest(){
@@ -330,15 +331,15 @@ export class InvoicesComponent implements OnInit {
     else
     this.employeeNameError=null;
 
-    if (this.date==null) {  
+    if (this.date==null) {
       this.dateError = 'Date Is Required';
-        
-    }  
+
+    }
     else
         this.dateError = null;
 
-    
-    const startDate = this.convertToDate(this.startTime);  
+
+    const startDate = this.convertToDate(this.startTime);
     const endDate = this.convertToDate(this.endTime);
     if(endDate<startDate)
     {
@@ -350,43 +351,43 @@ export class InvoicesComponent implements OnInit {
     //adding Employee
     if(this.employeeName != "-- Choose From Employees --" && this.date!=null)
       {
-        const newEmployee:any = { employeeName: this.employeeName, date:this.date, startTime:this.startTime, endTime:this.endTime  };  
+        const newEmployee:any = { employeeName: this.employeeName, date:this.date, startTime:this.startTime, endTime:this.endTime  };
 
-        this.invoiceService.addBillEmployee(newEmployee).subscribe({  
-          next: () => {  
-            console.log('EmployeeBill added successfully!');  
-            this.employeeBillList.push(newEmployee);  
+        this.invoiceService.addBillEmployee(newEmployee).subscribe({
+          next: () => {
+            console.log('EmployeeBill added successfully!');
+            this.employeeBillList.push(newEmployee);
             this.employeeForm.reset();
-            this.employeeName = "-- Choose From Employees --" 
+            this.employeeName = "-- Choose From Employees --"
             // this.typeName=null;
-            // this.companyValue="-- Choose From Companies --";  
-          },  
-          error: (error) => {  
-            console.error('Error adding Employee:', error);  
-          }  
-        });  
+            // this.companyValue="-- Choose From Companies --";
+          },
+          error: (error) => {
+            console.error('Error adding Employee:', error);
+          }
+        });
       }
-  }  
+  }
   Cancel(){
-    this.employeeForm.reset(); 
+    this.employeeForm.reset();
     this.employeeName = "-- Choose From Employees --";
     this.employeeNameError=null;
     this.dateError=null;
     this.timeError=null;
 
-    
+
   }
 
-  private convertToDate(timeString: string): Date {  
-    const [hours, minutes] = timeString.split(':').map(Number);  
-    const date = new Date();  
-    date.setHours(hours, minutes, 0, 0); // Set hours and minutes, seconds and milliseconds to 0  
-    return date; 
+  private convertToDate(timeString: string): Date {
+    const [hours, minutes] = timeString.split(':').map(Number);
+    const date = new Date();
+    date.setHours(hours, minutes, 0, 0); // Set hours and minutes, seconds and milliseconds to 0
+    return date;
   // ---------------------------------  END SECTION 4 --------------------------------------------
 
 }
 
 }
-  
+
 
 
