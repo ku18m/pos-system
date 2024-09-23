@@ -1,0 +1,29 @@
+.fixed-button-size {
+    width: 200px;
+
+}
+
+.position-relative {
+    position: relative;
+}
+
+.position-absolute {
+    position: absolute;
+}
+
+.start-0 {
+    left: 0;
+}
+
+.bottom-0 {
+    bottom: 0;
+}
+
+.p-3 {
+    padding: 1rem;
+}
+
+.mx-2 {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}

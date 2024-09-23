@@ -1,0 +1,173 @@
+<div class="container mt-4">
+  <h1 class="text-center mb-4 text-muted">
+    {{ productId === 0 ? "Add New Product" : "Edit Product" }}
+  </h1>
+  <form
+    [formGroup]="productForm"
+    (ngSubmit)="productOperation()"
+    class="bg-light p-4 rounded shadow"
+  >
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="companyName" class="form-label">Company Name</label>
+        <select
+          formControlName="companyName"
+          class="form-control"
+          id="companyName"
+          (change)="onCompanyNameChange($event)"
+        >
+          <option [value]="''" selected disabled>Select a company</option>
+          <option *ngFor="let company of companies" [value]="company.name">
+            {{ company.name }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            productForm.get('companyName')?.invalid &&
+            productForm.get('companyName')?.touched
+          "
+          class="text-danger"
+        >
+          Company Name is required.
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="companyTypes" class="form-label">Company Types</label>
+        <select
+          formControlName="companyType"
+          class="form-control"
+          id="companyTypes"
+        >
+          <option [value]="''" selected disabled>Select Company Type</option>
+          <option *ngFor="let type of types" [value]="type.name">
+            {{ type.name }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            productForm.get('companyType')?.invalid &&
+            productForm.get('companyType')?.touched
+          "
+          class="text-danger"
+        >
+          Company Type is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="name" class="form-label">Product Name</label>
+        <input
+          type="text"
+          formControlName="name"
+          class="form-control"
+          id="name"
+          placeholder="Enter Product Name"
+        />
+        <div
+          *ngIf="
+            productForm.get('name')?.invalid && productForm.get('name')?.touched
+          "
+          class="text-danger"
+        >
+          Product Name is required.
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="sellingPrice" class="form-label">Selling Price</label>
+        <input
+          type="number"
+          formControlName="sellingPrice"
+          class="form-control"
+          id="sellingPrice"
+          placeholder="Enter Selling Price"
+        />
+        <div
+          *ngIf="
+            productForm.get('sellingPrice')?.invalid &&
+            productForm.get('sellingPrice')?.touched
+          "
+          class="text-danger"
+        >
+          Selling Price is required and must be a valid number, equal to or
+          larger than 120.
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="buyingPrice" class="form-label">Buying Price</label>
+        <input
+          type="number"
+          formControlName="buyingPrice"
+          class="form-control"
+          id="buyingPrice"
+          placeholder="Enter Buying Price"
+        />
+        <div
+          *ngIf="
+            productForm.get('buyingPrice')?.invalid &&
+            productForm.get('buyingPrice')?.touched
+          "
+          class="text-danger"
+        >
+          Buying Price is required and must be a valid number, equal to or
+          larger than 120.
+        </div>
+      </div>
+
+      <!-- Added Quantity Input -->
+      <div class="col-md-6">
+        <label for="quantity" class="form-label">Quantity</label>
+        <input
+          type="number"
+          formControlName="quantity"
+          class="form-control"
+          id="quantity"
+          placeholder="Enter Quantity"
+        />
+        <div
+          *ngIf="
+            productForm.get('quantity')?.invalid &&
+            productForm.get('quantity')?.touched
+          "
+          class="text-danger"
+        >
+          Quantity is required and must be a valid number.
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="notes" class="form-label">Notes</label>
+        <textarea
+          formControlName="notes"
+          class="form-control"
+          id="notes"
+          placeholder="Enter Notes"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+      <button
+        type="submit"
+        class="btn btn-success mx-2 fixed-button-size"
+        [disabled]="productForm.invalid"
+      >
+        {{ productId === 0 ? "Add New Product" : "Edit Product" }}
+      </button>
+      <button
+        type="button"
+        (click)="goBack()"
+        class="btn btn-secondary mx-2 fixed-button-size"
+      >
+        Back to List
+      </button>
+    </div>
+  </form>
+</div>
