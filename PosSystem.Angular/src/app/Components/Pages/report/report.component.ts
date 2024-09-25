@@ -92,7 +92,7 @@ export class ReportComponent implements OnInit {
       .subscribe({ next: (response) => (this.itemList = response) });
   }
 
-  Submit(e: any) {
+  Submit(e: any) { 
     e.preventDefault();
 
     this.getSalesReport();
