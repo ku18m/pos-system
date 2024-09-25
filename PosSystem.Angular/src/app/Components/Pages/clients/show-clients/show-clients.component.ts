@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ClientsWithAPIService } from '../../../../services/clients-with-api.service';
@@ -28,7 +28,8 @@ export class ShowClientComponent implements OnInit {
 
   constructor(
     public clientService: ClientsWithAPIService,
-    private router: Router
+    private router: Router,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -68,10 +69,27 @@ export class ShowClientComponent implements OnInit {
         this.clientService.getAllClients().subscribe({
           next: (response) => {
             this.clients = response as IClients[];
+            this.showNotification('success', 'Client deleted successfully');
             this.updatePaginatedClients();
           },
+          error: (err) => {
+            this.showNotification('danger', 'Failed to delete client, client has invoices');
+            console.error(err);
+          }
         });
       },
     });
+  }
+
+  notification: { type: string; message: string } | null = null;
+
+  showNotification(type: string, message: string) {
+    this.notification = { type, message };
+    this.changeDetector.detectChanges();
+  }
+
+  closeNotification() {
+    this.notification = null;
+    this.changeDetector.detectChanges();
   }
 }

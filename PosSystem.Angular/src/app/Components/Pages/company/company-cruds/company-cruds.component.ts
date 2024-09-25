@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TypesWithAPIService } from '../../../../services/types-with-api.service';
 import { ICompany } from '../ICompany';
+import { response } from 'express';
 
 @Component({
   selector: 'app-company-cruds',
@@ -88,8 +89,17 @@ export class CompanyCrudsComponent implements OnInit {
   }
 
   deleteCompanyTypeHandler(typeId: string): void {
-    this.typesService.deleteType(typeId).subscribe(() => {
-      this.fetchTypes();
+    console.log(typeId);
+    this.typesService.deleteType(typeId).subscribe({
+      next: (response) => {
+        this.fetchTypes();
+        this.showNotification('success', 'Type deleted successfully');
+        console.log(response);
+      },
+      error: (err) => {
+        console.error(err);
+        this.showNotification('danger', err.error.errors);
+      }
     });
   }
 

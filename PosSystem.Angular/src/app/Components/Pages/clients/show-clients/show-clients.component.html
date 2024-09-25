@@ -9,6 +9,12 @@
     ></i>
     <span class="fs-5">Add Client</span>
   </button>
+
+  <div *ngIf="notification" class="alert alert-{{notification?.type}} alert-dismissible fade show" role="alert">
+    {{notification?.message}}
+    <button type="button" class="btn-close" aria-label="Close" (click)="closeNotification()"></button>
+  </div>
+
   <div
     class="table-container rounded-3 overflow-hidden border border-secondary"
   >

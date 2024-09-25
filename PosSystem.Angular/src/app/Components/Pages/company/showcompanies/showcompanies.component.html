@@ -1,13 +1,19 @@
 <div class="mt-5 container text-center">
   <h1 class="mb-4 text-muted">Companies</h1>
-  <div class="d-flex justify-content-start mb-4 align-items-center">
-    <i
-      class="bi bi-plus-square fs-2 text-success me-2"
-      [routerLink]="['/company/0/edit']"
-      (click)="$event.preventDefault()"
-    ></i>
+  <button
+    class="d-flex justify-content-start mb-4 align-items-center btn add-company-btn"
+    [routerLink]="['/company']"
+    (click)="$event.preventDefault()"
+  >
+    <i class="bi bi-plus-square fs-2 text-success me-2"></i>
     <span class="fs-4">Add Company</span>
+  </button>
+
+  <div *ngIf="notification" class="alert alert-{{notification?.type}} alert-dismissible fade show" role="alert">
+    {{notification?.message}}
+    <button type="button" class="btn-close" aria-label="Close" (click)="closeNotification()"></button>
   </div>
+
   <div
     class="table-container rounded-3 overflow-hidden border border-secondary"
   >

@@ -9,7 +9,7 @@
   >
     <div class="row mb-3">
       <div class="col-md-6">
-        <label for="companyName" class="form-label">Company Name</label>
+        <label for="companyName" class="form-label">Company Name:</label>
         <input
           type="text"
           formControlName="name"
@@ -30,9 +30,9 @@
 
     <div class="row mb-3">
       <div class="col-md-12">
-        <label for="companyTypes" class="form-label">Company Types</label>
-        <table>
-          <thead>
+        <label for="companyTypes" class="form-label">Company Types:</label>
+        <table *ngIf="types[0]" class="table table-striped table-hover border">
+          <thead class="table-light">
             <tr>
               <th>Id</th>
               <th>Name</th>
@@ -45,7 +45,7 @@
               <td>{{ type.name }}</td>
               <td>
                 <i
-                  [routerLink]="['/company', 'operations', type.id]"
+                  [routerLink]="['/types', 'operations', type.id]"
                   class="fs-4 mx-2 text-info bi bi-pencil-square"
                   title="Edit"
                 ></i>
@@ -58,16 +58,12 @@
             </tr>
           </tbody>
         </table>
-        <div *ngFor="let type of types">
-          <input
-            type="checkbox"
-            [formControlName]="'types'"
-            [value]="type.id"
-            (change)="onTypeChange($event)"
-          />
-          {{ type.name }}
-        </div>
       </div>
+    </div>
+
+    <div *ngIf="notification" class="alert alert-{{notification?.type}} alert-dismissible fade show" role="alert">
+      {{notification?.message}}
+      <button type="button" class="btn-close" aria-label="Close" (click)="closeNotification()"></button>
     </div>
 
     <div class="d-flex justify-content-center mt-4">

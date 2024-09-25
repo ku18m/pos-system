@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -18,7 +18,7 @@ export class CompaniesComponent implements OnInit {
   companiesPerPage: number = 3;
   totalPages: number = 0;
 
-  constructor(private fb: FormBuilder, private companiesService: CompanyWithAPIService,private router: Router) { }
+  constructor(private fb: FormBuilder, private companiesService: CompanyWithAPIService,private router: Router, private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.fetchCompanies();
@@ -43,8 +43,27 @@ export class CompaniesComponent implements OnInit {
   }
 
   deleteCompanyHandler(companyId: string): void {
-    this.companiesService.deleteCompany(companyId).subscribe(() => {
-      this.fetchCompanies();
+    this.companiesService.deleteCompany(companyId).subscribe({
+      next: () => {
+        this.showNotification('success', 'Company deleted successfully');
+        this.fetchCompanies();
+      },
+      error: (err) => {
+        this.showNotification('danger', 'Failed to delete company');
+        console.error(err);
+      }
     });
+  }
+
+  notification: { type: string; message: string } | null = null;
+
+  showNotification(type: string, message: string) {
+    this.notification = { type, message };
+    this.changeDetector.detectChanges();
+  }
+
+  closeNotification() {
+    this.notification = null;
+    this.changeDetector.detectChanges();
   }
 }

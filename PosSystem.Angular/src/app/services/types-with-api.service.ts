@@ -9,11 +9,11 @@ import { ITypes } from '../Components/Pages/types/ITypes';
 })
 export class TypesWithAPIService {
 
-  GetAllURL="https://localhost:44376/api/Type/GetAll";
+  GetAllURL="https://localhost:7168/api/Type/GetAll";
 
   parentEndpoint = 'Type';
 
-  AddURL="https://localhost:44376/api/Type";
+  AddURL="https://localhost:7168/api/Type";
   constructor(private http:HttpClient, private requestHandler: RequestHandlerService) { }
 
   getAllTypes(token:string): Observable<any> {
