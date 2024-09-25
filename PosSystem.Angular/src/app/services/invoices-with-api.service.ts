@@ -1,8 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IEmployee } from '../Components/Pages/Employee/IEmployee';
-import { IInvoices } from '../Components/Pages/invoices/IInvoices';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,39 +14,10 @@ export class InvoicesWithAPIService {
   clientURL="https://localhost:44376/api/Client";
   itemURL="https://localhost:44376/api/Product"
   unitURL="https://localhost:44376/api/Unit";
+  employeeURL="https://localhost:44376/api/Users";
   invoiceURL="https://localhost:44376/api/Invoice";
 
-
-  billURL="http://localhost:3010/bill";
-  discountURL="http://localhost:3011/discount";
-  employeeNameURL="http://localhost:3012/employee";
-  billEmployeeURL="http://localhost:3013/billEmployee";
   constructor(private http:HttpClient) { }
-
-  getAllBills():Observable<IInvoices[]>{
-    return this.http.get<IInvoices[]>(this.billURL);
-  }
-
-  addBill(bill: any)  {  
-    return this.http.post(this.billURL, bill);  
-  }  
-
-
-  getAllDiscount():Observable<IInvoices[]>{
-    return this.http.get<IInvoices[]>(this.discountURL);
-  }
-
-  getAllEmployees():Observable<IEmployee[]>{
-    return this.http.get<IEmployee[]>(this.employeeNameURL);
-  }
-
-  getAllBillEmployees():Observable<IInvoices[]>{
-    return this.http.get<IInvoices[]>(this.billEmployeeURL);
-  }
-
-  addBillEmployee(employee: any)  {  
-    return this.http.post(this.billEmployeeURL, employee);  
-  }  
 
   GetBillNumber(): Observable<any> {   
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`); // Set the authorization header  
@@ -64,7 +34,7 @@ export class InvoicesWithAPIService {
 
   GetAllItems(): Observable<any> {   
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`); // Set the authorization header  
-    
+
     return this.http.get(`${this.itemURL}`, { headers }); // Make the API call  
   }
 
@@ -73,4 +43,21 @@ export class InvoicesWithAPIService {
     
     return this.http.get(`${this.unitURL}`, { headers }); // Make the API call  
   }
+
+  fetchAllUsers(): Observable<any> {  
+    const headers = new HttpHeaders({  
+      'Authorization': `Bearer ${this.token}`, // Set the Authorization header with the token  
+      'Content-Type': 'application/json'  
+    });  
+
+    return this.http.get(this.employeeURL, { headers }); // Perform the GET request  
+}
+
+addInvoice(date:string,billDate:string,paidUp:number,totalDiscount:number,totalAmount:number,invoiceItems:any[],clientId:string,employeeId:string): Observable<any> {   
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`); // Set the authorization header  
+
+  const body = { name:date, billDate,paidUp, totalDiscount,totalAmount,invoiceItems,clientId,employeeId  }; // Prepare the request body with company name and notes  
+
+  return this.http.post(this.invoiceURL, body, { headers }); // Make the API call  
+}  
 }

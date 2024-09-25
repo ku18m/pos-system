@@ -154,3 +154,12 @@ th{
 .unit-input{
     margin-left:55px;
 }
+
+h2{
+    display: inline-block;
+}
+
+.show{
+    display: inline-block;
+    margin-left: 580px;
+}

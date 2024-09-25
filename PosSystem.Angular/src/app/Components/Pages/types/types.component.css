@@ -59,3 +59,12 @@ i{
 .save{
     margin-left: 50px
 }
+
+h2{
+    display: inline-block;
+}
+
+.show{
+    display: inline-block;
+    margin-left: 590px;
+}

@@ -2,6 +2,7 @@
 <app-sidebar></app-sidebar>
 <div class="rounded bg-light company">
     <h2>Company Data Form</h2>
+    <button class="btn btn-primary text-light show" (click)="show()">Show All</button>
     <form [formGroup]="companyForm" >
         <div class="input">
             <label>Company Name:</label>

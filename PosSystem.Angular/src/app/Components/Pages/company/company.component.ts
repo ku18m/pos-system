@@ -4,6 +4,8 @@ import { CompanyWithAPIService } from '../../../services/company-with-api.servic
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FooterComponent } from '../footer/footer.component';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-company',
@@ -18,7 +20,7 @@ export class CompanyComponent implements OnInit {
   companyName: any;
   companyNotes: any;
   companyList: any[] = [];
-  tokin:any=localStorage.getItem('token');
+  
 
   companyForm = new FormGroup({
     name: new FormControl("", [Validators.required]),
@@ -27,9 +29,9 @@ export class CompanyComponent implements OnInit {
 
 
 
-  constructor(private companyService: CompanyWithAPIService) { }
+  constructor(private companyService: CompanyWithAPIService, private router:Router) { }
   ngOnInit() {
-    this.companyService.getAllCompanies(this.tokin).subscribe({  
+    this.companyService.getAllCompanies().subscribe({  
       next: (element) => {
           for(var i=0;i<element.data.length;i++){
             this.companyList.push(element.data[i].name);
@@ -37,6 +39,11 @@ export class CompanyComponent implements OnInit {
       }});
 
     }
+
+    show(){
+      this.router.navigate(['/'])
+    }
+
   Submit(e: any) {
     e.preventDefault();
     console.log(this.companyForm.status);
@@ -66,7 +73,7 @@ export class CompanyComponent implements OnInit {
       
     //adding company
     if (this.companyName != null && this.companyName != "") {  
-        this.companyService.addCompanyWithNotes(this.tokin,this.companyName, this.companyNotes).subscribe(  
+        this.companyService.addCompanyWithNotes(this.companyName, this.companyNotes).subscribe(  
           response => {  
             console.log('Company added successfully:', response);  
             this.companyName = ''; // Clear input  
