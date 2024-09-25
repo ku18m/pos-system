@@ -1,12 +1,11 @@
-/* Ensure icons are visible and have good spacing */
-i {
-    cursor: pointer;
-    transition: color 0.3s ease, transform 0.3s ease;
+
+.btn-add-employee:hover {
+  background-color: #e0ffe0;
+  color: #28a745;
 }
 
-i:hover {
-    color: #0056b3;
-    transform: scale(1.1);
+.btn-add-employee i:hover {
+  color: #1e7e34;
 }
 
 /* Table styling */

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IEmployee } from '../Components/Pages/Employee/IEmployee';
+import { IEmployee } from '../Components/Pages/users/IEmployee';
 import { IInvoices } from '../Components/Pages/invoices/IInvoices';
 
 @Injectable({
@@ -19,9 +19,9 @@ export class InvoicesWithAPIService {
     return this.http.get<IInvoices[]>(this.billURL);
   }
 
-  addBill(bill: any)  {  
-    return this.http.post(this.billURL, bill);  
-  }  
+  addBill(bill: any)  {
+    return this.http.post(this.billURL, bill);
+  }
 
 
   getAllDiscount():Observable<IInvoices[]>{
@@ -36,8 +36,8 @@ export class InvoicesWithAPIService {
     return this.http.get<IInvoices[]>(this.billEmployeeURL);
   }
 
-  addBillEmployee(employee: any)  {  
-    return this.http.post(this.billEmployeeURL, employee);  
-  }  
+  addBillEmployee(employee: any)  {
+    return this.http.post(this.billEmployeeURL, employee);
+  }
 
 }

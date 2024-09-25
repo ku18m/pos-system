@@ -11,6 +11,7 @@ import { StockComponent } from './Components/Pages/stock/stock.component';
 import { LoginComponent } from './Components/Pages/login/login.component';
 import { ClientsmainComponent } from './Components/Pages/clients/clientsmain.component';
 import { CompanyMainComponent } from './Components/Pages/company/company-main.component';
+import { UsersMainComponent } from './Components/Pages/users/users-main.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -37,4 +38,12 @@ export const routes: Routes = [
   { path: 'invoices', component: InvoicesComponent },
   { path: 'report', component: ReportComponent },
   { path: 'stock', component: StockComponent },
+  {
+    path: 'users',
+    component: UsersMainComponent,
+    loadChildren: () =>
+      import('./Components/Pages/users/users.module').then(
+        (m) => m.UsersModule
+      ),
+  }
 ];

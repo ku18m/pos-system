@@ -1,10 +1,10 @@
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { EmployeeService } from '../../services/employee.service';
 import {  Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { IEmployee } from '../../models/iemployee';
+import { UsersWithAPIService } from '../../../../services/users-with-api.service';
+import { IUser } from '../IUser';
 
 @Component({
   selector: 'app-show-employee',
@@ -12,18 +12,18 @@ import { IEmployee } from '../../models/iemployee';
   imports: [CommonModule,FormsModule,RouterLink,HttpClientModule,RouterLinkActive],
   templateUrl: './show-employee.component.html',
   styleUrl: './show-employee.component.css',
-   providers: [EmployeeService]
+  providers: [UsersWithAPIService]
 })
 export class ShowEmployeeComponent implements OnInit {
-  employees:IEmployee[]=[];
+  employees:IUser[]=[];
   currentPage: number = 1;
   employeesPerPage: number = 3;
-  paginatedEmployees: IEmployee[] = [];
-  constructor(public employeeServices: EmployeeService,private router: Router) {}
+  paginatedEmployees: IUser[] = [];
+  constructor(public employeeServices: UsersWithAPIService, private router: Router) {}
     ngOnInit(): void {
-    this.employeeServices.getAllEmployee().subscribe({
+    this.employeeServices.getAllUsers().subscribe({
       next: (response) => {
-        this.employees = response as IEmployee[];
+        this.employees = response as IUser[];
         console.log(this.employees)
         this.updatePaginatedProducts();
       },
@@ -44,15 +44,15 @@ export class ShowEmployeeComponent implements OnInit {
     return Math.ceil(this.employees.length / this.employeesPerPage);
   }
   editEmployee(employeeId: string) {
-    this.router.navigate(['/employee', employeeId, 'edit']);
+    this.router.navigate(['/users', 'edit', employeeId]);
   }
 
   deleteEmployeeHandler(employeeId: any) {
-    this.employeeServices.deleteEmployee(employeeId).subscribe({
+    this.employeeServices.deleteUser(employeeId).subscribe({
       next: () => {
-        this.employeeServices.getAllEmployee().subscribe({
+        this.employeeServices.getAllUsers().subscribe({
           next: (response) => {
-            this.employees = response as IEmployee[];
+            this.employees = response as IUser[];
             this.updatePaginatedProducts();
           },
         });

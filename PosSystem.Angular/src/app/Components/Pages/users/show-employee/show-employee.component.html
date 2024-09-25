@@ -1,13 +1,15 @@
 <div class="mt-5 container text-center">
   <h1 class="mb-4 text-muted">Employees</h1>
-  <div class="d-flex justify-content-start mb-4 align-items-center">
+  <button
+    class="d-flex justify-content-start mb-4 align-items-center btn btn-add-employee"
+    [routerLink]="['/users/new']"
+    (click)="$event.preventDefault()"
+  >
     <i
       class="bi bi-plus-square fs-2 text-success me-2"
-      [routerLink]="['/employee/0/edit']"
-      (click)="$event.preventDefault()"
     ></i>
     <span class="fs-4">Add Employee</span>
-  </div>
+  </button>
   <div
     class="table-container rounded-3 overflow-hidden border border-secondary"
   >
@@ -17,9 +19,10 @@
           <th scope="col">Id</th>
           <th scope="col">First Name</th>
           <th scope="col">Last Name</th>
-          <th scope="col">Address</th>
-          <th scope="col">Birth Date</th>
-          <th scope="col">Phone</th>
+          <th scope="col">UserName</th>
+          <th scope="col">Start time</th>
+          <th scope="col">End time</th>
+          <th scope="col">Role</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
@@ -28,12 +31,13 @@
           <td>{{ employee.id }}</td>
           <td>{{ employee.firstName }}</td>
           <td>{{ employee.lastName }}</td>
-          <td>{{ employee.address }}</td>
-          <td>{{ employee.birthDate }}</td>
-          <td>{{ employee.phone }}</td>
+          <td>{{ employee.userName }}</td>
+          <td>{{ employee.startTime }}</td>
+          <td>{{ employee.endTime }}</td>
+          <td>{{ employee.role }}</td>
           <td>
             <i
-              [routerLink]="['/employee', employee.id, 'edit']"
+              [routerLink]="['/users', 'edit', employee.id]"
               (click)="editEmployee(employee.id)"
               class="fs-4 mx-2 text-info bi bi-pencil-square"
               title="Edit"
