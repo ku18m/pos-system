@@ -1,4 +1,7 @@
 export interface IClients{
     id:string,
-    number:string
+    number:number,
+    name:string,
+    address: string,
+    phoneNumber: string
 }

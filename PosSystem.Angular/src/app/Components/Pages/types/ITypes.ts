@@ -1,5 +1,6 @@
 export interface ITypes{
     id:string,
-    companyId:string,
+    name:string,
+    note:string | null,
     companyName:string,
 }

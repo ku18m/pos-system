@@ -1,3 +1,18 @@
 body{
     background-color: #e0e0e0;
 }
+
+.layout-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  /* width: 300px; */
+  background-color: #21263C;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 0px;
+}

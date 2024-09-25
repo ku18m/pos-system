@@ -1,0 +1,8 @@
+.add-client-btn:hover {
+  background-color: #e0ffe0; /* light green background */
+  color: #28a745; /* Text color on hover */
+}
+
+.add-client-btn i:hover {
+  color: #1e7e34; /* Darker green for the icon */
+}

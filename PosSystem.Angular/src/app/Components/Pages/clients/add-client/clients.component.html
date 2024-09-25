@@ -1,5 +1,5 @@
-<app-navbar></app-navbar>
-<app-sidebar></app-sidebar>
+<!-- <app-navbar></app-navbar> -->
+<!-- <app-sidebar></app-sidebar> -->
 <div class="rounded bg-light company">
     <h2>Clients</h2>
     <form [formGroup]="clientForm">
@@ -28,7 +28,12 @@
             <button (click)="Submit($event)" class=" bg-success rounded text-light save"><i class="bi bi-floppy text-light m-1"></i>Save</button>
             <button (click)="Cancel()" class=" bg-danger rounded text-light"><i class="bi bi-trash3 text-light"></i>Cancel</button>
         </div>
+
+      <div *ngIf="notification" class="alert alert-{{notification?.type}} alert-dismissible fade show" role="alert">
+        {{notification?.message}}
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeNotification()"></button>
+      </div>
     </form>
 </div>
 
-<app-footer></app-footer>
+<!-- <app-footer></app-footer> -->

@@ -1,0 +1,90 @@
+<div class="container mt-4">
+  <h1 class="text-center mb-4 text-muted">
+    {{ companyId == "0" ? "Add New Company" : "Edit Company" }}
+  </h1>
+  <form
+    [formGroup]="companyForm"
+    (ngSubmit)="companyOperation()"
+    class="bg-light p-4 rounded shadow"
+  >
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="companyName" class="form-label">Company Name</label>
+        <input
+          type="text"
+          formControlName="name"
+          class="form-control"
+          id="companyName"
+          placeholder="Enter Company Name"
+        />
+        <div
+          *ngIf="
+            companyForm.get('name')?.touched && companyForm.get('name')?.invalid
+          "
+          class="text-danger"
+        >
+          Company Name is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <label for="companyTypes" class="form-label">Company Types</label>
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let type of types">
+              <td>{{ type.id }}</td>
+              <td>{{ type.name }}</td>
+              <td>
+                <i
+                  [routerLink]="['/company', 'operations', type.id]"
+                  class="fs-4 mx-2 text-info bi bi-pencil-square"
+                  title="Edit"
+                ></i>
+                <i
+                  class="fs-4 mx-2 text-danger bi bi-trash3-fill"
+                  (click)="deleteCompanyTypeHandler(type.id)"
+                  title="Delete"
+                ></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngFor="let type of types">
+          <input
+            type="checkbox"
+            [formControlName]="'types'"
+            [value]="type.id"
+            (change)="onTypeChange($event)"
+          />
+          {{ type.name }}
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+      <button
+        type="submit"
+        class="btn btn-success mx-2 fixed-button-size"
+        [disabled]="companyForm.invalid"
+      >
+        {{ companyId == "0" ? "Add New Company" : "Edit Company" }}
+      </button>
+      <button
+        type="button"
+        (click)="goBack()"
+        class="btn btn-secondary mx-2 fixed-button-size"
+      >
+        Back to List
+      </button>
+    </div>
+  </form>
+</div>

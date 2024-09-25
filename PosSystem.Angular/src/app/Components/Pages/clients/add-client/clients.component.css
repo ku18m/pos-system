@@ -1,0 +1,67 @@
+.company {
+  margin: 30px;
+  padding: 30px;
+  /* float: right;
+  width: 950px; */
+}
+
+.input {
+  margin: 20px;
+  display: flex;
+}
+
+input {
+  margin: 0px 10px 10px 10px;
+  width: 700px;
+  border: 1px solid #c7c7c7;
+}
+.notes {
+  margin-left: 40px;
+}
+textarea {
+  margin-left: 45px;
+  width: 400px;
+  height: 200px;
+  margin-right: 20px;
+  width: 700px;
+  border: 1px solid #c7c7c7;
+}
+
+input-notes {
+  display: flex;
+}
+
+button {
+  border: none;
+  padding: 5px;
+  width: 90px;
+  height: 40px;
+  margin: 10px;
+}
+.button {
+  margin-left: 600px;
+}
+i {
+  display: inline-block;
+}
+.phone {
+  margin-left: 20px;
+}
+.phone-input {
+  margin-left: 32px;
+}
+.number {
+  margin-left: 15px;
+}
+.number-input {
+  margin-left: 23px;
+}
+.save {
+  margin-left: 20px;
+}
+
+.alert {
+  width: 100%;
+  height: 100px;
+  padding: auto;
+}

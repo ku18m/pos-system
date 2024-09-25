@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CompanyWithAPIService } from '../../../services/company-with-api.service';
-import { NavbarComponent } from '../navbar/navbar.component';
-import { SidebarComponent } from '../sidebar/sidebar.component';
-import { FooterComponent } from '../footer/footer.component';
+import { CompanyWithAPIService } from '../../../../services/company-with-api.service';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-company',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, NavbarComponent, SidebarComponent, FooterComponent],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule],
   templateUrl: './company.component.html',
   styleUrl: './company.component.css'
 })
@@ -27,7 +26,7 @@ export class CompanyComponent implements OnInit {
 
 
 
-  constructor(private companyService: CompanyWithAPIService) { }
+  constructor(private companyService: CompanyWithAPIService, private changeDetector: ChangeDetectorRef) { }
   ngOnInit() {
     this.companyService.getAllCompanies(this.tokin).subscribe({
       next: (element) => {
@@ -69,12 +68,14 @@ export class CompanyComponent implements OnInit {
         this.companyService.addCompanyWithNotes(this.tokin,this.companyName, this.companyNotes).subscribe(
           response => {
             console.log('Company added successfully:', response);
+            this.showNotification('success', 'Company added successfully');
             this.companyName = ''; // Clear input
             this.companyNotes = ''; // Clear input
             this.duplicateError=null;
           },
-          error => {
-            console.error('Error adding company:', error);
+          err => {
+            console.error('Error adding company:', err);
+            this.showNotification('danger', err.error.errors.Name[0]);
           }
         );
 
@@ -88,6 +89,16 @@ export class CompanyComponent implements OnInit {
     console.log("canceled")
   }
 
+
+  notification: { type: string; message: string } | null = null;
+
+  showNotification(type: string, message: string) {
+    this.notification = { type, message };
+    this.changeDetector.detectChanges();
+  }
+
+  closeNotification() {
+    this.notification = null;
+    this.changeDetector.detectChanges();
+  }
 }
-
-

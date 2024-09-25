@@ -1,31 +1,40 @@
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ClientService } from '../../services/client.service'; 
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { IClient } from '../../models/iclient'; 
+import { ClientsWithAPIService } from '../../../../services/clients-with-api.service';
+import { IClients } from '../IClients';
 
 @Component({
   selector: 'app-show-client',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, HttpClientModule, RouterLinkActive],
-  templateUrl: './show-clients.component.html', 
-  styleUrls: ['./show-clients.component.css'], 
-  providers: [ClientService]
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    HttpClientModule,
+    RouterLinkActive,
+  ],
+  templateUrl: './show-clients.component.html',
+  styleUrls: ['./show-clients.component.css'],
+  providers: [],
 })
 export class ShowClientComponent implements OnInit {
-  clients: IClient[] = [];
+  clients: IClients[] = [];
   currentPage: number = 1;
-  clientsPerPage: number = 3; 
-  paginatedClients: IClient[] = [];
+  clientsPerPage: number = 3;
+  paginatedClients: IClients[] = [];
 
-  constructor(public clientService: ClientService, private router: Router) {}
+  constructor(
+    public clientService: ClientsWithAPIService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.clientService.getAllClients().subscribe({
       next: (response) => {
-        this.clients = response as IClient[];
+        this.clients = response as IClients[];
         console.log(this.clients);
         this.updatePaginatedClients();
       },
@@ -50,7 +59,7 @@ export class ShowClientComponent implements OnInit {
   }
 
   editClient(clientId: string) {
-    this.router.navigate(['/client', clientId, 'edit']); 
+    this.router.navigate(['/clients', 'operations', clientId]);
   }
 
   deleteClientHandler(clientId: any) {
@@ -58,7 +67,7 @@ export class ShowClientComponent implements OnInit {
       next: () => {
         this.clientService.getAllClients().subscribe({
           next: (response) => {
-            this.clients = response as IClient[];
+            this.clients = response as IClients[];
             this.updatePaginatedClients();
           },
         });
