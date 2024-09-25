@@ -1,0 +1,8 @@
+.add-company-btn:hover {
+  background-color: #e0ffe0;
+  color: #28a745;
+}
+
+.add-company-btn i:hover {
+  color: #1e7e34;
+}

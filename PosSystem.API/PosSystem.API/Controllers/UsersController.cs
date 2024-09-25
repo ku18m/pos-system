@@ -107,14 +107,21 @@ namespace PosSystem.API.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var user = await _userServices.UpdateUserAsync(id, userToUpdate);
-
-            if (user == null)
+            try
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+                var user = await _userServices.UpdateUserAsync(id, userToUpdate);
 
-            return Ok(user);
+                if (user == null)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
+
+                return Ok(user);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         /// <summary>

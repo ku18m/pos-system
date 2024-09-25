@@ -79,7 +79,7 @@ namespace PosSystem.API.Controllers
         /// </summary>
         /// <param name="id">The company ID.</param>
         /// <returns>The company with the specified ID.</returns>
-        [HttpGet("GetById")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
             try

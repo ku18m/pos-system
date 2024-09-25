@@ -35,7 +35,7 @@ namespace PosSystem.Application.Services
             if (unit == null)
                 throw new Exception("Type not found");
 
-            await unitOfWork.UnitRepository.Delete(id);
+            await unitOfWork.CategoryRepository.Delete(id);
             await unitOfWork.Save();
         }
 

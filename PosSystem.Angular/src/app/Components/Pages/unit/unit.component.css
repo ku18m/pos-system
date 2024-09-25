@@ -1,8 +1,8 @@
 .company{
     margin:30px;
     padding: 30px;
-    float: right;
-    width: 950px;
+    /* float: right; */
+    /* width: 950px; */
 
 }
 
@@ -15,11 +15,11 @@ input{
     margin:0px 10px 10px 10px;
     width: 700px;
     border: 1px solid #c7c7c7;
-    
+
 }
 .notes{
     margin-left:20px;
-    
+
 
 }
 textarea{
@@ -29,7 +29,7 @@ textarea{
     margin-right: 20px;
     width: 700px;
     border: 1px solid #c7c7c7 ;
-      
+
 }
 
 input-notes{

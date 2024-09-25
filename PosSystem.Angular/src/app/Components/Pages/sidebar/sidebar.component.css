@@ -2,8 +2,6 @@ ul{
     display: inline-block;
     margin: 0px;
     padding: 0px;
-    
-
 }
 li{
     background-color: #21263C;
@@ -15,7 +13,7 @@ li{
 a{
     text-decoration: none;
     color:white;
-    
+
 }
 .active-link{
     background-color: #296888;

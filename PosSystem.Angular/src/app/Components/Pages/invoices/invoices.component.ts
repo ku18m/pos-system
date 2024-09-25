@@ -116,7 +116,7 @@ export class InvoicesComponent implements OnInit {
   ngOnInit(): void {
     // ---------------------------------  START SECTION 1&2 (oNiNIT)  --------------------------------------------
     this.unitService.getAllUnits(this.tokin).subscribe({next:(response)=> this.unitList=response});
-    this.clientService.getAllClients(this.tokin).subscribe({next:(response)=> this.clientList=response});
+    this.clientService.getAllClients().subscribe({next:(response)=> this.clientList=response});
     this.itemService.getAllItems(this.tokin).subscribe({next:(response)=> this.itemList=response});
     this.invoiceService.getAllBills().subscribe({next:(bills:IInvoices[])=>{
     this.billList = bills.map(bill => bill.id)}});

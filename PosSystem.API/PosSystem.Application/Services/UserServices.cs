@@ -98,9 +98,17 @@ namespace PosSystem.Application.Services
                 return null;
             }
 
-            userToUpdate.Password = BCrypt.Net.BCrypt.HashPassword(userToUpdate.Password);
+            if (!string.IsNullOrEmpty(userToUpdate.Password))
+            {
+                userToUpdate.Password = BCrypt.Net.BCrypt.HashPassword(userToUpdate.Password);
+            }
+            else
+            {
+                userToUpdate.Password = user.Password;
+            }
 
             var userToUpdateEntity = mapper.Map(userToUpdate, user);
+
 
             await unitOfWork.UserRepository.Update(userToUpdateEntity);
 

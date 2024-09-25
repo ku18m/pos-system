@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pioneers</title>
-</head>
-<body>
-  <!-- <app-navbar></app-navbar> -->
-  <!-- <app-sidebar></app-sidebar> -->
-  <router-outlet></router-outlet>
-  <!-- <app-footer></app-footer> -->
-  <!-- <app-login></app-login> -->
-   <!-- <app-register></app-register> -->
-
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pioneers</title>
+  </head>
+  <body>
+    <app-navbar *ngIf="showNavbarAndFooter"></app-navbar>
+    <div class="layout-container">
+      <div class="sidebar">
+        <app-sidebar *ngIf="showNavbarAndFooter"></app-sidebar>
+      </div>
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <app-footer *ngIf="showNavbarAndFooter"></app-footer>
+  </body>
 </html>
