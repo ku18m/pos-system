@@ -1,8 +1,8 @@
 .company{
-    margin:30px;
+    margin:10px;
     padding: 30px;
-    /* float: right;
-    width: 950px; */
+    
+    
 
 }
 
@@ -15,11 +15,8 @@ input,select{
     margin:0px 10px 10px 10px;
     width: 700px;
     border: 1px solid #c7c7c7;
-
+    
 }
-
-
-
 
 button{
     border: none;
@@ -42,20 +39,66 @@ i{
     margin-left: 50px;
 }
 
-table{
-    /* width:950px; */
-    /* margin-left: 250px; */
-    /* margin-top: -250px; */
-    /* margin-bottom: 250px; */
-
+.custom-card-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    
+  }
+  .font-bold {
+    font-weight: bold;
+  }
+  
+  .card {
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .card .list-group-item {
+    padding: 15px;
+  }
+  
+  .card:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s;
+  }
+  
+  .table-responsive {
+    margin-top: 30px;
+    max-width: 1300px; /* Adjust this value to your preferred width */
+    margin-left: auto;
+    margin-right: 15px;
+  }
+  .table {
+    width: 100%; /* Make sure the table takes the full width of its container */
 }
-td{
+  
+  .table th,
+  .table td {
+    text-align: center;
+    vertical-align: middle;
+  }
+  table thead th {
+    background-color: #c0d2e4; /* Darker color */
+    
+  }
+  
+  .table thead {
+    background-color: #343a40;
+  }
+/*   
+  .table tbody tr:nth-child(odd) {
     background-color: #f8f9fa;
-}
-
-th{
-    background-color:#e6f0f5 ;
-}
-.clear{
-    clear: both;
-}
+  } */
+  
+  .table tbody tr:hover {
+    background-color: #d6e0e7;
+  }
+  
+  .table-bordered {
+    border: 2px solid #dee2e6;
+  }
+  
+  
