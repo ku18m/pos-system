@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './Components/Pages/home/home.component';
-import { UnitComponent } from './Components/Pages/unit/unit.component';
 import { InvoicesComponent } from './Components/Pages/invoices/invoices.component';
 import { ReportComponent } from './Components/Pages/report/report.component';
 import { StockComponent } from './Components/Pages/stock/stock.component';
@@ -10,6 +9,7 @@ import { CompanyMainComponent } from './Components/Pages/company/company-main.co
 import { UsersMainComponent } from './Components/Pages/users/users-main.component';
 import { ItemsMainComponent } from './Components/Pages/items/items-main.component';
 import { TypesMainComponent } from './Components/Pages/types/types-main.component';
+import { UnitsMainComponent } from './Components/Pages/unit/units-main.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -30,7 +30,14 @@ export const routes: Routes = [
         (m) => m.TypesModule
       ),
   },
-  { path: 'units', component: UnitComponent },
+  {
+    path: 'units',
+    component: UnitsMainComponent,
+    loadChildren: () =>
+      import('./Components/Pages/unit/units.module').then(
+        (m) => m.UnitsModule
+      ),
+  },
   {
     path: 'items',
     component: ItemsMainComponent,

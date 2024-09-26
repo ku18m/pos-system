@@ -1,3 +1,5 @@
 export interface IUnits{
-    id:string
+    id:string;
+    name:string;
+    notes:string;
 }
