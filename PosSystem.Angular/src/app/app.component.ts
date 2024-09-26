@@ -5,7 +5,7 @@ import { NavbarComponent } from './Components/Pages/navbar/navbar.component';
 import { SidebarComponent } from './Components/Pages/sidebar/sidebar.component';
 import { HomeComponent } from './Components/Pages/home/home.component';
 import { CompanyComponent } from './Components/Pages/company/add-company/company.component';
-import { TypesComponent } from './Components/Pages/types/types.component';
+import { TypesComponent } from './Components/Pages/types/add-type/types.component';
 import { UnitComponent } from './Components/Pages/unit/unit.component';
 import { ItemsComponent } from './Components/Pages/items/add-product/items.component';
 import { ClientsComponent } from './Components/Pages/clients/add-client/clients.component';

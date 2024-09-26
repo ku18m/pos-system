@@ -21,7 +21,7 @@ export class CompanyWithAPIService {
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`); // Set the authorization header
 
-    return this.http.get<any[]>(this.baseURL, { headers }); // Make the API call
+    return this.http.get<any[]>(`${this.baseURL}/GetAll`, { headers }); // Make the API call
   }
 
   addCompanyWithNotes(token:string ,companyName: string, notes: string): Observable<any> {
