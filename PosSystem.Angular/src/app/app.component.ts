@@ -7,19 +7,20 @@ import { HomeComponent } from './Components/Pages/home/home.component';
 import { CompanyComponent } from './Components/Pages/company/add-company/company.component';
 import { TypesComponent } from './Components/Pages/types/types.component';
 import { UnitComponent } from './Components/Pages/unit/unit.component';
-import { ItemsComponent } from './Components/Pages/items/items.component';
+import { ItemsComponent } from './Components/Pages/items/add-product/items.component';
 import { ClientsComponent } from './Components/Pages/clients/add-client/clients.component';
 import { InvoicesComponent } from './Components/Pages/invoices/invoices.component';
 import { ReportComponent } from './Components/Pages/report/report.component';
 import { StockComponent } from './Components/Pages/stock/stock.component';
 import { CommonModule } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet,NavbarComponent,FooterComponent,SidebarComponent,HomeComponent,CompanyComponent,TypesComponent,UnitComponent,ItemsComponent,ClientsComponent,InvoicesComponent,ReportComponent,StockComponent],
+  imports: [NgbModule, CommonModule, RouterOutlet,NavbarComponent,FooterComponent,SidebarComponent,HomeComponent,CompanyComponent,TypesComponent,UnitComponent,ItemsComponent,ClientsComponent,InvoicesComponent,ReportComponent,StockComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -39,7 +40,6 @@ export class AppComponent {
   }
 
   isLoginRoute(): boolean {
-    console.log(this.router.url);
     return this.router.url === '/';
   }
 }

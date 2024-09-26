@@ -5,24 +5,33 @@
     <form [formGroup]="itemForm">
         <div class="input">
             <label>Company Name:</label>
-            <select  class="form-control dropdown-toggle"  data-bs-toggle="dropdown" formControlName="companyName" [(ngModel)]="companyName" (change)="ChangeType()">
+            <select  class="form-control dropdown-toggle"  data-bs-toggle="dropdown" formControlName="companyId" [(ngModel)]="companyId" (change)="ChangeType()">
                 <option disabled selected>-- Choose From Companies --</option>
-                @for(company of companyList; track $index){
-                    <option>{{company.name}}</option>
-                }
+                <option *ngFor="let company of companyList" [value]="company.id">
+                  {{ company.name }}
+                </option>
             </select>
         </div>
         <div class="text-danger ms-3">{{companyNameRequiredError}}</div>
+
         <div class="input">
             <label class="type">Type Name:</label>
-            <select  class="form-control dropdown-toggle type-input"  data-bs-toggle="dropdown" formControlName="typeName" [(ngModel)]="typeName" >
+            <select  class="form-control dropdown-toggle type-input"  data-bs-toggle="dropdown" formControlName="typeId" [(ngModel)]="typeId" >
                 <option disabled selected>-- Choose From Types --</option>
-                @for(type of typeList ;track $index){
-                    @if(type.companyName==companyName){
-                        <option>{{type.name}}</option>
-                    }
+                <option *ngFor="let type of typeList" [value]="type.id">
+                  {{ type.name }}
+                </option>
+            </select>
+        </div>
+        <div class="text-danger ms-3">{{typeNameRequiredError}}</div>
 
-                }
+        <div class="input">
+            <label class="type">Unit Name:</label>
+            <select  class="form-control dropdown-toggle type-input"  data-bs-toggle="dropdown" formControlName="unitId" [(ngModel)]="unitId" >
+                <option disabled selected>-- Choose From Units --</option>
+                <option *ngFor="let unit of unitList" [value]="unit.id">
+                  {{ unit.name }}
+                </option>
             </select>
         </div>
         <div class="text-danger ms-3">{{typeNameRequiredError}}</div>
@@ -54,6 +63,11 @@
         <div class="button">
             <button (click)="Submit($event)" class=" bg-success rounded text-light save"><i class="bi bi-floppy text-light m-1"></i>Save</button>
             <button (click)="Cancel()" class=" bg-danger rounded text-light"><i class="bi bi-trash3 text-light"></i>Cancel</button>
+        </div>
+
+        <div *ngIf="notification" class="alert alert-{{notification?.type}} alert-dismissible fade show" role="alert">
+          {{notification?.message}}
+          <button type="button" class="btn-close" aria-label="Close" (click)="closeNotification()"></button>
         </div>
     </form>
 </div>

@@ -1,14 +1,17 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { RequestHandlerService } from './request-handler.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UnitsWithAPIService {
 
+  parentEndpoint = 'Unit';
+
   baseURL="http://localhost:7168/Unit"; // Adjust this based on your API configuration
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private requestHandler: RequestHandlerService) { }
 
   // Get all units with token authorization
   getAllUnits(token: string): Observable<any> {
@@ -25,4 +28,9 @@ export class UnitsWithAPIService {
 
     return this.http.post(this.baseURL, body, { headers });
   }
+
+  getAll(): Observable<any> {
+    return this.requestHandler.get<any[]>(`${this.parentEndpoint}/GetAll`);
+  }
+
 }

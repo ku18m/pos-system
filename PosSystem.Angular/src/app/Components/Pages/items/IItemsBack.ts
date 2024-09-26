@@ -1,12 +1,11 @@
 export interface IItemsBack{
-    id:string,
-    companyId:string,
-    companyName:string,
-    typeId:string,
-    typeName:string,
-    name:string,
-    sellingPrice:number,
-    buyingPrice:number,
-    quantity:number,
-    notes:string,
+    id?:string;
+    name:string;
+    buyingPrice:number;
+    sellingPrice:number;
+    quantity:number;
+    notes:string;
+    categoryId:string;
+    companyId:string;
+    unitId:string;
 }

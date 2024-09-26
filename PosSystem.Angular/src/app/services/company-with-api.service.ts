@@ -32,6 +32,10 @@ export class CompanyWithAPIService {
     return this.http.post(this.baseURL, body, { headers }); // Make the API call
   }
 
+  getCompanies(): Observable<any> {
+    return this.requestHandler.get<ICompany[]>(`${this.parentEndpoint}/GetAll`);
+  }
+
   getCompanyById(companyId: string): Observable<any> {
     return this.requestHandler.get<ICompany>(`${this.parentEndpoint}/${companyId}`);
   }
@@ -46,5 +50,9 @@ export class CompanyWithAPIService {
 
   getCompaniesPage(page: number, pageSize: number): Observable<any> {
     return this.requestHandler.get<any>(`${this.parentEndpoint}?pageNumber=${page}&pageSize=${pageSize}`);
+  }
+
+  getCompaniesShorted(): Observable<any> {
+    return this.requestHandler.get<any>(`${this.parentEndpoint}/GetAllShorted`);
   }
 }

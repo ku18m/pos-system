@@ -1,23 +1,24 @@
 <div class="container mt-4">
   <h1 class="text-center mb-4 text-muted">
-    {{ productId === 0 ? "Add New Product" : "Edit Product" }}
+    {{ productId === undefined ? "Add New Product" : "Edit Product" }}
   </h1>
   <form
     [formGroup]="productForm"
     (ngSubmit)="productOperation()"
     class="bg-light p-4 rounded shadow"
   >
+    <!-- Company Selection -->
     <div class="row mb-3">
       <div class="col-md-6">
-        <label for="companyName" class="form-label">Company Name</label>
+        <label for="companyId" class="form-label">Company Name</label>
         <select
-          formControlName="companyName"
+          formControlName="companyId"
           class="form-control"
-          id="companyName"
+          id="companyId"
           (change)="onCompanyNameChange($event)"
         >
           <option [value]="''" selected disabled>Select a company</option>
-          <option *ngFor="let company of companies" [value]="company.name">
+          <option *ngFor="let company of companies" [value]="company.id">
             {{ company.name }}
           </option>
         </select>
@@ -32,22 +33,23 @@
         </div>
       </div>
 
+      <!-- Category Selection -->
       <div class="col-md-6">
         <label for="companyTypes" class="form-label">Company Types</label>
         <select
-          formControlName="companyType"
+          formControlName="categoryId"
           class="form-control"
           id="companyTypes"
         >
           <option [value]="''" selected disabled>Select Company Type</option>
-          <option *ngFor="let type of types" [value]="type.name">
+          <option *ngFor="let type of types" [value]="type.id">
             {{ type.name }}
           </option>
         </select>
         <div
           *ngIf="
-            productForm.get('companyType')?.invalid &&
-            productForm.get('companyType')?.touched
+            productForm.get('categoryId')?.invalid &&
+            productForm.get('categoryId')?.touched
           "
           class="text-danger"
         >
@@ -56,6 +58,7 @@
       </div>
     </div>
 
+    <!-- Product Details -->
     <div class="row mb-3">
       <div class="col-md-6">
         <label for="name" class="form-label">Product Name</label>
@@ -97,6 +100,7 @@
       </div>
     </div>
 
+    <!-- Buying Price and Quantity -->
     <div class="row mb-3">
       <div class="col-md-6">
         <label for="buyingPrice" class="form-label">Buying Price</label>
@@ -119,7 +123,7 @@
         </div>
       </div>
 
-      <!-- Added Quantity Input -->
+      <!-- Quantity -->
       <div class="col-md-6">
         <label for="quantity" class="form-label">Quantity</label>
         <input
@@ -141,6 +145,33 @@
       </div>
     </div>
 
+    <!-- Unit Selection -->
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="unitId" class="form-label">Unit</label>
+        <select
+          formControlName="unitId"
+          class="form-control"
+          id="unitId"
+        >
+          <option [value]="''" selected disabled>Select Unit</option>
+          <option *ngFor="let unit of units" [value]="unit.id">
+            {{ unit.name }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            productForm.get('unitId')?.invalid &&
+            productForm.get('unitId')?.touched
+          "
+          class="text-danger"
+        >
+          Unit is required.
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes -->
     <div class="row mb-3">
       <div class="col-md-6">
         <label for="notes" class="form-label">Notes</label>
@@ -153,13 +184,14 @@
       </div>
     </div>
 
+    <!-- Buttons -->
     <div class="d-flex justify-content-center mt-4">
       <button
         type="submit"
         class="btn btn-success mx-2 fixed-button-size"
         [disabled]="productForm.invalid"
       >
-        {{ productId === 0 ? "Add New Product" : "Edit Product" }}
+        {{ productId === undefined ? "Add New Product" : "Edit Product" }}
       </button>
       <button
         type="button"

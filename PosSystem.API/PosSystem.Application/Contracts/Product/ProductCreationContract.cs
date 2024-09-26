@@ -17,6 +17,11 @@ namespace PosSystem.Application.Contracts.Product
         [SellingNotLessThanBuying]
         public decimal SellingPrice { get; set; }
 
+
+        [Required]
+        [Range(0, double.MaxValue)]
+        public decimal? Quantity { get; set; }
+
         public string? Notes { get; set; }
 
         [Required]
