@@ -28,7 +28,7 @@ export class CompanyComponent implements OnInit {
 
   constructor(private companyService: CompanyWithAPIService, private changeDetector: ChangeDetectorRef) { }
   ngOnInit() {
-    this.companyService.getAllCompanies(this.tokin).subscribe({
+    this.companyService.getAllCompanies().subscribe({
       next: (element) => {
           for(var i=0;i<element.data.length;i++){
             this.companyList.push(element.data[i].name);
@@ -65,7 +65,7 @@ export class CompanyComponent implements OnInit {
 
     //adding company
     if (this.companyName != null && this.companyName != "") {
-        this.companyService.addCompanyWithNotes(this.tokin,this.companyName, this.companyNotes).subscribe(
+        this.companyService.addCompanyWithNotes(this.companyName, this.companyNotes).subscribe(
           response => {
             console.log('Company added successfully:', response);
             this.showNotification('success', 'Company added successfully');

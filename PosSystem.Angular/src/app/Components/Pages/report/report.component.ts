@@ -37,10 +37,10 @@ export class ReportComponent implements OnInit {
   constructor(private invoiceService:InvoicesWithAPIService, private itemService:ItemWithAPIService){}
 
   ngOnInit(): void {
-    this.invoiceService.getAllBills().subscribe({next:(bills:any)=>{
-      this.billDateList = bills}});
-    this.invoiceService.getAllBills().subscribe({next:(bills:any)=>{
-      this.billDateList = bills}});
+    // this.invoiceService.getAllBills().subscribe({next:(bills:any)=>{
+    //   this.billDateList = bills}});
+    // this.invoiceService.getAllBills().subscribe({next:(bills:any)=>{
+    //   this.billDateList = bills}});
       this.itemService.getAllItems(this.tokin).subscribe({next:(response)=> this.itemList=response});
   }
 

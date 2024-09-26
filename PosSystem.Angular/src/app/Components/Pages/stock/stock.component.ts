@@ -4,6 +4,7 @@ import { ItemWithAPIService } from '../../../services/item-with-api.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FooterComponent } from '../footer/footer.component';
+import { StockWithAPIService } from '../../../services/stock-with-api.service';
 
 @Component({
   selector: 'app-stock',
@@ -16,26 +17,37 @@ export class StockComponent implements OnInit {
 
   items:any="-- Choose From Items --";
   itemList:any[]=[];
-  tokin:any=localStorage.getItem('token');
-
   code:any;
   name:any;
   quantity:any;
   itemTable:{code:string,name:string,quantity:number}[]=[];
+  Error:any;
 
-  constructor(private itemService:ItemWithAPIService){}
+  constructor(private itemService:ItemWithAPIService, private stockService:StockWithAPIService){}
   ngOnInit(): void {
-    this.itemService.getAllItems(this.tokin).subscribe({next:(response)=> this.itemList=response});
+    this.stockService.GetAllItems().subscribe({
+      next:(response)=>{
+        response.data.forEach((element:any) => {
+          this.itemList.push(element);
+        });
+      }
+    })
+    
   }
 
   Search(){
     this.itemList.forEach(item=>{
       if(this.items==item.name)
       {
-        this.code=item.itemCode;
+        this.code=item.id;
         this.name=item.name;
         this.quantity=item.quantity;
         this.itemTable.push({code:this.code,name:this.name,quantity:this.quantity})
+      }
+      else{
+        this.Error="Wrong Item Name!"
+        // <div class="text-danger">{{Error}}</div>
+
       }
     })
 

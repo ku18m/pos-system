@@ -2,6 +2,7 @@ ul{
     display: inline-block;
     margin: 0px;
     padding: 0px;
+    width: 200px;
 }
 li{
     background-color: #21263C;

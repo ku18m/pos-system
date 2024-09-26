@@ -6,6 +6,7 @@ import { ITypes } from './ITypes';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FooterComponent } from '../footer/footer.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-types',
@@ -25,25 +26,26 @@ export class TypesComponent implements OnInit {
   TypeList: any[]=[];
   duplicateError: any;
   TypeRequiredError: string | null = null;
-  token: any = localStorage.getItem('token');
   companyID:any;
 
-  constructor(private companyService: CompanyWithAPIService, private typeService: TypesWithAPIService) { }
+  constructor(private companyService: CompanyWithAPIService, private typeService: TypesWithAPIService, private router:Router) { }
 
   ngOnInit(): void {
-    this.companyService.getAllCompanies(this.token).subscribe({
+    this.companyService.getAllCompanies().subscribe({
       next: (element) => {
         for (var i = 0; i < element.data.length; i++) {
           this.companyList.push(element.data[i].name);
         }
       }
     });
-    this.typeService.getAllTypes(this.token).subscribe({  
+    this.typeService.getAllTypes().subscribe({  
       next: (element) => {   
           for(var i=0;i<element.length;i++){
             this.TypeList.push(element[i].name);
           }
       }});
+
+      
   }
 
 
@@ -53,18 +55,18 @@ export class TypesComponent implements OnInit {
     notes: new FormControl("")
   });
 
+
+  show(){
+    this.router.navigate(['/'])
+  }
+
   onChange(){
-    this.companyService.getAllCompanies(this.token).subscribe({
-      next: (element) => {
-        this.companyList.forEach((item)=>{
-          if(this.companyValue==item){
-            this.companyID=item.id;
-            console.log(this.companyID)
-          }
-        })
+    
+    this.companyService.GetCompany(this.companyValue).subscribe({
+      next:(element)=>{
+        this.companyID=element.id;
       }
     });
-
   }
 
   Submit(e: any) {
@@ -94,7 +96,7 @@ export class TypesComponent implements OnInit {
       })
     //adding type
     if (this.companyValue != "-- Choose From Companies --" && this.typeName != null && this.typeName != "" ) { 
-        this.typeService.addTypeWithNotes(this.token,this.typeName, this.notes,this.companyID).subscribe(  
+        this.typeService.addTypeWithNotes(this.typeName, this.notes,this.companyID).subscribe(  
           response => {  
             console.log('Type added successfully:', response);  
             this.typeName = ''; // Clear input  
