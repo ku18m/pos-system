@@ -8,28 +8,64 @@
         <a [routerLink]="['/users']" >Users</a>
     </li>
     <li routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
-        <i class="bi bi-pencil-square text-light me-1"></i>
-        <a [routerLink]="['/company']">Company Data</a>
+      <i class="bi bi-pencil-square text-light me-1"></i>
+      <a data-bs-toggle="collapse" href="#companyMenu" role="button" aria-expanded="false" aria-controls="companyMenu">
+        Companies
+      </a>
+      <ul id="companyMenu" class="collapse sub-menu">
+        <li><a [routerLink]="['/company']">Add Company</a></li>
+        <li><a [routerLink]="['/company/operations']">All Companies</a></li>
+      </ul>
     </li>
     <li routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
-        <i class="bi bi-grid text-light me-1"></i>
-        <a [routerLink]="['/types']">Types</a>
+      <i class="bi bi-grid text-light me-1"></i>
+      <a data-bs-toggle="collapse" href="#typesMenu" role="button" aria-expanded="false" aria-controls="typesMenu">
+        Types
+      </a>
+      <ul id="typesMenu" class="collapse sub-menu">
+        <li><a [routerLink]="['/types']">Add Type</a></li>
+        <li><a [routerLink]="['/types/operations']">All Types</a></li>
+      </ul>
     </li>
     <li routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
-        <i class="bi bi-pie-chart me-1"></i>
-        <a [routerLink]="['/units']">All Units</a>
+      <i class="bi bi-pie-chart me-1"></i>
+      <a data-bs-toggle="collapse" href="#unitsMenu" role="button" aria-expanded="false" aria-controls="unitsMenu">
+        Units
+      </a>
+      <ul id="unitsMenu" class="collapse sub-menu">
+        <li><a [routerLink]="['/units']">Add Unit</a></li>
+        <li><a [routerLink]="['/units/operations']">All Units</a></li>
+      </ul>
     </li>
     <li routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
-        <i class="bi bi-layers me-1"></i>
-        <a [routerLink]="['/items']">Items</a>
+      <i class="bi bi-layers me-1"></i>
+      <a data-bs-toggle="collapse" href="#itemsMenu" role="button" aria-expanded="false" aria-controls="itemsMenu">
+        Items
+      </a>
+      <ul id="itemsMenu" class="collapse sub-menu">
+        <li><a [routerLink]="['/items']">Add Item</a></li>
+        <li><a [routerLink]="['/items/operations']">All Items</a></li>
+      </ul>
     </li>
     <li routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
-        <i class="bi bi-people-fill text-light me-1"></i>
-        <a [routerLink]="['/clients']">Clients</a>
+      <i class="bi bi-people-fill text-light me-1"></i>
+      <a data-bs-toggle="collapse" href="#clientsMenu" role="button" aria-expanded="false" aria-controls="clientsMenu">
+        Clients
+      </a>
+      <ul id="clientsMenu" class="collapse sub-menu">
+        <li><a [routerLink]="['/clients']">Add Client</a></li>
+        <li><a [routerLink]="['/clients/operations']">All Clients</a></li>
+      </ul>
     </li>
     <li routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
-        <i class="bi bi-sliders2-vertical text-light me-1"></i>
-        <a [routerLink]="['/invoices']">Invoices</a>
+      <i class="bi bi-sliders2-vertical text-light me-1"></i>
+      <a data-bs-toggle="collapse" href="#invoicesMenu" role="button" aria-expanded="false" aria-controls="invoicesMenu">
+        Invoices
+      </a>
+      <ul id="invoicesMenu" class="collapse sub-menu">
+        <li><a [routerLink]="['/invoices']">Create Invoice</a></li>
+        <li><a [routerLink]="['/invoices/operations']">All Invoice</a></li>
+      </ul>
     </li>
     <li routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
         <i class="bi bi-bar-chart-line text-light me-1"></i>

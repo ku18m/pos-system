@@ -8,7 +8,7 @@ namespace PosSystem.Application.Contracts.Type
         [UniqueTypeName]
         public string Name { get; set; }
 
-        public string? Note { get; set; }
+        public string? Notes { get; set; }
 
         [ExistingCompanyId]
         public string CompanyId { get; set; }

@@ -75,7 +75,7 @@ namespace PosSystem.API.Controllers
         /// </summary>
         /// <param name="id">The ID of the unit.</param>
         /// <returns>The unit with the specified ID.</returns>
-        [HttpGet("GetById")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
             try
@@ -123,7 +123,7 @@ namespace PosSystem.API.Controllers
             try
             {
                 await service.Edit(id, unit);
-                return Ok("Unit updated successfully");
+                return NoContent();
             }
             catch (Exception ex)
             {

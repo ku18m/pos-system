@@ -1,6 +1,6 @@
 export interface ITypesOperationsBack{
   id:string,
   name:string,
-  note:string | null,
+  notes?:string | null,
   companyId:string,
 }

@@ -16,6 +16,8 @@ namespace PosSystem.Application.Contracts.Invoice
         public decimal Remaining { get; set; }
         public List<InvoiceItemOutContract> InvoiceItems { get; set; } = new List<InvoiceItemOutContract>();
         public string ClientName { get; set; }
+        public string ClientId { get; set; }
         public string EmployeeName { get; set; }
+        public string EmployeeId { get; set; }
     }
 }

@@ -30,8 +30,8 @@ export class CompanyComponent implements OnInit {
   ngOnInit() {
     this.companyService.getAllCompanies(this.tokin).subscribe({
       next: (element) => {
-          for(var i=0;i<element.data.length;i++){
-            this.companyList.push(element.data[i].name);
+          for(var i=0;i<element.length;i++){
+            this.companyList.push(element[i].name);
           }
       }});
 
@@ -47,8 +47,6 @@ export class CompanyComponent implements OnInit {
     }
     else
       this.requiredError = null;
-
-      console.log(this.companyList)
 
 
 

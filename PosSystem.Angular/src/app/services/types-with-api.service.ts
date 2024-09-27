@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RequestHandlerService } from './request-handler.service';
 import { ITypes } from '../Components/Pages/types/ITypes';
+import { ITypesBack } from '../Components/Pages/types/ITypesBack';
+import { ITypesOperationsBack } from '../Components/Pages/types/ITypesOperationsBack';
 
 @Injectable({
   providedIn: 'root'
@@ -31,16 +33,28 @@ export class TypesWithAPIService {
     return this.http.post(this.AddURL, body, { headers }); // Make the API call
   }
 
-  getTypes(): Observable<any> {
+  getTypes(): Observable<ITypes[]> {
     let methodEndpoint = 'GetAll';
     return this.requestHandler.get<ITypes[]>(`${this.parentEndpoint}/${methodEndpoint}`);
   }
 
-  getTypesByCompanyId(companyId: string): Observable<any> {
-    return this.requestHandler.get<ITypes[]>(`${this.parentEndpoint}/GetByCompanyId?companyId=${companyId}`);
+  getTypeById(typeId: string): Observable<ITypes> {
+    return this.requestHandler.get<ITypes>(`${this.parentEndpoint}/${typeId}`);
+  }
+
+  addType(type: ITypesBack): Observable<ITypes> {
+    return this.requestHandler.post<ITypes>(`${this.parentEndpoint}`, type);
+  }
+
+  updateType(type: ITypesOperationsBack): Observable<any> {
+    return this.requestHandler.put<any>(`${this.parentEndpoint}/${type.id}`, type);
   }
 
   deleteType(typeId: string): Observable<any> {
     return this.requestHandler.delete<any>(`${this.parentEndpoint}/${typeId}`);
+  }
+
+  getTypesByCompanyId(companyId: string): Observable<any> {
+    return this.requestHandler.get<ITypes[]>(`${this.parentEndpoint}/GetByCompanyId?companyId=${companyId}`);
   }
 }

@@ -11,7 +11,7 @@ namespace PosSystem.Application.Contracts.Type
         [UniqueTypeNameOnUpdate]
         public string Name { get; set; }
 
-        public string? Note { get; set; }
+        public string? Notes { get; set; }
 
         [Required]
         [ExistingCompanyId]

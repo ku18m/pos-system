@@ -1,5 +1,5 @@
 export interface ITypesBack{
   name:string,
-  note:string,
+  notes?:string | null,
   companyId:string
 }

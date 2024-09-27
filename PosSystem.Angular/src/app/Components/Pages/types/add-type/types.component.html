@@ -1,0 +1,39 @@
+<div class="rounded bg-light company">
+  <h2>Types Form</h2>
+  <form [formGroup]="typeForm" (ngSubmit)="Submit($event)">
+      <div class="input">
+          <label>Company Name:</label>
+          <select class="form-control dropdown-toggle" formControlName="companyName" (change)="companyReqFlag = false">
+              <option disabled selected>-- Choose From Companies --</option>
+              <option *ngFor="let company of companyList" [value]="company.id">{{ company.name }}</option>
+          </select>
+          <span *ngIf="companyReqFlag" class="text-danger errorMessage">Company Name is required</span>
+      </div>
+
+      <div class="input">
+          <label class="type">Type Name:</label>
+          <input type="text" class="form-control type-input" formControlName="name" />
+          <span *ngIf="TypeRequiredError" class="text-danger errorMessage">{{ TypeRequiredError }}</span>
+          <span *ngIf="duplicateError" class="text-danger errorMessage">{{ duplicateError }}</span>
+      </div>
+
+      <div class="input input-notes">
+          <label class="notes">Notes:</label>
+          <textarea cols="20" rows="3" class="form-control" formControlName="notes"></textarea>
+      </div>
+
+      <div class="button">
+          <button type="submit" class="bg-success rounded text-light save">
+              <i class="bi bi-floppy text-light m-1"></i>Save
+          </button>
+          <button type="button" (click)="Cancel()" class="bg-danger rounded text-light">
+              <i class="bi bi-trash3 text-light"></i>Cancel
+          </button>
+      </div>
+
+      <div *ngIf="notification" class="alert alert-{{notification?.type}} alert-dismissible fade show" role="alert">
+        {{notification?.message}}
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeNotification()"></button>
+      </div>
+  </form>
+</div>

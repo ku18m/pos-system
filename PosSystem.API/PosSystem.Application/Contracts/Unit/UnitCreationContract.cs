@@ -6,6 +6,6 @@ namespace PosSystem.Application.Contracts.Unit
     {
         [UniqueUnitName]
         public string Name { get; set; }
-        public string? Note { get; set; }
+        public string? Notes { get; set; }
     }
 }

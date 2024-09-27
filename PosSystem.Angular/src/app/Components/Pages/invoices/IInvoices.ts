@@ -1,19 +1,18 @@
-export interface IInvoices{
-    id:string,
-    billsNumber:number,
-    clientId:string,
-    clientName:string,
-    itemId:string,
-    itemName:string,
-    sellingPrice:number,
-    unitId:string,
-    unit:string,
-    quantity:string,
-    discount:number,
-    total:number,
-    balance:number,
-    employeeId:string,
-    employeeName:string,
-    
+import { IInvoiceItem } from "./IInvoiceItem";
 
+export interface IInvoices {
+  id: string;
+  number: number;
+  billDate: string;
+  date: string;
+  totalAmount: number;
+  totalDiscount: number;
+  net: number;
+  paidUp: number;
+  remaining: number;
+  invoiceItems: IInvoiceItem[];
+  clientName?: string;
+  clientId: string;
+  employeeName?: string;
+  employeeId: string;
 }

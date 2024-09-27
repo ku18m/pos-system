@@ -22,7 +22,9 @@ namespace PosSystem.Application.Services.AutoMapper
 
                 CreateMap<Invoice, InvoiceOutContract>()
                     .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client.Name))
+                    .ForMember(dest => dest.ClientId, opt => opt.MapFrom(src => src.ClientId))
                     .ForMember(dest => dest.EmployeeName, opt => opt.MapFrom(src => src.User.FullName))
+                    .ForMember(dest => dest.EmployeeId, opt => opt.MapFrom(src => src.UserId))
                     .ForMember(dest => dest.Number, opt => opt.MapFrom(src => src.BillNumber))
                     .ForMember(dest => dest.Net, opt => opt.MapFrom(src => src.FinalAmount))
                     .ForMember(dest => dest.PaidUp, opt => opt.MapFrom(src => src.PaidAmount))
