@@ -10,13 +10,16 @@ import { ItemsMainComponent } from './Components/Pages/items/items-main.componen
 import { TypesMainComponent } from './Components/Pages/types/types-main.component';
 import { UnitsMainComponent } from './Components/Pages/unit/units-main.component';
 import { InvoicesMainComponent } from './Components/Pages/invoices/invoices-main.component';
+import { AuthGuardService } from './services/auth-guard.service';
+import { AdminGuardService } from './services/admin-guard.service';
 
 export const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
+  { path: '', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
   {
     path: 'company',
     component: CompanyMainComponent,
+    canActivate: [AuthGuardService],
     loadChildren: () =>
       import('./Components/Pages/company/company.module').then(
         (m) => m.CompanyModule
@@ -24,6 +27,7 @@ export const routes: Routes = [
   },
   {
     path: 'types',
+    canActivate: [AuthGuardService],
     component: TypesMainComponent,
     loadChildren: () =>
       import('./Components/Pages/types/types.module').then(
@@ -32,6 +36,7 @@ export const routes: Routes = [
   },
   {
     path: 'units',
+    canActivate: [AuthGuardService],
     component: UnitsMainComponent,
     loadChildren: () =>
       import('./Components/Pages/unit/units.module').then(
@@ -40,6 +45,7 @@ export const routes: Routes = [
   },
   {
     path: 'items',
+    canActivate: [AuthGuardService],
     component: ItemsMainComponent,
     loadChildren: () =>
       import('./Components/Pages/items/items.module').then(
@@ -48,6 +54,7 @@ export const routes: Routes = [
   },
   {
     path: 'clients',
+    canActivate: [AuthGuardService],
     component: ClientsmainComponent,
     loadChildren: () =>
       import('./Components/Pages/clients/clients.module').then(
@@ -56,16 +63,18 @@ export const routes: Routes = [
   },
   {
     path: 'invoices',
+    canActivate: [AuthGuardService],
     component: InvoicesMainComponent,
     loadChildren: () =>
       import('./Components/Pages/invoices/invoices.module').then(
         (m) => m.InvoicesModule
       ),
   },
-  { path: 'report', component: ReportComponent },
-  { path: 'stock', component: StockComponent },
+  { path: 'report', canActivate: [AuthGuardService], component: ReportComponent },
+  { path: 'stock', canActivate: [AuthGuardService], component: StockComponent },
   {
     path: 'users',
+    canActivate: [AdminGuardService],
     component: UsersMainComponent,
     loadChildren: () =>
       import('./Components/Pages/users/users.module').then(

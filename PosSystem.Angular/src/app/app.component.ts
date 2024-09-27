@@ -40,6 +40,6 @@ export class AppComponent {
   }
 
   isLoginRoute(): boolean {
-    return this.router.url === '/';
+    return this.router.url.startsWith('/login');
   }
 }

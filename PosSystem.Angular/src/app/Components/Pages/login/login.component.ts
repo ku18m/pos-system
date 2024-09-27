@@ -34,7 +34,7 @@ export class LoginComponent {
           const token = response.token; // Adjust this based on your API response
           localStorage.setItem('token', token); // Store the token in local storage
           this.loginError =null;
-          this.router.navigate(['/home']); // Redirect after successful login
+          this.router.navigate(['/']); // Redirect after successful login
         },
         error: (error) => {
           this.loginError = "Invalid UserName or Password";

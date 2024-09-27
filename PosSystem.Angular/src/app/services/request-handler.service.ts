@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AuthWithAPIService } from './auth-with-api.service';
 
 @Injectable({
   providedIn: 'root'
