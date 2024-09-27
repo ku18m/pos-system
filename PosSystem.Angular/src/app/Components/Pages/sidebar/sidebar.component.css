@@ -1,20 +1,60 @@
-ul{
-    display: inline-block;
-    margin: 0px;
-    padding: 0px;
+ul {
+  display: block;
+  margin: 0px;
+  padding: 0px;
 }
-li{
-    background-color: #21263C;
-    color:white;
-    list-style: none;
-    padding: 25px;
-    padding-right: 40px;
-}
-a{
-    text-decoration: none;
-    color:white;
 
+li {
+  background-color: #21263C;
+  color: white;
+  list-style: none;
+  padding: 15px;
+  padding-right: 30px;
+  position: relative;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
-.active-link{
-    background-color: #296888;
+
+li a {
+  text-decoration: none;
+  color: white;
+  display: block;
+}
+
+li:hover {
+  background-color: #296888;
+  color: #fff;
+}
+
+.sub-menu {
+  /* padding-left: 20px; */
+  background-color: #2C344C;
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 10px;
+  /* padding-bottom: 10px; */
+}
+
+.active-link {
+  background-color: #296888;
+}
+
+.sub-menu li {
+  padding: 10px;
+  border-radius: 10px;
+  margin: 3px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sub-menu a {
+  /* padding-left: 10px; */
+  font-size: 14px;
+}
+
+.sub-menu:hover {
+  background-color: #3a4a6b;
+  color: #fff;
+}
+
+.collapse {
+  transition: max-height 0.5s ease-in-out;
 }

@@ -95,20 +95,20 @@ addInvoiceItem(item?: any): void {
     let invoiceData: IInvoices = this.invoiceForm.value;
     if (!this.invoiceId) {
       this.invoiceService.addInvoice(invoiceData).subscribe({
-        next: () => this.router.navigate(['/invoices']),
+        next: () => this.router.navigate(['/invoices/operations']),
         error: (err) => console.error('Error adding invoice:', err)
       });
     } else {
       invoiceData = { ...this.selectedInvoice, ...invoiceData };
       this.invoiceService.update(invoiceData).subscribe({
-        next: () => this.router.navigate(['/invoices']),
+        next: () => this.router.navigate(['/invoices/operations']),
         error: (err) => console.error('Error updating invoice:', err)
       });
     }
   }
 
   goBack(): void {
-    this.router.navigate(['/invoices']);
+    this.router.navigate(['/invoices/operations']);
   }
 
   get f() {
