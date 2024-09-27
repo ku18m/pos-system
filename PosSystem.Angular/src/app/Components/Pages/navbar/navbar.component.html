@@ -16,6 +16,11 @@
           
         </ul>
         <ul class="nav-right">
+          @if(loggedIn) {
+            <button class="btn btn-danger me-2" (click)="logoutUser()">Logout</button>
+          } @else {
+            <button class="btn btn-primary me-2" (click)="switchLogin()">Login</button>
+          }
           <i class="bi bi-search me-3"></i>
           <i class="bi bi-flag dropdown-toggle me-3" data-bs-toggle="dropdown"></i>
           <i class="bi bi-bell dropdown-toggle me-3" data-bs-toggle="dropdown"></i>
