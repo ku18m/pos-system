@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './Components/Pages/home/home.component';
-import { InvoicesComponent } from './Components/Pages/invoices/invoices.component';
 import { ReportComponent } from './Components/Pages/report/report.component';
 import { StockComponent } from './Components/Pages/stock/stock.component';
 import { LoginComponent } from './Components/Pages/login/login.component';
@@ -10,6 +9,7 @@ import { UsersMainComponent } from './Components/Pages/users/users-main.componen
 import { ItemsMainComponent } from './Components/Pages/items/items-main.component';
 import { TypesMainComponent } from './Components/Pages/types/types-main.component';
 import { UnitsMainComponent } from './Components/Pages/unit/units-main.component';
+import { InvoicesMainComponent } from './Components/Pages/invoices/invoices-main.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -54,7 +54,14 @@ export const routes: Routes = [
         (m) => m.ClientsModule
       ),
   },
-  { path: 'invoices', component: InvoicesComponent },
+  {
+    path: 'invoices',
+    component: InvoicesMainComponent,
+    loadChildren: () =>
+      import('./Components/Pages/invoices/invoices.module').then(
+        (m) => m.InvoicesModule
+      ),
+  },
   { path: 'report', component: ReportComponent },
   { path: 'stock', component: StockComponent },
   {

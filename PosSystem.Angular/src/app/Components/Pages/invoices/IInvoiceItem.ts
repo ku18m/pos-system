@@ -1,9 +1,10 @@
 export interface IInvoiceItem{
-    id:string,
-    name:string,
-    quantity:string,
-    price:number,
-    totalAmount:number,
-    discount:number,
-    finalAmount:number
+  invoiceItemId?: string;
+  itemName?: string;
+  itemId: string;
+  unitName?: string;
+  unitId: string;
+  quantity: number;
+  total?: number;
+  sellingPrice: number;
 }

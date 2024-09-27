@@ -9,7 +9,7 @@ import { TypesComponent } from './Components/Pages/types/add-type/types.componen
 import { UnitComponent } from './Components/Pages/unit/add-unit/unit.component';
 import { ItemsComponent } from './Components/Pages/items/add-product/items.component';
 import { ClientsComponent } from './Components/Pages/clients/add-client/clients.component';
-import { InvoicesComponent } from './Components/Pages/invoices/invoices.component';
+import { InvoicesComponent } from './Components/Pages/invoices/add-invoice/invoices.component';
 import { ReportComponent } from './Components/Pages/report/report.component';
 import { StockComponent } from './Components/Pages/stock/stock.component';
 import { CommonModule } from '@angular/common';

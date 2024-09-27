@@ -6,7 +6,7 @@ namespace PosSystem.Application.Contracts.InvoiceItem
 {
     public class InvoiceItemOperationsContract
     {
-        public string InvoiceItemId { get; set; }
+        public string? InvoiceItemId { get; set; }
 
         [Required]
         public string ItemId { get; set; }
