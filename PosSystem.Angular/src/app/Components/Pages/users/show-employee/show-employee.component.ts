@@ -24,7 +24,6 @@ export class ShowEmployeeComponent implements OnInit {
     this.employeeServices.getAllUsers().subscribe({
       next: (response) => {
         this.employees = response as IUser[];
-        console.log(this.employees)
         this.updatePaginatedProducts();
       },
     });

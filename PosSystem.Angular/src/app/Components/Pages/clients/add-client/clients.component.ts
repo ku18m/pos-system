@@ -57,7 +57,6 @@ export class ClientsComponent implements OnInit {
 
     this.clientService.getNextClientNumber().subscribe({
       next: (number: any) => {
-        console.log('Next client number:', number);
         this.number = number.clientNumber;
       },
     });

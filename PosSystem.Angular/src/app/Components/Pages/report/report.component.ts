@@ -77,22 +77,10 @@ export class ReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.invoiceService.getAllBills().subscribe({
-      next: (bills: any) => {
-        this.billDateList = bills;
-      },
-    });
-    this.invoiceService.getAllBills().subscribe({
-      next: (bills: any) => {
-        this.billDateList = bills;
-      },
-    });
-    this.itemService
-      .getAllItems(this.tokin)
-      .subscribe({ next: (response) => (this.itemList = response) });
+    
   }
 
-  Submit(e: any) { 
+  Submit(e: any) {
     e.preventDefault();
 
     this.getSalesReport();
