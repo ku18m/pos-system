@@ -38,4 +38,4 @@ Setup Instructions
    dotnet run
 
 5. The API will be available at:
-   http://localhost:5000
+   http://localhost:7168
