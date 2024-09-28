@@ -153,17 +153,12 @@
     <form [formGroup]="employeeForm">
         <div class="input">
             <label class="Employee">Employee Name:</label>
-            <select  class="form-control dropdown-toggle employee-select" formControlName="employeeName" [(ngModel)]="employeeName" >
-                <option disabled selected>-- Choose From Employees --</option>
-                @for(employee of employeeList;track $index){
-                    <option>{{employee.firstName + " " + employee.lastName}}</option>
-                }
-            </select>
+            <input type="text" class="form-control dropdown-toggle employee-select" formControlName="employeeName" [(ngModel)]="employeeName" />
         </div>
         <div class="text-danger ms-5">{{employeeNameError}}</div>
         <div class="input">
             <label class="date" >Date:</label>
-            <input type="date" class="form-control date-input" formControlName="date" [(ngModel)]="date"/>
+            <input type="date" class="form-control date-input" formControlName="date" [(ngModel)]="billDate"/>
         </div>
         <div class="text-danger ms-5">{{dateError}}</div>
 

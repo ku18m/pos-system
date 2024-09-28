@@ -50,10 +50,10 @@ i{
   }
   
   .card {
-    margin: 10px;
+    /* margin: 10px; */
     border: none;
     border-radius: 10px;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
   
   .card .list-group-item {
@@ -67,9 +67,11 @@ i{
   
   .table-responsive {
     margin-top: 30px;
-    max-width: 1300px; /* Adjust this value to your preferred width */
-    margin-left: auto;
-    margin-right: 15px;
+    /* max-width: 1300px; */
+    /* margin-left: auto; */
+    /* margin-right: 15px; */
+    margin: auto;
+    padding: 50px;
   }
   .table {
     width: 100%; /* Make sure the table takes the full width of its container */

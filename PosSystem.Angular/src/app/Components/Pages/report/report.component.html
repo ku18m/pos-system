@@ -3,7 +3,7 @@
 <div class="rounded bg-light company">
   <h2 class="mb-5">Sales Report</h2>
   <div class="input">
-    <label class="clent">Choose A Period:</label>
+    <label class="clent">Start Date:</label>
     <input
       type="date"
       placeholder="From"
@@ -12,7 +12,7 @@
     />
   </div>
   <div class="input">
-    <label class="type">Choose A Period:</label>
+    <label class="type">End Date:</label>
     <input
       type="date"
       placeholder="To"
@@ -29,97 +29,98 @@
     </button>
   </div>
   <div class="clear"></div>
+  @if (reportData) {
+    <div class="row justify-content-center mb-3 mt-3">
+      <div class="col-md-3 col-sm-6">
+        <div class="card shadow-sm mb-3">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item py-2">
+              <span class="font-bold">Top Client By Invoices: </span>{{ reportData.topClientByInvoices }}
+            </li>
+            <li class="list-group-item py-2">
+              <span class="font-bold">Top Client By Invoices Count:</span> {{ reportData.topClientByInvoicesCount }}
+            </li>  
+            <li class="list-group-item py-2">
+              <span class="font-bold">Top Client By Paid Amount:</span> {{ reportData.topClientByPaidAmount }}
+            </li>
+            <li class="list-group-item py-2">
+              <span class="font-bold">Top Client Paid Amount:</span> {{ reportData.topClientPaidAmount }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="card shadow-sm mb-3">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item py-2">
+              <span class="font-bold">Total Sellings Amount:</span> {{ reportData.totalSellingsAmount }}
+            </li>
+            <li class="list-group-item py-2">
+              <span class="font-bold">Total Earned Amount: </span>{{ reportData.totalEarnedAmount }}
+            </li>
+            <li class="list-group-item py-2">
+              <span class="font-bold">Total Due Amount: </span>{{ reportData.totalDiscounts }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="card shadow-sm mb-3">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item py-2">
+              <span class="font-bold">Top Employee By Invoices: </span>{{ reportData.topEmployeeByInvoices }}
+            </li>
+            <li class="list-group-item py-2">
+              <span class="font-bold">Top Employee Invoices Count: </span>{{ reportData.topEmployeeInvoicesCount }}
+            </li>
+            <li class="list-group-item py-2">
+              <span class="font-bold">Top Employee By Total Amount: </span>{{ reportData.topEmployeeByTotalAmount }}
+            </li>
+            <li class="list-group-item py-2">
+              <span class="font-bold">Top Employee Total Amount:</span> {{ reportData.topEmployeeTotalAmount }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="table-light">
+          <tr>
+            
+            <th scope="col">Invoice Number</th>
+            <th scope="col">Bill Date</th>
+            <th scope="col">Date</th>
+            <th scope="col">Paid Up</th>
+            <th scope="col">Net</th>
+            <th scope="col">Discount Value</th>
+            <th scope="col">Total Amount</th>
+            <th scope="col">Client Name</th>
+            <th scope="col">Employee Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(item of Invoices; track $index) {
+          <tr>
+            
+            <td>{{ item.number }}</td>
+            <td>{{ item.billDate }}</td>
+            <td>{{ item.date }}</td>
+            <td>{{ item.paidUp }}</td>
+            <td>{{ item.net }}</td>
+            <td>{{ item.discountValue }}</td>
+            <td>{{ item.totalAmount }}</td>
+            <td>{{ item.clientName }}</td>
+            <td>{{ item.employeeName }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
 </div>
 
-@if (reportData) {
-  <div class="row justify-content-center mb-3">
-    <div class="col-md-3 col-sm-6">
-      <div class="card shadow-sm mb-3">
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item py-2">
-            <span class="font-bold">Top Client By Invoices: </span>{{ reportData.topClientByInvoices }}
-          </li>
-          <li class="list-group-item py-2">
-            <span class="font-bold">Top Client By Invoices Count:</span> {{ reportData.topClientByInvoicesCount }}
-          </li>  
-          <li class="list-group-item py-2">
-            <span class="font-bold">Top Client By Paid Amount:</span> {{ reportData.topClientByPaidAmount }}
-          </li>
-          <li class="list-group-item py-2">
-            <span class="font-bold">Top Client Paid Amount:</span> {{ reportData.topClientPaidAmount }}
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-md-3 col-sm-6">
-      <div class="card shadow-sm mb-3">
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item py-2">
-            <span class="font-bold">Total Sellings Amount:</span> {{ reportData.totalSellingsAmount }}
-          </li>
-          <li class="list-group-item py-2">
-            <span class="font-bold">Total Earned Amount: </span>{{ reportData.totalEarnedAmount }}
-          </li>
-          <li class="list-group-item py-2">
-            <span class="font-bold">Total Due Amount: </span>{{ reportData.totalDiscounts }}
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-md-3 col-sm-6">
-      <div class="card shadow-sm mb-3">
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item py-2">
-            <span class="font-bold">Top Employee By Invoices: </span>{{ reportData.topEmployeeByInvoices }}
-          </li>
-          <li class="list-group-item py-2">
-            <span class="font-bold">Top Employee Invoices Count: </span>{{ reportData.topEmployeeInvoicesCount }}
-          </li>
-          <li class="list-group-item py-2">
-            <span class="font-bold">Top Employee By Total Amount: </span>{{ reportData.topEmployeeByTotalAmount }}
-          </li>
-          <li class="list-group-item py-2">
-            <span class="font-bold">Top Employee Total Amount:</span> {{ reportData.topEmployeeTotalAmount }}
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-}
 
-<div class="table-responsive">
-  <table class="table table-bordered table-hover">
-    <thead class="table-light">
-      <tr>
-        
-        <th scope="col">Invoice Number</th>
-        <th scope="col">Bill Date</th>
-        <th scope="col">Date</th>
-        <th scope="col">Paid Up</th>
-        <th scope="col">Net</th>
-        <th scope="col">Discount Value</th>
-        <th scope="col">Total Amount</th>
-        <th scope="col">Client Name</th>
-        <th scope="col">Employee Name</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for(item of Invoices; track $index) {
-      <tr>
-        
-        <td>{{ item.number }}</td>
-        <td>{{ item.billDate }}</td>
-        <td>{{ item.date }}</td>
-        <td>{{ item.paidUp }}</td>
-        <td>{{ item.net }}</td>
-        <td>{{ item.discountValue }}</td>
-        <td>{{ item.totalAmount }}</td>
-        <td>{{ item.clientName }}</td>
-        <td>{{ item.employeeName }}</td>
-      </tr>
-      }
-    </tbody>
-  </table>
-</div>
 
 <!-- <app-footer></app-footer> -->

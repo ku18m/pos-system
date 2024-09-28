@@ -156,7 +156,7 @@ export class ProductFormComponent implements OnInit {
         productData.id = this.productId;
         this.productServices.updateItem(productData).subscribe({
           next: () => {
-            this.router.navigate(['/products']);
+            this.router.navigate(['/items/operations']);
           },
           error: (err) => {
             console.error('Error updating product:', err);
@@ -167,7 +167,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/products']);
+    this.router.navigate(['/items/operations']);
   }
 }
 
