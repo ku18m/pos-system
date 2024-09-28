@@ -81,7 +81,6 @@
         <th scope="col">Unit</th>
         <th scope="col">Quantity</th>
         <th scope="col">Selling Price</th>
-        <th scope="col">Discount</th>
         <th scope="col">Total</th>
         <th scope="col">Balance</th>
         <th scope="col">Delete</th>
@@ -95,7 +94,6 @@
                 <td>{{bill.unit}}</td>
                 <td>{{bill.quantity}}</td>
                 <td>{{bill.sellingPrice}}</td>
-                <td>{{bill.discount}}</td>
                 <td>{{bill.total}}</td>
                 <td>{{bill.balance}}</td>
                 <td>
@@ -153,17 +151,12 @@
     <form [formGroup]="employeeForm">
         <div class="input">
             <label class="Employee">Employee Name:</label>
-            <select  class="form-control dropdown-toggle employee-select" formControlName="employeeName" [(ngModel)]="employeeName" >
-                <option disabled selected>-- Choose From Employees --</option>
-                @for(employee of employeeList;track $index){
-                    <option>{{employee.firstName + " " + employee.lastName}}</option>
-                }
-            </select>
+            <input type="text" class="form-control dropdown-toggle employee-select" formControlName="employeeName" [(ngModel)]="employeeName" />
         </div>
         <div class="text-danger ms-5">{{employeeNameError}}</div>
         <div class="input">
             <label class="date" >Date:</label>
-            <input type="date" class="form-control date-input" formControlName="date" [(ngModel)]="date"/>
+            <input type="date" class="form-control date-input" formControlName="date" [(ngModel)]="billDate"/>
         </div>
         <div class="text-danger ms-5">{{dateError}}</div>
 

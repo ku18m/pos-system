@@ -36,7 +36,9 @@ export class InvoiceCrudsComponent implements OnInit {
     this.invoiceForm = new FormGroup({
       number: new FormControl({ value: '', disabled: false }),
       billDate: new FormControl('', Validators.required),
-      clientName: new FormControl('', Validators.required),
+      clientName: new FormControl('', Validators.required), 
+      paidUp:new FormControl ('', [Validators.required, Validators.min(0)]),
+      totalDiscount: new FormControl('', [Validators.min(0)]),
       invoiceItems: new FormArray([])
     });
   }
@@ -48,6 +50,8 @@ export class InvoiceCrudsComponent implements OnInit {
       number: invoice.number,
       billDate: new Date(invoice.billDate).toISOString().split('T')[0],
       clientName: invoice.clientName,
+      paidUp:invoice.paidUp ,
+      totalDiscount: invoice.totalDiscount || 0
     });
 
     this.invoiceItems.clear();
@@ -87,18 +91,36 @@ addInvoiceItem(item?: any): void {
   }
 
   saveInvoice(): void {
+    console.log('before calc:', this.selectedInvoice);
     if (this.invoiceForm.invalid) {
       this.invoiceForm.markAllAsTouched();
       console.log(this.invoiceForm.controls);
       return;
     }
-    let invoiceData: IInvoices = this.invoiceForm.value;
+
+    let invoiceData: IInvoices =  {
+      ...this.invoiceForm.value,
+      totalDiscount: this.invoiceForm.get('totalDiscount')?.value || 0 
+    };
+
+    const itemsTotal = invoiceData.invoiceItems.reduce(
+      (sum, item) => sum + (item.sellingPrice * item.quantity),
+      0
+    );
+    
+    if (this.selectedInvoice) {
+      this.selectedInvoice.totalAmount = (itemsTotal || 0);
+      this.selectedInvoice.totalDiscount = invoiceData.totalDiscount;
+      this.selectedInvoice.net = (itemsTotal - invoiceData.totalDiscount);
+    }
+    
     if (!this.invoiceId) {
       this.invoiceService.addInvoice(invoiceData).subscribe({
         next: () => this.router.navigate(['/invoices/operations']),
         error: (err) => console.error('Error adding invoice:', err)
       });
     } else {
+      console.log('after calc:', this.selectedInvoice);
       invoiceData = { ...this.selectedInvoice, ...invoiceData };
       this.invoiceService.update(invoiceData).subscribe({
         next: () => this.router.navigate(['/invoices/operations']),

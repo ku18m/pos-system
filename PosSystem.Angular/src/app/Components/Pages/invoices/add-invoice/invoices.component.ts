@@ -8,6 +8,7 @@ import { NavbarComponent } from '../../navbar/navbar.component';
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { FooterComponent } from '../../footer/footer.component';
 import { Router } from '@angular/router';
+import { UsersWithAPIService } from '../../../../services/users-with-api.service';
 
 @Component({
   selector: 'app-invoices',
@@ -99,8 +100,7 @@ export class InvoicesComponent implements OnInit {
    discount: new FormControl(""),
    total: new FormControl(""),
    balance: new FormControl("")
-
- })
+ });
 
 
 
@@ -118,22 +118,31 @@ export class InvoicesComponent implements OnInit {
 
  //  START SECTION 4 (FORM)
  employeeForm = new FormGroup({
-   employeeName: new FormControl(""),
-   date: new FormControl(""),
-   startTime: new FormControl(""),
-   endTime: new FormControl("")
+   employeeName: new FormControl({ value: '', disabled: true }),
+   date: new FormControl({ value: '', disabled: true }),
+   startTime: new FormControl({ value: '', disabled: true }),
+   endTime: new FormControl({ value: '', disabled: true })
  });
 
 
 
  //CONSTRUCTOR
- constructor(private unitService: UnitsWithAPIService, private clientService: ClientsWithAPIService, private invoiceService: InvoicesWithAPIService, private itemService: ItemWithAPIService, private router: Router) { }
+ constructor(
+  private unitService: UnitsWithAPIService,
+  private clientService: ClientsWithAPIService,
+  private invoiceService: InvoicesWithAPIService,
+  private itemService: ItemWithAPIService,
+  private userServices: UsersWithAPIService,
+  private router: Router
+) { }
 
 
  //ONINTI
  ngOnInit(): void {
 
    //   START SECTION 1&2 (oNiNIT)
+  this.billDate = new Date().toISOString().substring(0, 10);
+
    this.invoiceService.GetBillNumber().subscribe({
      next:(response)=>{
        this.billNumber= response.invoiceNumber;
@@ -194,6 +203,18 @@ export class InvoicesComponent implements OnInit {
        });
      }
    });
+
+   this.userServices.getCurrentUser().subscribe({
+    next:(response)=>{
+      this.employeeName = response.firstName + " " + response.lastName;
+      this.startTime = response.startTime;
+      this.endTime = response.endTime;
+      this.employeeId = response.id;
+    },
+    error:(error)=>{
+      console.error('Error fetching current user:',error);
+    },
+   })
  }
 
 
@@ -480,7 +501,9 @@ export class InvoicesComponent implements OnInit {
 
  //CALCULATE REST VALUE
  calculateRest() {
-   this.rest = this.net - (this.paidUp | 0);
+  if(this.paidUp){
+    this.rest = this.paidUp - this.net;
+  }
  }
 
 
@@ -492,33 +515,37 @@ export class InvoicesComponent implements OnInit {
   // CHECK VALIDATION
    if (this.employeeName === "-- Choose From Employees --") {
      this.employeeNameError = "Employee Name Is Required";
+     return;
    }
    else
      this.employeeNameError = null;
 
-   if (this.date == null) {
+   if (this.billDate == null) {
      this.dateError = 'Date Is Required';
-
-   }
-   else
-     this.dateError = null;
+     return;
+    }
+    else{
+      this.date = this.billDate;
+      this.dateError = null;
+     }
 
 
      //CHECK DATE
    const startDate = this.convertToDate(this.startTime);
    const endDate = this.convertToDate(this.endTime);
    if (endDate < startDate) {
-     this.timeError = "End Time Must Be Greater Than Start Time"
+     this.timeError = "End Time Must Be Greater Than Start Time";
+     return;
    }
    else
      this.timeError = null;
 
     //GET EMPLOYEE ID
-  this.employeeList.forEach((element) => {
-    if (element.firstName + " " + element.lastName == this.employeeName) {
-      this.employeeId = element.id;
-    }
-  });
+  // this.employeeList.forEach((element) => {
+  //   if (element.firstName + " " + element.lastName == this.employeeName) {
+  //     this.employeeId = element.id;
+  //   }
+  // });
   //  this.invoiceService.fetchAllUsers().subscribe({
   //    next: (response) => {
   //      response.forEach((element: any) => {
@@ -531,6 +558,10 @@ export class InvoicesComponent implements OnInit {
   //  });
 
    //PUSH IN INVOICE LIST
+   console.log('before push');
+   console.log(this.billTableItem);
+   console.log(this.invoiceItems);
+   
    this.billTableItem.forEach((item) => {
     let invoiceItem = {
       itemId: item.id,
@@ -539,8 +570,12 @@ export class InvoicesComponent implements OnInit {
       sellingPrice: item.sellingPrice
     }
     this.invoiceItems.push(invoiceItem);
-   });
-
+  });
+  
+  console.log('after push');
+  console.log(this.billTableItem);
+  console.log(this.invoiceItems);
+  //return;
 
    //ADDING INVOICE
    const INVOICE = {
@@ -557,7 +592,6 @@ export class InvoicesComponent implements OnInit {
    this.invoiceService.addInvoice(INVOICE).subscribe({
       next: () => {
         this.Cancel();
-        this.ngOnInit();
         console.log('Invoice Added Successfully');
       },
       error: (error) => {
@@ -578,6 +612,10 @@ export class InvoicesComponent implements OnInit {
    this.timeError = null;
    this.employeeBillList = [];
    this.billTableItem = [];
+   this.invoiceItems = [];
+   this.clientList = [];
+   this.itemList = [];
+   this.unitList = [];
    this.ngOnInit();
  }
 
