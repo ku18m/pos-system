@@ -24,12 +24,12 @@ export class ShowinvoicesComponent {
   ngOnInit(): void {
   this.invoiceService.getAll().subscribe({
     next: (response) => {
-      this.invoices = response.map(invoice => {
+      this.invoices = response.map((invoice: IInvoices) => {
         const itemsTotal = invoice.invoiceItems.reduce(
           (sum, item) => sum + (item.sellingPrice * item.quantity), 
           0
         );
-        const discount = invoice.discount || 0;
+        const discount = invoice.totalDiscount || 0;
         const totalPrice = itemsTotal - discount;
         return {
           ...invoice,

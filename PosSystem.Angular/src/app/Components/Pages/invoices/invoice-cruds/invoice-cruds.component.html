@@ -59,40 +59,39 @@
         </div>
       </div>
     </div>
- <div class="col-md-6">
-        <label for="paidAmount" class="form-label">Paid Amount</label>
+    <div class="col-md-6">
+        <label for="paidUp" class="form-label">Paid Amount</label>
         <input
           type="number"
-          formControlName="paidAmount"
+          formControlName="paidUp"
           class="form-control"
-          id="paidAmount"
+          id="paidUp"
           placeholder="Paid Amount"
         />
         <div
           *ngIf="
-            invoiceForm.get('paidAmount')?.touched &&
-            invoiceForm.get('paidAmount')?.invalid
+            invoiceForm.get('paidUp')?.touched &&
+            invoiceForm.get('paidUp')?.invalid
           "
           class="text-danger"
         >
           Paid Amount is required and must be a positive number.
         </div>
-      </div>
     </div>
     <div class="row mb-3">
       <div class="col-md-6">
-        <label for="discount" class="form-label">Discount</label>
+        <label for="totalDiscount" class="form-label">Discount</label>
         <input
           type="number"
-          formControlName="discount"
+          formControlName="totalDiscount"
           class="form-control"
-          id="discount"
+          id="totalDiscount"
           placeholder="Discount"
         />
         <div
           *ngIf="
-            invoiceForm.get('discount')?.touched &&
-            invoiceForm.get('discount')?.invalid
+            invoiceForm.get('totalDiscount')?.touched &&
+            invoiceForm.get('totalDiscount')?.invalid
           "
           class="text-danger"
         >
@@ -181,9 +180,9 @@
           </button>
         </div>
       </div>
-      <button type="button" (click)="addInvoiceItem()" class="btn btn-primary">
+      <!-- <button type="button" (click)="addInvoiceItem()" class="btn btn-primary">
         Add Item
-      </button>
+      </button> -->
     </div>
 
     <div class="d-flex justify-content-center mt-4">
