@@ -22,17 +22,29 @@ export class ShowinvoicesComponent {
   constructor(public invoiceService: InvoicesWithAPIService, private router: Router) {}
 
   ngOnInit(): void {
-    this.invoiceService.getAll().subscribe({
-      next: (response) => {
-        this.invoices = response.map((invoice: IInvoices) => ({
+  this.invoiceService.getAll().subscribe({
+    next: (response) => {
+      this.invoices = response.map(invoice => {
+        const itemsTotal = invoice.invoiceItems.reduce(
+          (sum, item) => sum + (item.sellingPrice * item.quantity), 
+          0
+        );
+        const discount = invoice.discount || 0;
+        const totalPrice = itemsTotal - discount;
+        return {
           ...invoice,
-          totalPrice: invoice.invoiceItems.reduce((sum: number, item: IInvoiceItem) => sum + (item.sellingPrice * item.quantity), 0)
-        }));
-        this.updatePaginatedInvoices();
-      },
-    });
-  }
+          totalPrice
+        };
+      });
 
+     
+      this.updatePaginatedInvoices();
+    },
+    error: (err) => {
+      console.error('Error fetching invoices:', err);
+    }
+  });
+}
   updatePaginatedInvoices(): void {
     const startIndex = (this.currentPage - 1) * this.invoicesPerPage;
     const endIndex = startIndex + this.invoicesPerPage;

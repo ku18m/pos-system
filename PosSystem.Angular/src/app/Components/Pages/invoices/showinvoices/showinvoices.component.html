@@ -21,7 +21,10 @@
           <th scope="col">Item Name</th>
           <th scope="col">Selling Price</th>
           <th scope="col">Quantity</th>
+          <th scope="col">Discount</th>
           <th scope="col">Total Price</th>
+          <th scope="col">Paid Amount</th>
+          <th scope="col">Remaining</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
@@ -42,8 +45,21 @@
             <td>{{ invoice.invoiceItems[0].sellingPrice | currency }}</td>
             <td>{{ invoice.invoiceItems[0].quantity }}</td>
             <td [attr.rowspan]="invoice.invoiceItems.length">
-              {{ invoice.totalAmount| currency }}
+              {{ invoice.discount | currency }}
             </td>
+            <td [attr.rowspan]="invoice.invoiceItems.length">
+              {{ invoice.totalAmount | currency }}
+            </td>
+            <td [attr.rowspan]="invoice.invoiceItems.length">
+              {{ invoice.totalPrice | currency }}
+            </td>
+            <td [attr.rowspan]="invoice.invoiceItems.length">
+              {{ invoice.paidUp | currency }}
+            </td>
+            <td [attr.rowspan]="invoice.invoiceItems.length">
+              {{ invoice.totalPrice - invoice.paidUp | currency }}
+            </td>
+
             <td [attr.rowspan]="invoice.invoiceItems.length">
               <i
                 [routerLink]="['/invoice', invoice.id, 'edit']"

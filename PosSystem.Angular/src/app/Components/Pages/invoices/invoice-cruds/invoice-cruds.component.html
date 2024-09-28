@@ -59,6 +59,47 @@
         </div>
       </div>
     </div>
+ <div class="col-md-6">
+        <label for="paidAmount" class="form-label">Paid Amount</label>
+        <input
+          type="number"
+          formControlName="paidAmount"
+          class="form-control"
+          id="paidAmount"
+          placeholder="Paid Amount"
+        />
+        <div
+          *ngIf="
+            invoiceForm.get('paidAmount')?.touched &&
+            invoiceForm.get('paidAmount')?.invalid
+          "
+          class="text-danger"
+        >
+          Paid Amount is required and must be a positive number.
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="discount" class="form-label">Discount</label>
+        <input
+          type="number"
+          formControlName="discount"
+          class="form-control"
+          id="discount"
+          placeholder="Discount"
+        />
+        <div
+          *ngIf="
+            invoiceForm.get('discount')?.touched &&
+            invoiceForm.get('discount')?.invalid
+          "
+          class="text-danger"
+        >
+          Discount must be a positive number.
+        </div>
+      </div>
+    </div>
 
     <div class="mb-4">
       <h5>Item Details</h5>

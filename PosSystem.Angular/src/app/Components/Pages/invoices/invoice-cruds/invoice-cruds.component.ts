@@ -36,7 +36,9 @@ export class InvoiceCrudsComponent implements OnInit {
     this.invoiceForm = new FormGroup({
       number: new FormControl({ value: '', disabled: false }),
       billDate: new FormControl('', Validators.required),
-      clientName: new FormControl('', Validators.required),
+      clientName: new FormControl('', Validators.required), 
+      paidAmount:new FormControl ('', [Validators.required, Validators.min(0)]),
+      discount: new FormControl('', [Validators.min(0)]),
       invoiceItems: new FormArray([])
     });
   }
@@ -48,6 +50,8 @@ export class InvoiceCrudsComponent implements OnInit {
       number: invoice.number,
       billDate: new Date(invoice.billDate).toISOString().split('T')[0],
       clientName: invoice.clientName,
+         paidAmount:invoice.paidUp ,
+       discount: invoice.discount || 0
     });
 
     this.invoiceItems.clear();
@@ -92,7 +96,10 @@ addInvoiceItem(item?: any): void {
       console.log(this.invoiceForm.controls);
       return;
     }
-    let invoiceData: IInvoices = this.invoiceForm.value;
+    let invoiceData: IInvoices =  {
+      ...this.invoiceForm.value,
+      discount: this.invoiceForm.get('discount')?.value || 0 
+    };
     if (!this.invoiceId) {
       this.invoiceService.addInvoice(invoiceData).subscribe({
         next: () => this.router.navigate(['/invoices/operations']),
