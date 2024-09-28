@@ -22,6 +22,8 @@
           <th scope="col">Selling Price</th>
           <th scope="col">Quantity</th>
           <th scope="col">Total Price</th>
+          <th scope="col">Discount</th>
+          <th scope="col">Net Price</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
@@ -29,7 +31,7 @@
         <ng-container *ngFor="let invoice of paginatedInvoices">
           <tr>
             <td [attr.rowspan]="invoice.invoiceItems.length">
-              {{ invoice.id }}
+              {{ invoice.number }}
             </td>
             <td [attr.rowspan]="invoice.invoiceItems.length">
               {{ invoice.billDate | date : "shortDate" }}
@@ -42,8 +44,16 @@
             <td>{{ invoice.invoiceItems[0].sellingPrice | currency }}</td>
             <td>{{ invoice.invoiceItems[0].quantity }}</td>
             <td [attr.rowspan]="invoice.invoiceItems.length">
-              {{ invoice.totalAmount| currency }}
+              {{ invoice.totalAmount | currency }}
             </td>
+            <td [attr.rowspan]="invoice.invoiceItems.length">
+              {{ invoice.totalDiscount| currency }}
+            </td>
+            <td [attr.rowspan]="invoice.invoiceItems.length">
+              {{ invoice.net| currency }}
+            </td>
+            
+
             <td [attr.rowspan]="invoice.invoiceItems.length">
               <i
                 [routerLink]="['/invoice', invoice.id, 'edit']"
