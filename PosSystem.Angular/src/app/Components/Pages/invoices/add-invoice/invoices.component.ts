@@ -515,23 +515,27 @@ export class InvoicesComponent implements OnInit {
   // CHECK VALIDATION
    if (this.employeeName === "-- Choose From Employees --") {
      this.employeeNameError = "Employee Name Is Required";
+     return;
    }
    else
      this.employeeNameError = null;
 
-   if (this.date == null) {
+   if (this.billDate == null) {
      this.dateError = 'Date Is Required';
-
-   }
-   else
-     this.dateError = null;
+     return;
+    }
+    else{
+      this.date = this.billDate;
+      this.dateError = null;
+     }
 
 
      //CHECK DATE
    const startDate = this.convertToDate(this.startTime);
    const endDate = this.convertToDate(this.endTime);
    if (endDate < startDate) {
-     this.timeError = "End Time Must Be Greater Than Start Time"
+     this.timeError = "End Time Must Be Greater Than Start Time";
+     return;
    }
    else
      this.timeError = null;
@@ -554,6 +558,10 @@ export class InvoicesComponent implements OnInit {
   //  });
 
    //PUSH IN INVOICE LIST
+   console.log('before push');
+   console.log(this.billTableItem);
+   console.log(this.invoiceItems);
+   
    this.billTableItem.forEach((item) => {
     let invoiceItem = {
       itemId: item.id,
@@ -562,8 +570,12 @@ export class InvoicesComponent implements OnInit {
       sellingPrice: item.sellingPrice
     }
     this.invoiceItems.push(invoiceItem);
-   });
-
+  });
+  
+  console.log('after push');
+  console.log(this.billTableItem);
+  console.log(this.invoiceItems);
+  //return;
 
    //ADDING INVOICE
    const INVOICE = {
@@ -600,6 +612,7 @@ export class InvoicesComponent implements OnInit {
    this.timeError = null;
    this.employeeBillList = [];
    this.billTableItem = [];
+   this.invoiceItems = [];
    this.clientList = [];
    this.itemList = [];
    this.unitList = [];
