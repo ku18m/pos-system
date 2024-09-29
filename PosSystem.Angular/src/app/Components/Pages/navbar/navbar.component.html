@@ -13,10 +13,11 @@
           <li class="nav-item">
             <i class="bi bi-cart me-2"></i>
           </li>
-          
+
         </ul>
         <ul class="nav-right">
           @if(loggedIn) {
+            <span class="me-2 userName">Welcome, {{currentUser?.firstName}}</span>
             <button class="btn btn-danger me-2" (click)="logoutUser()">Logout</button>
           } @else {
             <button class="btn btn-primary me-2" (click)="switchLogin()">Login</button>
