@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClientsWithAPIService } from '../../../../services/clients-with-api.service';
 import { InvoicesWithAPIService } from '../../../../services/invoices-with-api.service';
@@ -56,6 +56,7 @@ export class InvoicesComponent implements OnInit {
  discountValueError: any;
  net: any;
  paidUp: any;
+ paidUpError: any;
  paidError: any;
  rest: any;
  count: any = 0;
@@ -111,7 +112,7 @@ export class InvoicesComponent implements OnInit {
    percentageDiscount: new FormControl(""),
    valueDiscount: new FormControl(""),
    theNet: new FormControl(""),
-   paidUp: new FormControl(""),
+   paidUp: new FormControl("", Validators.required),
    theRest: new FormControl(""),
  });
 
@@ -133,7 +134,8 @@ export class InvoicesComponent implements OnInit {
   private invoiceService: InvoicesWithAPIService,
   private itemService: ItemWithAPIService,
   private userServices: UsersWithAPIService,
-  private router: Router
+  private router: Router,
+  private changeDetector: ChangeDetectorRef
 ) { }
 
 
@@ -337,6 +339,9 @@ export class InvoicesComponent implements OnInit {
      }
    });
 
+   if (this.quantityGraterError) {
+     return;
+   }
 
    //TO SHOW IN TABLE & FILTER SELECT ITEM
    this.itemList.forEach(item => {
@@ -352,7 +357,6 @@ export class InvoicesComponent implements OnInit {
        }
      }
    });
-
 
    // Item List Data
    this.invoiceService.GetAllItems().subscribe({
@@ -529,6 +533,13 @@ export class InvoicesComponent implements OnInit {
       this.dateError = null;
      }
 
+     if(this.paidUp == null || this.paidUp == ""){
+      this.paidUpError = 'Paid Up Is Required';
+      return;
+     } else {
+        this.paidUpError = null;
+     }
+
 
      //CHECK DATE
    const startDate = this.convertToDate(this.startTime);
@@ -558,10 +569,7 @@ export class InvoicesComponent implements OnInit {
   //  });
 
    //PUSH IN INVOICE LIST
-   console.log('before push');
-   console.log(this.billTableItem);
-   console.log(this.invoiceItems);
-   
+
    this.billTableItem.forEach((item) => {
     let invoiceItem = {
       itemId: item.id,
@@ -571,11 +579,6 @@ export class InvoicesComponent implements OnInit {
     }
     this.invoiceItems.push(invoiceItem);
   });
-  
-  console.log('after push');
-  console.log(this.billTableItem);
-  console.log(this.invoiceItems);
-  //return;
 
    //ADDING INVOICE
    const INVOICE = {
@@ -592,9 +595,11 @@ export class InvoicesComponent implements OnInit {
    this.invoiceService.addInvoice(INVOICE).subscribe({
       next: () => {
         this.Cancel();
+        this.showNotification('success', 'Invoice Added Successfully');
         console.log('Invoice Added Successfully');
       },
       error: (error) => {
+        this.showNotification('danger', 'Error Adding Invoice');
         console.error(error);
       }
    });
@@ -628,6 +633,18 @@ export class InvoicesComponent implements OnInit {
 
  }
 
+
+ notification: { type: string; message: string } | null = null;
+
+  showNotification(type: string, message: string) {
+    this.notification = { type, message };
+    this.changeDetector.detectChanges();
+  }
+
+  closeNotification() {
+    this.notification = null;
+    this.changeDetector.detectChanges();
+  }
 
 }
 
