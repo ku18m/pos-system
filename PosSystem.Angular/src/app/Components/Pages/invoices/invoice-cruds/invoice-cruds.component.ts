@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -20,7 +20,8 @@ export class InvoiceCrudsComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private invoiceService: InvoicesWithAPIService,
-    private router: Router
+    private router: Router,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -34,9 +35,9 @@ export class InvoiceCrudsComponent implements OnInit {
 
  initializeForm(): void {
     this.invoiceForm = new FormGroup({
-      number: new FormControl({ value: '', disabled: false }),
+      number: new FormControl({ value: '', disabled: true }),
       billDate: new FormControl('', Validators.required),
-      clientName: new FormControl('', Validators.required), 
+      clientName: new FormControl({ value: '', disabled: true }, Validators.required),
       paidUp:new FormControl ('', [Validators.required, Validators.min(0)]),
       totalDiscount: new FormControl('', [Validators.min(0)]),
       invoiceItems: new FormArray([])
@@ -100,20 +101,20 @@ addInvoiceItem(item?: any): void {
 
     let invoiceData: IInvoices =  {
       ...this.invoiceForm.value,
-      totalDiscount: this.invoiceForm.get('totalDiscount')?.value || 0 
+      totalDiscount: this.invoiceForm.get('totalDiscount')?.value || 0
     };
 
     const itemsTotal = invoiceData.invoiceItems.reduce(
       (sum, item) => sum + (item.sellingPrice * item.quantity),
       0
     );
-    
+
     if (this.selectedInvoice) {
       this.selectedInvoice.totalAmount = (itemsTotal || 0);
       this.selectedInvoice.totalDiscount = invoiceData.totalDiscount;
       this.selectedInvoice.net = (itemsTotal - invoiceData.totalDiscount);
     }
-    
+
     if (!this.invoiceId) {
       this.invoiceService.addInvoice(invoiceData).subscribe({
         next: () => this.router.navigate(['/invoices/operations']),
@@ -123,8 +124,13 @@ addInvoiceItem(item?: any): void {
       console.log('after calc:', this.selectedInvoice);
       invoiceData = { ...this.selectedInvoice, ...invoiceData };
       this.invoiceService.update(invoiceData).subscribe({
-        next: () => this.router.navigate(['/invoices/operations']),
-        error: (err) => console.error('Error updating invoice:', err)
+        next: () => {
+          this.showNotification('success', 'Invoice updated successfully');
+        },
+        error: (err) => {
+          this.showNotification('danger', 'Error updating invoice');
+          console.error('Error updating invoice:', err);
+        }
       });
     }
   }
@@ -135,5 +141,17 @@ addInvoiceItem(item?: any): void {
 
   get f() {
     return this.invoiceForm.controls;
+  }
+
+  notification: { type: string; message: string } | null = null;
+
+  showNotification(type: string, message: string) {
+    this.notification = { type, message };
+    this.changeDetector.detectChanges();
+  }
+
+  closeNotification() {
+    this.notification = null;
+    this.changeDetector.detectChanges();
   }
 }

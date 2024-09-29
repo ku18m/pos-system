@@ -197,5 +197,10 @@
         Back to List
       </button>
     </div>
+
+    <div *ngIf="notification" class="alert alert-{{notification?.type}} alert-dismissible fade show" role="alert">
+      {{notification?.message}}
+      <button type="button" class="btn-close" aria-label="Close" (click)="closeNotification()"></button>
+    </div>
   </form>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { InvoicesWithAPIService } from '../../../../services/invoices-with-api.service';
@@ -19,14 +19,16 @@ export class ShowinvoicesComponent {
   invoicesPerPage: number = 3;
   paginatedInvoices: IInvoices[] = [];
 
-  constructor(public invoiceService: InvoicesWithAPIService, private router: Router) {}
+  invoiceIdToDelete: string | null = null;
+
+  constructor(public invoiceService: InvoicesWithAPIService, private router: Router, private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit(): void {
   this.invoiceService.getAll().subscribe({
     next: (response) => {
       this.invoices = response.map((invoice: IInvoices) => {
         const itemsTotal = invoice.invoiceItems.reduce(
-          (sum, item) => sum + (item.sellingPrice * item.quantity), 
+          (sum, item) => sum + (item.sellingPrice * item.quantity),
           0
         );
         const discount = invoice.totalDiscount || 0;
@@ -37,7 +39,7 @@ export class ShowinvoicesComponent {
         };
       });
 
-     
+
       this.updatePaginatedInvoices();
     },
     error: (err) => {
@@ -69,6 +71,8 @@ export class ShowinvoicesComponent {
   deleteInvoiceHandler(invoiceId: any) {
     this.invoiceService.delete(invoiceId).subscribe({
       next: () => {
+        this.showNotification('success', 'Invoice deleted successfully');
+
         this.invoiceService.getAll().subscribe({
           next: (response) => {
             this.invoices = response as IInvoices[];
@@ -76,6 +80,46 @@ export class ShowinvoicesComponent {
           },
         });
       },
+      error: (error) => {
+        this.showNotification('danger', 'Error deleting invoice');
+        console.error('Error deleting invoice:', error);
+      },
     });
+  }
+
+  notification: { type: string; message: string } | null = null;
+
+  showNotification(type: string, message: string) {
+    this.notification = { type, message };
+    this.changeDetector.detectChanges();
+  }
+
+  closeNotification() {
+    this.notification = null;
+    this.changeDetector.detectChanges();
+  }
+
+  openDeleteModal(productId: string) {
+    this.invoiceIdToDelete = productId;
+    const modalElement = document.getElementById('deleteModal');
+    if (modalElement) {
+      const modal = new (window as any).bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
+
+  confirmDelete() {
+    if (this.invoiceIdToDelete) {
+      this.deleteInvoiceHandler(this.invoiceIdToDelete);
+      this.invoiceIdToDelete = null;
+    }
+  }
+
+  hideModal() {
+    const modalElement = document.getElementById('deleteModal');
+    if (modalElement) {
+      const modal = new (window as any).bootstrap.Modal(modalElement);
+      modal.hide();
+    }
   }
 }
