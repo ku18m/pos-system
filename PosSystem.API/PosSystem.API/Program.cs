@@ -1,7 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using PosSystem.API.SwaggerSchemaFilters;
 using PosSystem.Application;
 using PosSystem.Infrastracture;
+using PosSystem.Infrastracture.Persistence.Data;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -84,6 +86,12 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<PosDbContext>();
+    dbContext.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
